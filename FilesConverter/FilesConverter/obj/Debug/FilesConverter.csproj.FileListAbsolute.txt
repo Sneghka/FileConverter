@@ -1,0 +1,11 @@
+D:\Sneghka\C#\FilesConverter\FilesConverter\bin\Debug\FilesConverter.exe.config
+D:\Sneghka\C#\FilesConverter\FilesConverter\bin\Debug\FilesConverter.exe
+D:\Sneghka\C#\FilesConverter\FilesConverter\bin\Debug\FilesConverter.pdb
+D:\Sneghka\C#\FilesConverter\FilesConverter\obj\Debug\FilesConverter.csprojResolveAssemblyReference.cache
+D:\Sneghka\C#\FilesConverter\FilesConverter\obj\Debug\FilesConverter.Form1.resources
+D:\Sneghka\C#\FilesConverter\FilesConverter\obj\Debug\FilesConverter.Properties.Resources.resources
+D:\Sneghka\C#\FilesConverter\FilesConverter\obj\Debug\FilesConverter.csproj.GenerateResource.Cache
+D:\Sneghka\C#\FilesConverter\FilesConverter\obj\Debug\FilesConverter.exe
+D:\Sneghka\C#\FilesConverter\FilesConverter\obj\Debug\FilesConverter.pdb
+D:\Sneghka\C#\FilesConverter\FilesConverter\obj\Debug\Interop.Office.dll
+D:\Sneghka\C#\FilesConverter\FilesConverter\obj\Debug\FilesConverter.csproj.ResolveComReference.cache
