@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FilesConverter.Distributors
 {
-   public class BadmItem 
+   public class SalesResultItem 
     {
         public string ItemName { get; set; }
         public string Customer { get; set; }
@@ -19,7 +19,6 @@ namespace FilesConverter.Distributors
         {
             get { return Date.Year; }
         }
-
         public string Region { get; set; }
         public string City { get; set; }
         public string OKPO { get; set; }

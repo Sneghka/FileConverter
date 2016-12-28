@@ -9,19 +9,19 @@ using Excel = Microsoft.Office.Interop.Excel;
 
 namespace FilesConverter.Distributors
 {
-    public class BadmItemList : List<BadmItem>, SalesReport
+    public class BadmSalesConverter : List<SalesResultItem>, ISalesReport
     {
        
-        public void ReadSalesReport(string path, string request, out List<BadmItem> storedFile )
+        public List<SalesResultItem> ConvertSalesReport(string path, string request )
         {
             DataTable salesReport = new DataTable();
-            List<BadmItem> storedSales = new List<BadmItem>();
+            List<SalesResultItem> storedSales = new List<SalesResultItem>();
 
             WorkWithExcel.ExcelFileToDataTable(out salesReport, path, request );
 
             foreach (DataRow row in salesReport.Rows)
             {
-                var storedSalesRow = new BadmItem
+                var storedSalesRow = new SalesResultItem
                 {
                     Customer = "Джонсон и Джонсон",
                     Distributor = "Badm",
@@ -37,17 +37,16 @@ namespace FilesConverter.Distributors
                 storedSales.Add(storedSalesRow);
             }
 
-            storedFile = storedSales;
-
+            return storedSales;
         }
         public void CheckErrorSalesReport()
         {
 
         }
 
-        public void WriteDataToExcel(List<BadmItem> storedFile )
+        public void WriteDataToExcel(List<SalesResultItem> storedFile )
         {
-            WorkWithExcel.WriteDataToExcel(storedFile);
+            WorkWithExcel.WriteDataToExcel(storedFile, @"C:\Users\snizhana.nomirovska\Desktop\Jonson\Project\Converted Files\BadmSalesConverted.xls");
         }
     }
 }

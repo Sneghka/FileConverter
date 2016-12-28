@@ -33,7 +33,7 @@ namespace FilesConverter
             dtData = dsData.Tables[0];
         }
 
-        public static void WriteDataToExcel(List<BadmItem> list)
+        public static void WriteDataToExcel(List<SalesResultItem> list, string path)
         {
             Excel.Application myApp = new Excel.Application();
             myApp.Visible = false;
@@ -59,7 +59,7 @@ namespace FilesConverter
                 ws.Cells[i + 2, 12] = list[i].Upakovki;
             }
 
-            wb.SaveAs(@"C:\Users\snizhana.nomirovska\Desktop\Jonson\Project\Converted Files\SalesTemplateConverted.xls");
+            wb.SaveAs(path);
             wb.Close(Excel.XlSaveAction.xlSaveChanges, Type.Missing, Type.Missing);
             myApp.Quit();
         }
