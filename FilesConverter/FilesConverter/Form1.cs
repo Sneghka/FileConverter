@@ -9,13 +9,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using FilesConverter.Distributors;
 
 
 namespace FilesConverter
 {
     public partial class Form1 : Form
     {
+        private List<BadmItem> storedFile = new List<BadmItem>();
+
         public Form1()
         {
             InitializeComponent();
@@ -34,26 +36,16 @@ namespace FilesConverter
             dialog.Multiselect = false; // allow/deny user to upload more than one file at a time
             if (dialog.ShowDialog() == DialogResult.OK) // if user clicked OK
             {
-
+                var badm = new BadmItemList();
                 String path = dialog.FileName; // get name of file
                 label6.Text = path;
-                string con = String.Format("Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties=\"{1};HDR=No\";", path, path.EndsWith(".xlsx") ? "Excel 12.0 Xml" : "Excel 8.0");
-                using (OleDbConnection connection = new OleDbConnection(con))
-                {
-                    connection.Open();
-                    OleDbCommand command = new OleDbCommand("select * from [Sheet1$]", connection);
-                    using (OleDbDataReader dr = command.ExecuteReader())
-                    {
-                        while (dr.Read())
-                        {
-                            label7.Text = dr[0].ToString();
-                        }
-                    }
-                }
+                
+                badm.ReadSalesReport(path, "select * from [Sheet1$]", out storedFile);
+
             }
         }
 
-      private void button2_Click(object sender, EventArgs e)
+        private void button2_Click(object sender, EventArgs e)
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
 
@@ -66,6 +58,12 @@ namespace FilesConverter
             }
         }
 
-        
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+            var badm = new BadmItemList();
+           badm.WriteDataToExcel(storedFile);
+          
+        }
     }
 }

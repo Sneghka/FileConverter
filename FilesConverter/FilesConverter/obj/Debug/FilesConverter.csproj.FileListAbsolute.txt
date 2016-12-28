@@ -19,3 +19,9 @@ C:\Users\snizhana.nomirovska\Desktop\Jonson\Project\FileConverter\FilesConverter
 C:\Users\snizhana.nomirovska\Desktop\Jonson\Project\FileConverter\FilesConverter\FilesConverter\obj\Debug\FilesConverter.csproj.ResolveComReference.cache
 C:\Users\snizhana.nomirovska\Desktop\Jonson\Project\FileConverter\FilesConverter\FilesConverter\obj\Debug\FilesConverter.exe
 C:\Users\snizhana.nomirovska\Desktop\Jonson\Project\FileConverter\FilesConverter\FilesConverter\obj\Debug\FilesConverter.pdb
+C:\Users\snizhana.nomirovska\Desktop\Jonson\Project\FileConverter\FilesConverter\FilesConverter\obj\Debug\FilesConverter.Form1.resources
+C:\Users\snizhana.nomirovska\Desktop\Jonson\Project\FileConverter\FilesConverter\FilesConverter\obj\Debug\FilesConverter.Properties.Resources.resources
+C:\Users\snizhana.nomirovska\Desktop\Jonson\Project\FileConverter\FilesConverter\FilesConverter\obj\Debug\FilesConverter.csproj.GenerateResource.Cache
+C:\Users\snizhana.nomirovska\Desktop\Jonson\Project\FileConverter\FilesConverter\FilesConverter\bin\Debug\FilesConverter.exe
+C:\Users\snizhana.nomirovska\Desktop\Jonson\Project\FileConverter\FilesConverter\FilesConverter\bin\Debug\FilesConverter.pdb
+C:\Users\snizhana.nomirovska\Desktop\Jonson\Project\FileConverter\FilesConverter\FilesConverter\obj\Debug\FilesConverter.csprojResolveAssemblyReference.cache
