@@ -20,7 +20,7 @@ namespace FilesConverter.Distributors
             WorkWithExcel.ExcelFileToDataTable(out salesReport, path, request );
 
             foreach (DataRow row in salesReport.Rows)
-            {
+         {
                 var storedSalesRow = new SalesResultItem
                 {
                     Customer = "Джонсон и Джонсон",
@@ -31,7 +31,7 @@ namespace FilesConverter.Distributors
                     ItemName = row["Товар"].ToString(),
                     ItemCode = row["Код товара"].ToString(),
                     OKPO = row["ОКПО клиента"].ToString(),
-                    DistributorsClientPlusAdress = row["Клиент"] + ", " + row["Факт#адрес доставки"],
+                    DistributorsClientPlusAdress = row["Клиент"] + " " + row["Факт#адрес доставки"],
                     Upakovki = Convert.ToInt32(row["Количество"])
                 };
                 storedSales.Add(storedSalesRow);
@@ -42,11 +42,6 @@ namespace FilesConverter.Distributors
         public void CheckErrorSalesReport()
         {
 
-        }
-
-        public void WriteDataToExcel(List<SalesResultItem> storedFile )
-        {
-            WorkWithExcel.WriteDataToExcel(storedFile, @"C:\Users\snizhana.nomirovska\Desktop\Jonson\Project\Converted Files\BadmSalesConverted.xls");
         }
     }
 }

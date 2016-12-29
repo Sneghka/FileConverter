@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Distributors\FramkoSalesConverter.cs" />
     <Compile Include="Distributors\SalesResultItem.cs" />
     <Compile Include="Distributors\BadmSalesConverter.cs" />
     <Compile Include="Distributors\FarmacoSalesConverter.cs" />

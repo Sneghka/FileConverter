@@ -41,23 +41,28 @@ namespace FilesConverter
                 List<string> pathsList = (from f in dialog.FileNames
                                           select f).ToList(); // get name of file
 
-                label6.Text = pathsList[0];
+                string error = "all files are correct";
 
                 foreach (var file in pathsList)
                 {
                     //проверка имени файла для генерации экземпляра нужного класса
-                    if (file.Contains("Badm"))
+                    if (file.Contains("Badm_sales"))
                     {
                         var badm = new BadmSalesConverter();
                         storedSalesBadm = badm.ConvertSalesReport(file, "select * from [Sheet1$]");
                     }
 
-                    if (file.Contains("Farmaco"))
+                    if (file.Contains("Farmaco_sales"))
                     {
                         var farmaco = new FarmacoSalesConverter();
                         storedSalesFarmaco = farmaco.ConvertSalesReport(file, "select * from [Sheet1$]");
                     }
+
+                     error = file + " - некорректное имя файла";
                 }
+
+                label6.Text = error;
+
             }
         }
 
@@ -76,13 +81,10 @@ namespace FilesConverter
 
         private void button1_Click(object sender, EventArgs e)
         {
-
-            var badm = new BadmSalesConverter();
-            badm.WriteDataToExcel(storedSalesBadm);
-
-            var farmaco = new FarmacoSalesConverter();
-            farmaco.WriteDataToExcel(storedSalesFarmaco);
-
+            WorkWithExcel.WriteDataToExcel(storedSalesBadm, @"C:\Users\snizhana.nomirovska\Desktop\Jonson\Project\Converted Files\BadmSalesConverted.xls");
+            WorkWithExcel.WriteDataToExcel(storedSalesFarmaco, @"C:\Users\snizhana.nomirovska\Desktop\Jonson\Project\Converted Files\FarmacoSalesConverted.xls");
         }
     }
 }
+
+

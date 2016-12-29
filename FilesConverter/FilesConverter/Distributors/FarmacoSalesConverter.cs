@@ -27,7 +27,7 @@ namespace FilesConverter.Distributors
                     Date = DateTime.Today,
                     ItemName = row["Наименование товара"].ToString(),
                     OKPO = row["ОКПО покупателя"].ToString(),
-                    DistributorsClientPlusAdress = row["Покупатель"] + ", " + row["Адрес доставки"],
+                    DistributorsClientPlusAdress = row["Покупатель"] + " " + row["Адрес доставки"],
                     Upakovki = Convert.ToInt32(row["Количество проданных уп#"])
                 };
                 storedSales.Add(storedSalesRow);
@@ -37,11 +37,6 @@ namespace FilesConverter.Distributors
         public void CheckErrorSalesReport()
         {
 
-        }
-
-        public void WriteDataToExcel(List<SalesResultItem> storedFile)
-        {
-            WorkWithExcel.WriteDataToExcel(storedFile, @"C:\Users\snizhana.nomirovska\Desktop\Jonson\Project\Converted Files\FarmacoSalesConverted.xls");
         }
     }
 }

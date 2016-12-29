@@ -9,7 +9,7 @@ namespace FilesConverter.Sales
     {
         List<SalesResultItem> ConvertSalesReport(string path, string request);
         void CheckErrorSalesReport();
-        void WriteDataToExcel(List<SalesResultItem> storedFile);
+       
 
     }
 }

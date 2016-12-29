@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data.OleDb;
+using System.Reflection;
 using FilesConverter.Distributors;
 using Microsoft.Office.Core;
 using Excel = Microsoft.Office.Interop.Excel;
@@ -38,26 +39,40 @@ namespace FilesConverter
             Excel.Application myApp = new Excel.Application();
             myApp.Visible = false;
 
-            /* Excel.Workbook wb = myApp.Workbooks.Add(Excel.XlWBATemplate.xlWBATWorksheet);*/
-            Excel.Workbook wb = myApp.Workbooks.Add(@"C:\Users\snizhana.nomirovska\Desktop\Jonson\SalesTemplate.xls");
+            Excel.Workbook wb = myApp.Workbooks.Add(Excel.XlWBATemplate.xlWBATWorksheet);
+            /* Excel.Workbook wb = myApp.Workbooks.Add(@"C:\Users\snizhana.nomirovska\Desktop\Jonson\SalesTemplate.xls");*/
             Excel.Worksheet ws = (Excel.Worksheet)wb.Worksheets[1];
 
-            for (int i = 0; i < list.Count; i++)
-            /* for (int i = 0; i < 10; i++)*/
+
+            ws.Cells[1, 1] = "Заказчик";
+            ws.Cells[1, 2] = "Дистрибьютор";
+            ws.Cells[1, 3] = "Период";
+            ws.Cells[1, 4] = "Год";
+            ws.Cells[1, 5] = "Товар";
+            ws.Cells[1, 6] = "Область";
+            ws.Cells[1, 7] = "Город";
+            ws.Cells[1, 8] = "Код ОКПО";
+            ws.Cells[1, 9] = "Клиент с адресом";
+            ws.Cells[1, 10] = "Дата";
+            ws.Cells[1, 11] = "Код товара";
+            ws.Cells[1, 12] = "Кол-во упаковок";
+
+            PropertyInfo[] properties = typeof(SalesResultItem).GetProperties();
+            var topRow = 2;
+            object[,] arr = new object[list.Count, properties.Length];
+            for (int r = 0; r < list.Count; r++)
             {
-                ws.Cells[i + 2, 1] = list[i].Customer;
-                ws.Cells[i + 2, 2] = list[i].Distributor;
-                ws.Cells[i + 2, 3] = list[i].Month;
-                ws.Cells[i + 2, 4] = list[i].Year;
-                ws.Cells[i + 2, 5] = list[i].ItemName;
-                ws.Cells[i + 2, 6] = list[i].Region;
-                ws.Cells[i + 2, 7] = list[i].City;
-                ws.Cells[i + 2, 8] = list[i].OKPO;
-                ws.Cells[i + 2, 9] = list[i].DistributorsClientPlusAdress;
-                ws.Cells[i + 2, 10] = list[i].Date;
-                ws.Cells[i + 2, 11] = list[i].ItemCode;
-                ws.Cells[i + 2, 12] = list[i].Upakovki;
+                var rowOfList = list[r];
+                for (int p = 0; p < properties.Length; p++)
+               {
+                    arr[r, p] = properties[p].GetValue(rowOfList);
+                }
             }
+
+            Excel.Range c1 = (Excel.Range)ws.Cells[topRow, 1];
+            Excel.Range c2 = (Excel.Range)ws.Cells[topRow + list.Count - 1, properties.Length];
+            Excel.Range range = ws.get_Range(c1, c2);
+            range.Value = arr;
 
             wb.SaveAs(path);
             wb.Close(Excel.XlSaveAction.xlSaveChanges, Type.Missing, Type.Missing);
