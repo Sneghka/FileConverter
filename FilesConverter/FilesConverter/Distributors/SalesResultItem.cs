@@ -8,7 +8,7 @@ namespace FilesConverter.Distributors
 {
    public class SalesResultItem 
     {
-        public string ItemName { get; set; }
+        
         public string Customer { get; set; }
         public string Distributor { get; set; }
         public string Month
@@ -19,6 +19,7 @@ namespace FilesConverter.Distributors
         {
             get { return Date.Year; }
         }
+        public string ItemName { get; set; }
         public string Region { get; set; }
         public string City { get; set; }
         public string OKPO { get; set; }

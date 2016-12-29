@@ -1,27 +1,24 @@
-﻿using System;
+﻿using FilesConverter.Sales;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
-using FilesConverter.Sales;
-using Excel = Microsoft.Office.Interop.Excel;
 
 namespace FilesConverter.Distributors
 {
-    public class BadmSalesConverter : SalesResultItem, ISalesConverter
+    public class VentaSalesConverter : SalesResultItem, ISalesConverter
     {
+
         private string _customer;
         private DateTime _date;
 
-
-        public BadmSalesConverter(DateTime data, string customer)
+        public VentaSalesConverter(DateTime data, string customer)
         {
             _date = data;
             _customer = customer;
         }
-
 
         public List<SalesResultItem> ConvertSalesReport(string path, string request)
         {
@@ -35,14 +32,14 @@ namespace FilesConverter.Distributors
                 var storedSalesRow = new SalesResultItem
                 {
                     Customer = _customer,
-                    Distributor = "БаДМ",
+                    Distributor = "Вента",
                     Region = row["Область"].ToString(),
                     City = row["Город"].ToString(),
                     Date = _date.Date,
                     ItemName = row["Товар"].ToString(),
                     ItemCode = row["Код товара"].ToString(),
-                    OKPO = row["ОКПО клиента"].ToString(),
-                    DistributorsClientPlusAdress = row["Клиент"] + " " + row["Факт#адрес доставки"],
+                    OKPO = row["Окпо"].ToString(),
+                    DistributorsClientPlusAdress = row["Клиент"] + " " + row["Адрес дост#"],
                     Upakovki = Convert.ToInt32(row["Количество"])
                 };
                 storedSales.Add(storedSalesRow);
@@ -50,6 +47,7 @@ namespace FilesConverter.Distributors
 
             return storedSales;
         }
+
         public void CheckErrorSalesReport()
         {
 

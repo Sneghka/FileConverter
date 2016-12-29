@@ -5,7 +5,7 @@ using FilesConverter.Distributors;
 namespace FilesConverter.Sales
 
 {
-    public interface ISalesReport 
+    public interface ISalesConverter 
     {
         List<SalesResultItem> ConvertSalesReport(string path, string request);
         void CheckErrorSalesReport();

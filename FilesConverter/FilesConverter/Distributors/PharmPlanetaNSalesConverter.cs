@@ -1,27 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using FilesConverter.Sales;
-using Excel = Microsoft.Office.Interop.Excel;
+using System.Data;
 
 namespace FilesConverter.Distributors
 {
-    public class BadmSalesConverter : SalesResultItem, ISalesConverter
+    public class PharmPlanetaNSalesConverter : SalesResultItem, ISalesConverter
     {
         private string _customer;
         private DateTime _date;
 
-
-        public BadmSalesConverter(DateTime data, string customer)
+        public PharmPlanetaNSalesConverter(DateTime data, string customer)
         {
             _date = data;
             _customer = customer;
         }
-
 
         public List<SalesResultItem> ConvertSalesReport(string path, string request)
         {
@@ -35,21 +31,22 @@ namespace FilesConverter.Distributors
                 var storedSalesRow = new SalesResultItem
                 {
                     Customer = _customer,
-                    Distributor = "БаДМ",
-                    Region = row["Область"].ToString(),
-                    City = row["Город"].ToString(),
+                    Distributor = "Фармпланета",
+                    Region = row["Область"].ToString(), // из столбца F
+                    City = row["Город"].ToString(), // из столбца "G"
                     Date = _date.Date,
-                    ItemName = row["Товар"].ToString(),
+                    ItemName = row["Наименование"].ToString(),
                     ItemCode = row["Код товара"].ToString(),
-                    OKPO = row["ОКПО клиента"].ToString(),
-                    DistributorsClientPlusAdress = row["Клиент"] + " " + row["Факт#адрес доставки"],
-                    Upakovki = Convert.ToInt32(row["Количество"])
+                    OKPO = row["ОКПО"].ToString(),
+                    DistributorsClientPlusAdress = row["НаимКлиента"] + " " + row["Адрес"], //"Адрес" (из столбца "Н")
+                    Upakovki = Convert.ToInt32(row["К-во"])
                 };
                 storedSales.Add(storedSalesRow);
             }
 
             return storedSales;
         }
+
         public void CheckErrorSalesReport()
         {
 

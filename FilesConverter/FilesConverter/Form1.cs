@@ -16,8 +16,32 @@ namespace FilesConverter
 {
     public partial class Form1 : Form
     {
-        private List<SalesResultItem> storedSalesBadm = new List<SalesResultItem>();
-        private List<SalesResultItem> storedSalesFarmaco = new List<SalesResultItem>();
+        private List<SalesResultItem> _storedSalesBadm = new List<SalesResultItem>();
+        private List<SalesResultItem> _storedSalesFarmaco = new List<SalesResultItem>();
+        private List<SalesResultItem> _storedSalesFramko = new List<SalesResultItem>();
+        private List<List<SalesResultItem>> _convertedReportList = new List<List<SalesResultItem>>();
+
+        private List<string> incorrectFilesNameSales = new List<string>();
+        private List<string> correctFilesNameSales = new List<string>();
+
+        public void CheckAndConvertSalesFiles(List<string> salesFile)
+        {
+            int i = 1;
+            int j = 1;
+            var factory = new ConverterFactory(dateTimePicker1.Value, comboBox1.Text);
+
+            foreach (var file in salesFile)
+            {
+                var converter = factory.GetConverter(file);
+                if (converter == null)
+                {
+                    incorrectFilesNameSales.Add(j + ") " + file + " - некорректное имя файла");
+                    continue;
+                }
+                var newResult = converter.ConvertSalesReport(file, "select * from [Sheet1$]");
+                _convertedReportList.Add(newResult);
+            }
+        }
 
         public Form1()
         {
@@ -33,36 +57,17 @@ namespace FilesConverter
         private void button4_Click(object sender, EventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
-            dialog.Filter = "Excel files | *.xls; *.xlsx"; // file types, that will be allowed to upload
-            dialog.Multiselect = true; // allow/deny user to upload more than one file at a time
-            if (dialog.ShowDialog() == DialogResult.OK) // if user clicked OK
+            dialog.Filter = "Excel files | *.xls; *.xlsx"; 
+            dialog.Multiselect = true; 
+            if (dialog.ShowDialog() == DialogResult.OK) 
             {
-
                 List<string> pathsList = (from f in dialog.FileNames
-                                          select f).ToList(); // get name of file
+                                          select f).ToList(); 
 
-                string error = "all files are correct";
+                CheckAndConvertSalesFiles(pathsList);
 
-                foreach (var file in pathsList)
-                {
-                    //проверка имени файла для генерации экземпляра нужного класса
-                    if (file.Contains("Badm_sales"))
-                    {
-                        var badm = new BadmSalesConverter();
-                        storedSalesBadm = badm.ConvertSalesReport(file, "select * from [Sheet1$]");
-                    }
-
-                    if (file.Contains("Farmaco_sales"))
-                    {
-                        var farmaco = new FarmacoSalesConverter();
-                        storedSalesFarmaco = farmaco.ConvertSalesReport(file, "select * from [Sheet1$]");
-                    }
-
-                     error = file + " - некорректное имя файла";
-                }
-
-                label6.Text = error;
-
+                listBox1.DataSource = incorrectFilesNameSales; // временно для проверки
+                listBox2.DataSource = correctFilesNameSales;
             }
         }
 
@@ -81,8 +86,28 @@ namespace FilesConverter
 
         private void button1_Click(object sender, EventArgs e)
         {
-            WorkWithExcel.WriteDataToExcel(storedSalesBadm, @"C:\Users\snizhana.nomirovska\Desktop\Jonson\Project\Converted Files\BadmSalesConverted.xls");
-            WorkWithExcel.WriteDataToExcel(storedSalesFarmaco, @"C:\Users\snizhana.nomirovska\Desktop\Jonson\Project\Converted Files\FarmacoSalesConverted.xls");
+            for (int i = 0; i < _convertedReportList.Count; i++)
+            {
+                int j = 1;
+                WorkWithExcel.WriteDataToExcel(_convertedReportList[i], @"C:\Users\snizhana.nomirovska\Desktop\Jonson\Project\Converted Files\SalesConverted_"+ j + ".xls");
+                j++;
+            }
+
+        }
+
+        private void listView1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void listBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

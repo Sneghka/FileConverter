@@ -8,8 +8,17 @@ using FilesConverter.Sales;
 
 namespace FilesConverter.Distributors
 {
-    public class FarmacoSalesConverter : List<SalesResultItem>, ISalesReport
+    public class FarmacoSalesConverter : SalesResultItem, ISalesConverter
     {
+        private string _customer;
+        private DateTime _date;
+        
+        public FarmacoSalesConverter(DateTime data, string customer)
+        {
+            _date = data;
+            _customer = customer;
+        }
+        
         public List<SalesResultItem> ConvertSalesReport(string path, string request)
         {
             DataTable salesReport = new DataTable();
@@ -21,10 +30,10 @@ namespace FilesConverter.Distributors
             {
                 var storedSalesRow = new SalesResultItem
                 {
-                    Customer = "Джонсон и Джонсон",
-                    Distributor = "Farmaco",
+                    Customer = _customer,
+                    Distributor = "Фармако",
                     Region = row["Область"].ToString(),
-                    Date = DateTime.Today,
+                    Date = _date.Date,
                     ItemName = row["Наименование товара"].ToString(),
                     OKPO = row["ОКПО покупателя"].ToString(),
                     DistributorsClientPlusAdress = row["Покупатель"] + " " + row["Адрес доставки"],
