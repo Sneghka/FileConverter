@@ -1,27 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using FilesConverter.Sales;
-using Excel = Microsoft.Office.Interop.Excel;
+using DataTable = System.Data.DataTable;
 
-namespace FilesConverter.Distributors
+namespace FilesConverter.SalesConverters
 {
-    public class BadmSalesConverter : SalesResultItem, ISalesConverter
+    public class BadmSalesConverter : BaseConverter, ISalesConverter
     {
-        private string _customer;
-        private DateTime _date;
-
-
-        public BadmSalesConverter(DateTime data, string customer)
+        public BadmSalesConverter(DateTime data, string customer) : base( data, customer)
         {
-            _date = data;
-            _customer = customer;
+            
         }
-
 
         public List<SalesResultItem> ConvertSalesReport(string path, string request)
         {

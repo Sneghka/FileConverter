@@ -1,22 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FilesConverter.Sales;
 using System.Data;
+using FilesConverter.Sales;
 
-namespace FilesConverter.Distributors
+namespace FilesConverter.SalesConverters
 {
-    public class PharmPlanetaNSalesConverter : SalesResultItem, ISalesConverter
+    public class PharmPlanetaNSalesConverter : BaseConverter, ISalesConverter
     {
-        private string _customer;
-        private DateTime _date;
-
-        public PharmPlanetaNSalesConverter(DateTime data, string customer)
+        public PharmPlanetaNSalesConverter(DateTime data, string customer) : base( data, customer)
         {
-            _date = data;
-            _customer = customer;
+
         }
 
         public List<SalesResultItem> ConvertSalesReport(string path, string request)

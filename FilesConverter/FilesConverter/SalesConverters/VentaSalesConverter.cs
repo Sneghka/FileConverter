@@ -1,24 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FilesConverter.Sales;
 
-namespace FilesConverter.Distributors
+namespace FilesConverter.SalesConverters
 {
-    public class FarmacoSalesConverter : SalesResultItem, ISalesConverter
+    public class VentaSalesConverter : BaseConverter, ISalesConverter
     {
-        private string _customer;
-        private DateTime _date;
-        
-        public FarmacoSalesConverter(DateTime data, string customer)
+
+        public VentaSalesConverter(DateTime data, string customer) : base( data, customer)
         {
-            _date = data;
-            _customer = customer;
+
         }
-        
+
         public List<SalesResultItem> ConvertSalesReport(string path, string request)
         {
             DataTable salesReport = new DataTable();
@@ -31,18 +25,22 @@ namespace FilesConverter.Distributors
                 var storedSalesRow = new SalesResultItem
                 {
                     Customer = _customer,
-                    Distributor = "Фармако",
+                    Distributor = "Вента",
                     Region = row["Область"].ToString(),
+                    City = row["Город"].ToString(),
                     Date = _date.Date,
-                    ItemName = row["Наименование товара"].ToString(),
-                    OKPO = row["ОКПО покупателя"].ToString(),
-                    DistributorsClientPlusAdress = row["Покупатель"] + " " + row["Адрес доставки"],
-                    Upakovki = Convert.ToInt32(row["Количество проданных уп#"])
+                    ItemName = row["Товар"].ToString(),
+                    ItemCode = row["Код товара"].ToString(),
+                    OKPO = row["Окпо"].ToString(),
+                    DistributorsClientPlusAdress = row["Клиент"] + " " + row["Адрес дост#"],
+                    Upakovki = Convert.ToInt32(row["Количество"])
                 };
                 storedSales.Add(storedSalesRow);
             }
+
             return storedSales;
         }
+
         public void CheckErrorSalesReport()
         {
 

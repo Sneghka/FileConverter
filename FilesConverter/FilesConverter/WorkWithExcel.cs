@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.OleDb;
 using System.Reflection;
-using FilesConverter.Distributors;
+using FilesConverter.Sales;
 using Microsoft.Office.Core;
 using Excel = Microsoft.Office.Interop.Excel;
 
@@ -42,7 +42,6 @@ namespace FilesConverter
             Excel.Workbook wb = myApp.Workbooks.Add(Excel.XlWBATemplate.xlWBATWorksheet);
             /* Excel.Workbook wb = myApp.Workbooks.Add(@"C:\Users\snizhana.nomirovska\Desktop\Jonson\SalesTemplate.xls");*/
             Excel.Worksheet ws = (Excel.Worksheet)wb.Worksheets[1];
-
 
             ws.Cells[1, 1] = "Заказчик";
             ws.Cells[1, 2] = "Дистрибьютор";

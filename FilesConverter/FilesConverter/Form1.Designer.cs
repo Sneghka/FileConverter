@@ -29,22 +29,23 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.boxCustomer = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
+            this.btnConvertAndSave = new System.Windows.Forms.Button();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.label5 = new System.Windows.Forms.Label();
-            this.button4 = new System.Windows.Forms.Button();
+            this.btnUploadSales = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button2 = new System.Windows.Forms.Button();
+            this.btnChooseFolderForSaving = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.button3 = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.listBox1 = new System.Windows.Forms.ListBox();
             this.listBox2 = new System.Windows.Forms.ListBox();
+            this.listBox1 = new System.Windows.Forms.ListBox();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.textBoxRulesPath = new System.Windows.Forms.TextBox();
+            this.btnUploadRules = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -60,23 +61,23 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Customer";
             // 
-            // comboBox1
+            // boxCustomer
             // 
-            this.comboBox1.DropDownHeight = 150;
-            this.comboBox1.DropDownWidth = 220;
-            this.comboBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.IntegralHeight = false;
-            this.comboBox1.ItemHeight = 20;
-            this.comboBox1.Items.AddRange(new object[] {
+            this.boxCustomer.DropDownHeight = 150;
+            this.boxCustomer.DropDownWidth = 220;
+            this.boxCustomer.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.boxCustomer.FormattingEnabled = true;
+            this.boxCustomer.IntegralHeight = false;
+            this.boxCustomer.ItemHeight = 20;
+            this.boxCustomer.Items.AddRange(new object[] {
             "Джонсон и Джонсон",
             "Другое"});
-            this.comboBox1.Location = new System.Drawing.Point(184, 20);
-            this.comboBox1.MaxDropDownItems = 20;
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(226, 28);
-            this.comboBox1.TabIndex = 1;
-            this.comboBox1.SelectedIndexChanged += new System.EventHandler(this.comboBox1_SelectedIndexChanged);
+            this.boxCustomer.Location = new System.Drawing.Point(184, 20);
+            this.boxCustomer.MaxDropDownItems = 20;
+            this.boxCustomer.Name = "boxCustomer";
+            this.boxCustomer.Size = new System.Drawing.Size(226, 28);
+            this.boxCustomer.TabIndex = 1;
+            this.boxCustomer.SelectedIndexChanged += new System.EventHandler(this.boxCustomer_SelectedIndexChanged);
             // 
             // label2
             // 
@@ -88,16 +89,16 @@
             this.label2.TabIndex = 2;
             this.label2.Text = "Date";
             // 
-            // button1
+            // btnConvertAndSave
             // 
-            this.button1.Font = new System.Drawing.Font("Calibri", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button1.Location = new System.Drawing.Point(828, 573);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(143, 44);
-            this.button1.TabIndex = 4;
-            this.button1.Text = "Convert";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.btnConvertAndSave.Font = new System.Drawing.Font("Calibri", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnConvertAndSave.Location = new System.Drawing.Point(828, 573);
+            this.btnConvertAndSave.Name = "btnConvertAndSave";
+            this.btnConvertAndSave.Size = new System.Drawing.Size(143, 44);
+            this.btnConvertAndSave.TabIndex = 4;
+            this.btnConvertAndSave.Text = "Convert";
+            this.btnConvertAndSave.UseVisualStyleBackColor = true;
+            this.btnConvertAndSave.Click += new System.EventHandler(this.btnChangeNameAndSave_Click);
             // 
             // dateTimePicker1
             // 
@@ -119,34 +120,35 @@
             this.label5.TabIndex = 13;
             this.label5.Text = "Upload sales";
             // 
-            // button4
+            // btnUploadSales
             // 
-            this.button4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button4.Location = new System.Drawing.Point(145, 28);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(148, 31);
-            this.button4.TabIndex = 14;
-            this.button4.Text = "Choose file";
-            this.button4.UseVisualStyleBackColor = true;
-            this.button4.Click += new System.EventHandler(this.button4_Click);
+            this.btnUploadSales.Enabled = false;
+            this.btnUploadSales.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnUploadSales.Location = new System.Drawing.Point(145, 28);
+            this.btnUploadSales.Name = "btnUploadSales";
+            this.btnUploadSales.Size = new System.Drawing.Size(148, 31);
+            this.btnUploadSales.TabIndex = 14;
+            this.btnUploadSales.Text = "Choose file";
+            this.btnUploadSales.UseVisualStyleBackColor = true;
+            this.btnUploadSales.Click += new System.EventHandler(this.btnUploadSales_Click);
             // 
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(42, 89);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(351, 20);
+            this.textBox1.Size = new System.Drawing.Size(609, 20);
             this.textBox1.TabIndex = 17;
             // 
-            // button2
+            // btnChooseFolderForSaving
             // 
-            this.button2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button2.Location = new System.Drawing.Point(413, 80);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(198, 35);
-            this.button2.TabIndex = 18;
-            this.button2.Text = "Choose folder for saving";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.btnChooseFolderForSaving.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnChooseFolderForSaving.Location = new System.Drawing.Point(665, 81);
+            this.btnChooseFolderForSaving.Name = "btnChooseFolderForSaving";
+            this.btnChooseFolderForSaving.Size = new System.Drawing.Size(198, 35);
+            this.btnChooseFolderForSaving.TabIndex = 18;
+            this.btnChooseFolderForSaving.Text = "Choose folder for saving";
+            this.btnChooseFolderForSaving.UseVisualStyleBackColor = true;
+            this.btnChooseFolderForSaving.Click += new System.EventHandler(this.btnChooseFolderForSaving_Click);
             // 
             // tabControl1
             // 
@@ -163,9 +165,10 @@
             // 
             this.tabPage1.AllowDrop = true;
             this.tabPage1.BackColor = System.Drawing.Color.White;
+            this.tabPage1.Controls.Add(this.label3);
             this.tabPage1.Controls.Add(this.listBox2);
             this.tabPage1.Controls.Add(this.listBox1);
-            this.tabPage1.Controls.Add(this.button4);
+            this.tabPage1.Controls.Add(this.btnUploadSales);
             this.tabPage1.Controls.Add(this.label5);
             this.tabPage1.Location = new System.Drawing.Point(4, 33);
             this.tabPage1.Name = "tabPage1";
@@ -174,44 +177,15 @@
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "SalesConverter";
             // 
-            // tabPage2
+            // listBox2
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 33);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(681, 329);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "StockConverter";
-            this.tabPage2.UseVisualStyleBackColor = true;
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(41, 135);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(351, 20);
-            this.textBox2.TabIndex = 22;
-            // 
-            // button3
-            // 
-            this.button3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.button3.Location = new System.Drawing.Point(413, 127);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(198, 35);
-            this.button3.TabIndex = 23;
-            this.button3.Text = "Upload rules";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // groupBox1
-            // 
-            this.groupBox1.Controls.Add(this.dateTimePicker1);
-            this.groupBox1.Controls.Add(this.label2);
-            this.groupBox1.Controls.Add(this.comboBox1);
-            this.groupBox1.Controls.Add(this.label1);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(743, 59);
-            this.groupBox1.TabIndex = 24;
-            this.groupBox1.TabStop = false;
+            this.listBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.listBox2.FormattingEnabled = true;
+            this.listBox2.ItemHeight = 16;
+            this.listBox2.Location = new System.Drawing.Point(25, 79);
+            this.listBox2.Name = "listBox2";
+            this.listBox2.Size = new System.Drawing.Size(890, 132);
+            this.listBox2.TabIndex = 18;
             // 
             // listBox1
             // 
@@ -224,15 +198,55 @@
             this.listBox1.Size = new System.Drawing.Size(890, 84);
             this.listBox1.TabIndex = 17;
             // 
-            // listBox2
+            // tabPage2
             // 
-            this.listBox2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.listBox2.FormattingEnabled = true;
-            this.listBox2.ItemHeight = 16;
-            this.listBox2.Location = new System.Drawing.Point(25, 79);
-            this.listBox2.Name = "listBox2";
-            this.listBox2.Size = new System.Drawing.Size(890, 132);
-            this.listBox2.TabIndex = 18;
+            this.tabPage2.Location = new System.Drawing.Point(4, 33);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(921, 329);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "StockConverter";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
+            // textBoxRulesPath
+            // 
+            this.textBoxRulesPath.Location = new System.Drawing.Point(41, 135);
+            this.textBoxRulesPath.Name = "textBoxRulesPath";
+            this.textBoxRulesPath.Size = new System.Drawing.Size(609, 20);
+            this.textBoxRulesPath.TabIndex = 22;
+            // 
+            // btnUploadRules
+            // 
+            this.btnUploadRules.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnUploadRules.Location = new System.Drawing.Point(665, 128);
+            this.btnUploadRules.Name = "btnUploadRules";
+            this.btnUploadRules.Size = new System.Drawing.Size(198, 35);
+            this.btnUploadRules.TabIndex = 23;
+            this.btnUploadRules.Text = "Upload rules";
+            this.btnUploadRules.UseVisualStyleBackColor = true;
+            this.btnUploadRules.Click += new System.EventHandler(this.btnUploadRules_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.dateTimePicker1);
+            this.groupBox1.Controls.Add(this.label2);
+            this.groupBox1.Controls.Add(this.boxCustomer);
+            this.groupBox1.Controls.Add(this.label1);
+            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(743, 59);
+            this.groupBox1.TabIndex = 24;
+            this.groupBox1.TabStop = false;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label3.Location = new System.Drawing.Point(299, 38);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(175, 13);
+            this.label3.TabIndex = 19;
+            this.label3.Text = "(заполните поля Customer и Date)";
             // 
             // Form1
             // 
@@ -240,12 +254,12 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1011, 629);
             this.Controls.Add(this.groupBox1);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.textBox2);
+            this.Controls.Add(this.btnUploadRules);
+            this.Controls.Add(this.textBoxRulesPath);
             this.Controls.Add(this.tabControl1);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.btnChooseFolderForSaving);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.btnConvertAndSave);
             this.Name = "Form1";
             this.Text = "Form1";
             this.tabControl1.ResumeLayout(false);
@@ -261,22 +275,23 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox boxCustomer;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button btnConvertAndSave;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.Button btnUploadSales;
         private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button btnChooseFolderForSaving;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.TextBox textBoxRulesPath;
+        private System.Windows.Forms.Button btnUploadRules;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.ListBox listBox1;
         private System.Windows.Forms.ListBox listBox2;
+        private System.Windows.Forms.Label label3;
     }
 }
 

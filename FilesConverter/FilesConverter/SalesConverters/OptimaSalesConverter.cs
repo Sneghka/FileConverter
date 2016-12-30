@@ -1,23 +1,15 @@
-﻿using FilesConverter.Sales;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using FilesConverter.Sales;
 
-namespace FilesConverter.Distributors
+namespace FilesConverter.SalesConverters
 {
-    public class VentaSalesConverter : SalesResultItem, ISalesConverter
+    public class OptimaSalesConverter : BaseConverter, ISalesConverter
     {
-
-        private string _customer;
-        private DateTime _date;
-
-        public VentaSalesConverter(DateTime data, string customer)
+        public OptimaSalesConverter(DateTime data, string customer) : base( data, customer)
         {
-            _date = data;
-            _customer = customer;
+
         }
 
         public List<SalesResultItem> ConvertSalesReport(string path, string request)
@@ -32,25 +24,25 @@ namespace FilesConverter.Distributors
                 var storedSalesRow = new SalesResultItem
                 {
                     Customer = _customer,
-                    Distributor = "Вента",
+                    Distributor = "Оптима",
                     Region = row["Область"].ToString(),
                     City = row["Город"].ToString(),
                     Date = _date.Date,
                     ItemName = row["Товар"].ToString(),
                     ItemCode = row["Код товара"].ToString(),
-                    OKPO = row["Окпо"].ToString(),
-                    DistributorsClientPlusAdress = row["Клиент"] + " " + row["Адрес дост#"],
-                    Upakovki = Convert.ToInt32(row["Количество"])
+                    OKPO = row["ОКПО"].ToString(),
+                    DistributorsClientPlusAdress = row["Дебитор доставки"].ToString() , // будет исправление после первого отчёта (пока нет колонки Адрес)
+                    Upakovki = Convert.ToInt32(row["Продажи шт"])
                 };
                 storedSales.Add(storedSalesRow);
             }
 
             return storedSales;
         }
-
         public void CheckErrorSalesReport()
         {
 
         }
+
     }
 }
