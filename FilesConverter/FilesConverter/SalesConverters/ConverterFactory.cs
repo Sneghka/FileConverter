@@ -23,7 +23,7 @@ namespace FilesConverter.SalesConverters
             if (filenameSmall.IndexOf("framko") != - 1 && filenameSmall.IndexOf("sales") != -1) return new FramkoSalesConverter(_date, _customer);
             if (filenameSmall.IndexOf("optima") != -1 && filenameSmall.IndexOf("sales") != -1) return new OptimaSalesConverter(_date, _customer);
             if (filenameSmall.IndexOf("venta") != -1 && filenameSmall.IndexOf("sales") != -1) return new VentaSalesConverter(_date, _customer);
-            if (filenameSmall.IndexOf("pharmPlaneta") != -1 && filenameSmall.IndexOf("sales") != -1) return new PharmPlanetaNSalesConverter(_date, _customer);
+            if (filenameSmall.IndexOf("pharmplaneta") != -1 && filenameSmall.IndexOf("sales") != -1) return new PharmPlanetaNSalesConverter(_date, _customer);
             return null;
         }
     }

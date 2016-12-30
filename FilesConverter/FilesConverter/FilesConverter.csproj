@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Constants.cs" />
     <Compile Include="SalesConverters\BaseConverter.cs" />
     <Compile Include="SalesConverters\ConverterFactory.cs" />
     <Compile Include="SalesConverters\FramkoSalesConverter.cs" />

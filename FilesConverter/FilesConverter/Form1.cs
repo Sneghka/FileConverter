@@ -37,12 +37,13 @@ namespace FilesConverter
                 if (converter == null)
                 {
                     _incorrectFilesNameSales.Add(j + ") " + file + " - некорректное имя файла");
+                    j++;
                     continue;
                 }
                 var newResult = converter.ConvertSalesReport(file, "select * from [Sheet1$]");
                 _convertedReportList.Add(newResult);
                 _correctFilesNameSales.Add(i + ") " + file + " - загружен");
-
+                i++;
             }
         }
 
@@ -93,26 +94,22 @@ namespace FilesConverter
             if (_rules.Count == 0)
             {
                 DialogResult cancel = new DialogResult();
-                cancel = MessageBox.Show(
-                    "Файл с заменами наименований препаратов не загружен или не содержит записей. Файлы будут конвертированы без замены наименований препаратов.", "Внимание!!!", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
+                cancel = MessageBox.Show(Constants.RulesNotUpload, "Внимание!!!", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
                 if (cancel == DialogResult.Cancel)
                 {
-                    Close();
-                  //????? как остановить выполнение метода ??? чтобы была возможность догрузить файл правил?
+                  return;
                 }
             }
 
             for (int i = 0; i < _convertedReportList.Count; i++)
             {
-                int j = 1;
-
-
+               
                 if (_rules.Count != 0)
                 {
                     Helper.ChangeItemName(_rules, _convertedReportList[i]);
                 }
-                WorkWithExcel.WriteDataToExcel(_convertedReportList[i], _pathForSaving + @"\SalesConverted_" + j + ".xls");
-                j++;
+                WorkWithExcel.WriteDataToExcel(_convertedReportList[i], _pathForSaving + @"\SalesConverted_" + (i+1) + ".xls");
+               
             }
 
             this.Controls.Clear();

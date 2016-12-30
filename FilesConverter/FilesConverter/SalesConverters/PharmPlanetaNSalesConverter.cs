@@ -25,13 +25,13 @@ namespace FilesConverter.SalesConverters
                 {
                     Customer = _customer,
                     Distributor = "Фармпланета",
-                    Region = row["Область"].ToString(), // из столбца F
-                    City = row["Город"].ToString(), // из столбца "G"
+                    Region = row["Область1"].ToString(), // из столбца F
+                    City = row["Город1"].ToString(), // из столбца "G"
                     Date = _date.Date,
                     ItemName = row["Наименование"].ToString(),
-                    ItemCode = row["Код товара"].ToString(),
-                    OKPO = row["ОКПО"].ToString(),
-                    DistributorsClientPlusAdress = row["НаимКлиента"] + " " + row["Адрес"], //"Адрес" (из столбца "Н")
+                    ItemCode = row["Артикул МЦ"].ToString(),
+                    OKPO = row[" ОКПО"].ToString(),
+                    DistributorsClientPlusAdress = row["НаимКлиента_"] + " " + row["Адрес1"], //"Адрес" (из столбца "Н")
                     Upakovki = Convert.ToInt32(row["К-во"])
                 };
                 storedSales.Add(storedSalesRow);
