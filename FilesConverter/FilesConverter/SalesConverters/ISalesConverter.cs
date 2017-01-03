@@ -4,10 +4,8 @@ using FilesConverter.Sales;
 namespace FilesConverter.SalesConverters
 
 {
-    public interface ISalesConverter 
+    public interface ISalesConverter
     {
         List<SalesResultItem> ConvertSalesReport(string path, string request);
-        void CheckErrorSalesReport();
-
     }
 }

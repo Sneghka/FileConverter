@@ -20,32 +20,7 @@ namespace FilesConverter
     {
 
         private List<ExchangeRule> _rules = new List<ExchangeRule>();
-        private List<List<SalesResultItem>> _convertedReportList = new List<List<SalesResultItem>>();
-        private List<string> _incorrectFilesNameSales = new List<string>();
-        private List<string> _correctFilesNameSales = new List<string>();
-        private string _pathForSaving = string.Empty;
-
-        public void CheckAndConvertSalesFiles(List<string> salesFile)
-        {
-            int i = 1;
-            int j = 1;
-            var factory = new ConverterFactory(dateTimePicker1.Value, boxCustomer.Text);
-
-            foreach (var file in salesFile)
-            {
-                var converter = factory.GetConverter(file);
-                if (converter == null)
-                {
-                    _incorrectFilesNameSales.Add(j + ") " + file + " - некорректное имя файла");
-                    j++;
-                    continue;
-                }
-                var newResult = converter.ConvertSalesReport(file, "select * from [Sheet1$]");
-                _convertedReportList.Add(newResult);
-                _correctFilesNameSales.Add(i + ") " + file + " - загружен");
-                i++;
-            }
-        }
+        private SalesResultList _distributorsSalesList = new SalesResultList();
 
         public Form1()
         {
@@ -68,10 +43,15 @@ namespace FilesConverter
                 List<string> pathsList = (from f in dialog.FileNames
                                           select f).ToList();
 
-                CheckAndConvertSalesFiles(pathsList);
+                _distributorsSalesList.CheckAndConvertSalesFiles(pathsList, dateTimePicker1, boxCustomer);
 
-                listBox1.DataSource = _incorrectFilesNameSales; // временно для проверки
-                listBox2.DataSource = _correctFilesNameSales;
+
+
+                
+                dataGridView1.Rows.Add();
+                dataGridView1.Rows[0].Cells[0].Value = 1;
+                dataGridView1.Rows[0].Cells[1].Value = "Baqar";
+
             }
         }
 
@@ -85,7 +65,7 @@ namespace FilesConverter
             {
                 var path = fbd.SelectedPath;
                 textBox1.Text = path;
-                _pathForSaving = path;
+                _distributorsSalesList.PathForSaving = path;
             }
         }
 
@@ -97,26 +77,26 @@ namespace FilesConverter
                 cancel = MessageBox.Show(Constants.RulesNotUpload, "Внимание!!!", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
                 if (cancel == DialogResult.Cancel)
                 {
-                  return;
+                    return;
                 }
             }
 
-            for (int i = 0; i < _convertedReportList.Count; i++)
+            var distributorsFile = _distributorsSalesList.DistributorsSalesList;
+            for (int i = 0; i < distributorsFile.Count; i++)
             {
-               
+
                 if (_rules.Count != 0)
                 {
-                    Helper.ChangeItemName(_rules, _convertedReportList[i]);
+                    Helper.ChangeItemName(_rules, distributorsFile[i].SaleLines);
                 }
-                WorkWithExcel.WriteDataToExcel(_convertedReportList[i], _pathForSaving + @"\SalesConverted_" + (i+1) + ".xls");
-               
+                WorkWithExcel.WriteDataToExcel(distributorsFile[i].SaleLines, _distributorsSalesList.PathForSaving + @"\SalesConverted_" + (i + 1) + ".xls");
+
             }
 
             this.Controls.Clear();
             this.InitializeComponent();
-            _convertedReportList.Clear();
+            _distributorsSalesList.ClearResult();
             _rules.Clear();
-            _pathForSaving = string.Empty;
             _incorrectFilesNameSales.Clear();
             _correctFilesNameSales.Clear();
         }
@@ -142,6 +122,11 @@ namespace FilesConverter
         {
             if (boxCustomer.Text.Length > 0)
                 btnUploadSales.Enabled = true;
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

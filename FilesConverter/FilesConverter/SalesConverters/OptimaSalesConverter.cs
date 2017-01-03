@@ -39,10 +39,7 @@ namespace FilesConverter.SalesConverters
 
             return storedSales;
         }
-        public void CheckErrorSalesReport()
-        {
-
-        }
+        
 
     }
 }
