@@ -40,12 +40,12 @@ namespace FilesConverter.Sales
                 }
                 salesResult = converter.ConvertSalesReport(file, "select * from [Sheet1$]");
 
-                if (salesResult.Information.Contains("Не найдены колонки"))
+              /*  if (salesResult.Information.Contains("Не найдены колонки"))
                 {
                     salesResult.UploadStatus = "Error";
                     tempList.Add(salesResult);
                     continue;
-                }
+                }*/
 
                 salesResult.UploadStatus = "Ok";
                 tempList.Add(salesResult);

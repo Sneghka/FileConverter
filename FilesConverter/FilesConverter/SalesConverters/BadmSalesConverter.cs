@@ -53,6 +53,7 @@ namespace FilesConverter.SalesConverters
                 return storedSales;
             }
 
+            var property = new List<SalesResultItem>();
             foreach (DataRow row in salesReport.Rows)
             {
                 var storedSalesRow = new SalesResultItem
@@ -68,9 +69,10 @@ namespace FilesConverter.SalesConverters
                     DistributorsClientPlusAdress = row["Клиент"] + " " + row["Факт#адрес доставки"],
                     Upakovki = Convert.ToInt32(row["Количество"])
                 };
-                storedSales.SaleLines.Add(storedSalesRow);
+                property.Add(storedSalesRow);
             }
-
+            storedSales.SaleLines = property;
+            storedSales.FilePath = path;
             return storedSales;
         }
        
