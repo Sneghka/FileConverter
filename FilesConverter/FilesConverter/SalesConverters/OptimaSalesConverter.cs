@@ -12,10 +12,12 @@ namespace FilesConverter.SalesConverters
 
         }
 
-        public List<SalesResultItem> ConvertSalesReport(string path, string request)
+     
+
+        public SalesResult ConvertSalesReport(string path, string request)
         {
             DataTable salesReport = new DataTable();
-            List<SalesResultItem> storedSales = new List<SalesResultItem>();
+            SalesResult storedSales = new SalesResult();
 
             WorkWithExcel.ExcelFileToDataTable(out salesReport, path, request);
 
@@ -34,15 +36,12 @@ namespace FilesConverter.SalesConverters
                     DistributorsClientPlusAdress = row["Дебитор доставки"].ToString() , // будет исправление после первого отчёта (пока нет колонки Адрес)
                     Upakovki = Convert.ToInt32(row["Продажи шт"])
                 };
-                storedSales.Add(storedSalesRow);
+                storedSales.SaleLines.Add(storedSalesRow);
             }
 
             return storedSales;
         }
-        public void CheckErrorSalesReport()
-        {
-
-        }
+        
 
     }
 }

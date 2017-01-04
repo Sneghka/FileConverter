@@ -52,6 +52,7 @@
     <Compile Include="SalesConverters\FramkoSalesConverter.cs" />
     <Compile Include="SalesConverters\OptimaSalesConverter.cs" />
     <Compile Include="SalesConverters\PharmPlanetaNSalesConverter.cs" />
+    <Compile Include="Sales\SalesResult.cs" />
     <Compile Include="Sales\SalesResultItem.cs" />
     <Compile Include="SalesConverters\BadmSalesConverter.cs" />
     <Compile Include="SalesConverters\FarmacoSalesConverter.cs" />
@@ -68,6 +69,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SalesConverters\ISalesConverter.cs" />
+    <Compile Include="Sales\SalesResultList.cs" />
     <Compile Include="WorkWithExcel.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
