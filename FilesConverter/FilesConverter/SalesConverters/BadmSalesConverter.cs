@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
 using FilesConverter.Sales;
 using DataTable = System.Data.DataTable;
 
@@ -10,15 +13,45 @@ namespace FilesConverter.SalesConverters
     {
         public BadmSalesConverter(DateTime data, string customer) : base( data, customer)
         {
-            
+            ColumnNames = "Область,Город,Товар,Код товара,ОКПО клиента,Клиент,Факт#адрес доставки,Количество";
         }
+        
 
-        public List<SalesResultItem> ConvertSalesReport(string path, string request)
+       /* public List<string> GetNotFoundColunmNames(string path, string request)
+        {
+            WorkWithExcel.ExcelFileToDataTable(out salesReport, path, request);
+            string[] columnNames = salesReport.Columns.Cast<DataColumn>()
+                                .Select(x => x.ColumnName)
+                                .ToArray();
+            var incorrectColumns = CheckColumnNames(columnNames);
+
+           return incorrectColumns;
+        }*/
+
+        public SalesResult ConvertSalesReport(string path, string request)
         {
             DataTable salesReport = new DataTable();
-            List<SalesResultItem> storedSales = new List<SalesResultItem>();
+
+            SalesResult storedSales = new SalesResult();
 
             WorkWithExcel.ExcelFileToDataTable(out salesReport, path, request);
+
+            string[] columnNames = salesReport.Columns.Cast<DataColumn>()
+                                 .Select(x => x.ColumnName)
+                                 .ToArray();
+
+            var сolumnsNotFoundList = CheckColumnNames(columnNames);
+            if (сolumnsNotFoundList.Count > 0)
+            {
+                var newString = new StringBuilder();
+                foreach (var col in сolumnsNotFoundList)
+                {
+                    newString.Append(col + " ");
+                }
+                storedSales.Information = "Не найдены колонки - " + newString;
+                storedSales.FilePath = path;
+                return storedSales;
+            }
 
             foreach (DataRow row in salesReport.Rows)
             {
@@ -35,7 +68,7 @@ namespace FilesConverter.SalesConverters
                     DistributorsClientPlusAdress = row["Клиент"] + " " + row["Факт#адрес доставки"],
                     Upakovki = Convert.ToInt32(row["Количество"])
                 };
-                storedSales.Add(storedSalesRow);
+                storedSales.SaleLines.Add(storedSalesRow);
             }
 
             return storedSales;

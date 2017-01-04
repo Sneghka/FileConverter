@@ -9,14 +9,10 @@ namespace FilesConverter.Sales
     public class SalesResult
     {
         public string Name { get; set; }
+        public string FilePath { get; set; }
         public List<SalesResultItem> SaleLines { get; set; }
-        public string Status { get; set; }
-
-        public void CheckSalesError()
-        {
-
-        }
-
-
+        public string UploadStatus { get; set; }
+        public string Information { get; set; }
+        
     }
 }

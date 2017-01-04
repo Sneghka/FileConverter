@@ -44,15 +44,9 @@ namespace FilesConverter
                                           select f).ToList();
 
                 _distributorsSalesList.CheckAndConvertSalesFiles(pathsList, dateTimePicker1, boxCustomer);
-
-
-
-                
-                dataGridView1.Rows.Add();
-                dataGridView1.Rows[0].Cells[0].Value = 1;
-                dataGridView1.Rows[0].Cells[1].Value = "Baqar";
-
-            }
+                _distributorsSalesList.AddDataToGridView(dataGridView1);
+              
+             }
         }
 
         private void btnChooseFolderForSaving_Click(object sender, EventArgs e)
@@ -97,8 +91,7 @@ namespace FilesConverter
             this.InitializeComponent();
             _distributorsSalesList.ClearResult();
             _rules.Clear();
-            _incorrectFilesNameSales.Clear();
-            _correctFilesNameSales.Clear();
+            
         }
 
 
