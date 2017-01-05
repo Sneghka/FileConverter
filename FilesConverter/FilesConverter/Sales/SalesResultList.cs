@@ -56,9 +56,6 @@ namespace FilesConverter.Sales
                 dataGridView1.Rows[i].Cells[3].Value = convertedFile.GlobalErrorMessage;
 
                 dataGridView1.Rows[i].Cells[2].Style.ForeColor = convertedFile.IsSuccess ? Color.Green : Color.Red;
-
-               /* if (convertedFile.IsSuccess) dataGridView1.Rows[i].Cells[2].Style.ForeColor = Color.Green;
-                if (!convertedFile.IsSuccess) dataGridView1.Rows[i].Cells[2].Style.ForeColor = Color.Red;*/
                 
             }
         }
