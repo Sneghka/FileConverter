@@ -9,40 +9,28 @@ namespace FilesConverter.SalesConverters
 {
     public abstract class BaseConverter
     {
-        public string _customer;
-        public DateTime _date;
+        public string Customer;
+        public DateTime Date;
         public string ColumnNames { get; set; }
 
 
-        public BaseConverter(DateTime data, string customer)
+        protected BaseConverter(DateTime data, string customer)
         {
-            _date = data;
-            _customer = customer;
+            Date = data;
+            Customer = customer;
         }
 
-        public string CheckColumnNames(string[] dtColumnNames)
+        public string CheckColumnNames(IEnumerable<string> dtColumnNames)
         {
-            List<string> colNamesNotFound = new List<string>();
             string message = string.Empty;
             string[] colListOfClass = ColumnNames.Split(',');
 
-            foreach (var col in colListOfClass)
-
-            {
-                if (!dtColumnNames.Contains(col))
-                {
-                    colNamesNotFound.Add(col);
-                }
-            }
+            var colNamesNotFound = colListOfClass.Where(col => !dtColumnNames.Contains(col)).ToList();
 
             if (colNamesNotFound.Count > 0)
             {
-                var newString = new StringBuilder();
-                foreach (var col in colNamesNotFound)
-                {
-                    newString.Append(col + " / ");
-                }
-                message = "Не найдены колонки - " + newString;
+                var strJoin = string.Join("/", colNamesNotFound);
+                message = "Не найдены колонки - " + strJoin;
             }
             return message;
         }
@@ -51,17 +39,16 @@ namespace FilesConverter.SalesConverters
 
         public SalesResult ConvertSalesReport(string path, string request)
         {
-            DataTable salesReport = new DataTable();
-            SalesResult storedSales = new SalesResult();
+            var salesReport = new DataTable();
+            var storedSales = new SalesResult();
             WorkWithExcel.ExcelFileToDataTable(out salesReport, path, request);
 
-            string[] columnNames = salesReport.Columns.Cast<DataColumn>()
-                                 .Select(x => x.ColumnName)
-                                 .ToArray();
+            var columnNames = salesReport.Columns.Cast<DataColumn>()
+                                 .Select(x => x.ColumnName);
             storedSales.FilePath = path;
 
             storedSales.GlobalErrorMessage = CheckColumnNames(columnNames);
-            if (storedSales.GlobalErrorMessage != "")
+            if (!string.IsNullOrEmpty(storedSales.GlobalErrorMessage))
             {
                 storedSales.Status = "Error";
                 return storedSales;

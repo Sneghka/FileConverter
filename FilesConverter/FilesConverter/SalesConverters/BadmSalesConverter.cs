@@ -23,11 +23,11 @@ namespace FilesConverter.SalesConverters
             {
                 var storedSalesRow = new SalesResultItem
                 {
-                    Customer = _customer,
+                    Customer = Customer,
                     Distributor = "БаДМ",
                     Region = row["Область"].ToString(),
                     City = row["Город"].ToString(),
-                    Date = _date.Date,
+                    Date = Date.Date,
                     ItemName = row["Товар"].ToString(),
                     ItemCode = row["Код товара"].ToString(),
                     OKPO = row["ОКПО клиента"].ToString(),
