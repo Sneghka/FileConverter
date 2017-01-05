@@ -73,7 +73,7 @@ namespace FilesConverter
             Excel.Range range = ws.get_Range(c1, c2);
             range.Value = arr;
 
-            wb.SaveAs(path);
+            wb.SaveAs(path, Excel.XlFileFormat.xlAddIn8);
             wb.Close(Excel.XlSaveAction.xlSaveChanges, Type.Missing, Type.Missing);
             myApp.Quit();
         }

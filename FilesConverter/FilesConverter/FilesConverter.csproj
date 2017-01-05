@@ -47,6 +47,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="Errors\ConvertationError.cs" />
+    <Compile Include="Errors\ConvertationErrorsList.cs" />
     <Compile Include="SalesConverters\BaseConverter.cs" />
     <Compile Include="SalesConverters\ConverterFactory.cs" />
     <Compile Include="SalesConverters\FramkoSalesConverter.cs" />

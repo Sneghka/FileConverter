@@ -41,8 +41,7 @@ namespace FilesConverter
             {
                 List<string> pathsList = (from f in dialog.FileNames
                                           select f).ToList();
-                var temp = dialog.FileNames;
-
+                
                 _distributorsSalesList.CheckAndConvertSalesFiles(pathsList, dateTimePicker1, boxCustomer);
                 _distributorsSalesList.AddDataToGridView(dataGridView1);
               
@@ -58,7 +57,7 @@ namespace FilesConverter
             if (result == DialogResult.OK)
             {
                 var path = fbd.SelectedPath;
-                textBox1.Text = path;
+                textBoxFolderForSaving.Text = path;
                 _distributorsSalesList.PathForSaving = path;
             }
         }
@@ -75,6 +74,16 @@ namespace FilesConverter
                 }
             }
 
+            /*if (textBoxFolderForSaving.Text == "")
+            {
+                DialogResult ok = new DialogResult();
+                ok = MessageBox.Show(Constants.FolderForSavingIsnotChoosen, "Внимание!!!", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                if (ok == DialogResult.Cancel)
+                {
+                    return;
+                }
+            }*/
+
             var distributorsFile = _distributorsSalesList.DistributorsSalesList;
             for (int i = 0; i < distributorsFile.Count; i++)
             {
@@ -83,9 +92,14 @@ namespace FilesConverter
                 {
                     Helper.ChangeItemName(_rules, distributorsFile[i].SaleLines);
                 }
-                WorkWithExcel.WriteDataToExcel(distributorsFile[i].SaleLines, _distributorsSalesList.PathForSaving + @"\SalesConverted_" + (i + 1) + ".xls");
+
+                var temp = textBoxFolderForSaving.Text;
+                var pathForSaving =Path.Combine(temp, distributorsFile[i].Name);
+                WorkWithExcel.WriteDataToExcel(distributorsFile[i].SaleLines, pathForSaving);
 
             }
+
+           
 
             Controls.Clear();
             InitializeComponent();
@@ -120,6 +134,11 @@ namespace FilesConverter
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void textBoxFolderForSaving_TextChanged(object sender, EventArgs e)
+        {
+            
         }
     }
 }
