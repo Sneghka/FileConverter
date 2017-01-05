@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 
 namespace FilesConverter.SalesConverters
 {
@@ -9,7 +10,7 @@ namespace FilesConverter.SalesConverters
         public string _customer;
         public DateTime _date;
         public string ColumnNames { get; set; }
-      /*  public List<string> IncorrectColumnNamesList { get; set; }*/
+      
 
         public BaseConverter(DateTime data, string customer)
         {
@@ -17,9 +18,10 @@ namespace FilesConverter.SalesConverters
             _customer = customer;
         }
 
-        public List<string> CheckColumnNames(string[] dtColumnNames)
+        public string CheckColumnNames(string[] dtColumnNames)
         {
             List<string> colNamesNotFound = new List<string>();
+            string message = string.Empty;
             string[] colListOfClass = ColumnNames.Split(',');
 
             foreach (var col in colListOfClass)
@@ -30,7 +32,17 @@ namespace FilesConverter.SalesConverters
                     colNamesNotFound.Add(col);
                 }
             }
-            return colNamesNotFound;
+
+            if (colNamesNotFound.Count > 0)
+            {
+                var newString = new StringBuilder();
+                foreach (var col in colNamesNotFound)
+                {
+                    newString.Append(col + " / ");
+                }
+                message = "Не найдены колонки - " + newString;
+            }
+            return message;
         }
     }
 }

@@ -11,8 +11,9 @@ namespace FilesConverter.Sales
         public string Name { get; set; }
         public string FilePath { get; set; }
         public List<SalesResultItem> SaleLines { get; set; }
-        public string UploadStatus { get; set; }
-        public string Information { get; set; }
-        
+        public string Status { get; set; }
+        public string GlobalErrorMessage { get; set; }
+        public List<string> ErrorMessageList { get; set; }
+
     }
 }

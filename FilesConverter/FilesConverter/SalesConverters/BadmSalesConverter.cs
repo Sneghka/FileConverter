@@ -11,22 +11,11 @@ namespace FilesConverter.SalesConverters
 {
     public class BadmSalesConverter : BaseConverter, ISalesConverter
     {
-        public BadmSalesConverter(DateTime data, string customer) : base( data, customer)
+        public BadmSalesConverter(DateTime data, string customer) : base(data, customer)
         {
             ColumnNames = "Область,Город,Товар,Код товара,ОКПО клиента,Клиент,Факт#адрес доставки,Количество";
         }
-        
 
-       /* public List<string> GetNotFoundColunmNames(string path, string request)
-        {
-            WorkWithExcel.ExcelFileToDataTable(out salesReport, path, request);
-            string[] columnNames = salesReport.Columns.Cast<DataColumn>()
-                                .Select(x => x.ColumnName)
-                                .ToArray();
-            var incorrectColumns = CheckColumnNames(columnNames);
-
-           return incorrectColumns;
-        }*/
 
         public SalesResult ConvertSalesReport(string path, string request)
         {
@@ -40,16 +29,12 @@ namespace FilesConverter.SalesConverters
                                  .Select(x => x.ColumnName)
                                  .ToArray();
 
-            var сolumnsNotFoundList = CheckColumnNames(columnNames);
-            if (сolumnsNotFoundList.Count > 0)
+            
+            storedSales.GlobalErrorMessage = CheckColumnNames(columnNames);
+            if (storedSales.GlobalErrorMessage != null)
             {
-                var newString = new StringBuilder();
-                foreach (var col in сolumnsNotFoundList)
-                {
-                    newString.Append(col + " ");
-                }
-                storedSales.Information = "Не найдены колонки - " + newString;
                 storedSales.FilePath = path;
+                storedSales.Status = "Error";
                 return storedSales;
             }
 
@@ -73,8 +58,9 @@ namespace FilesConverter.SalesConverters
             }
             storedSales.SaleLines = property;
             storedSales.FilePath = path;
+            storedSales.Status = "OK";
             return storedSales;
         }
-       
+
     }
 }

@@ -14,10 +14,10 @@ namespace FilesConverter.Sales
         public List<SalesResult> DistributorsSalesList { get; set; }
         public string PathForSaving { get; set; }
 
-        
-        public void CheckAndConvertSalesFiles(List<string> salesFile, DateTimePicker dateTimePicker, ComboBox boxCustomer) // перенесла в класс
+
+        public void CheckAndConvertSalesFiles(List<string> salesFile, DateTimePicker dateTimePicker, ComboBox boxCustomer)
         {
-            
+
             var factory = new ConverterFactory(dateTimePicker.Value, boxCustomer.Text);
             List<SalesResult> tempList = new List<SalesResult>();
 
@@ -27,34 +27,25 @@ namespace FilesConverter.Sales
 
                 var dotIndex = file.LastIndexOf('.');
                 var slashIndex = file.LastIndexOf('\\');
-                salesResult.FilePath = file;
-                salesResult.Name = file.Substring(slashIndex + 1, dotIndex - slashIndex - 1);
-                var converter = factory.GetConverter(salesResult.Name);
-                
+                var name = file.Substring(slashIndex + 1, dotIndex - slashIndex - 1);
+                var converter = factory.GetConverter(name);
+
                 if (converter == null)
                 {
-                    salesResult.UploadStatus = "Error";
-                    salesResult.Information = "Incorrect file name.";
+                    salesResult.FilePath = file;
+                    salesResult.Status = "Error";
+                    salesResult.GlobalErrorMessage = "Incorrect file name.";
                     tempList.Add(salesResult);
                     continue;
                 }
                 salesResult = converter.ConvertSalesReport(file, "select * from [Sheet1$]");
-
-              /*  if (salesResult.Information.Contains("Не найдены колонки"))
-                {
-                    salesResult.UploadStatus = "Error";
-                    tempList.Add(salesResult);
-                    continue;
-                }*/
-
-                salesResult.UploadStatus = "Ok";
                 tempList.Add(salesResult);
-                
+
             }
             DistributorsSalesList = tempList;
         }
 
-        public void AddDataToGridView( DataGridView dataGridView1)
+        public void AddDataToGridView(DataGridView dataGridView1)
         {
             for (int i = 0; i < DistributorsSalesList.Count; i++)
             {
@@ -62,10 +53,10 @@ namespace FilesConverter.Sales
                 dataGridView1.Rows.Add();
                 dataGridView1.Rows[i].Cells[0].Value = i + 1;
                 dataGridView1.Rows[i].Cells[1].Value = convertedFile.FilePath;
-                dataGridView1.Rows[i].Cells[2].Value = convertedFile.UploadStatus;
-                dataGridView1.Rows[i].Cells[3].Value = convertedFile.Information;
-                if (convertedFile.UploadStatus == "Ok") dataGridView1.Rows[i].Cells[2].Style.ForeColor = Color.Green;
-                if (convertedFile.UploadStatus == "Error") dataGridView1.Rows[i].Cells[2].Style.ForeColor = Color.Red;
+                dataGridView1.Rows[i].Cells[2].Value = convertedFile.Status;
+                dataGridView1.Rows[i].Cells[3].Value = convertedFile.GlobalErrorMessage;
+                if (convertedFile.Status == "Ok") dataGridView1.Rows[i].Cells[2].Style.ForeColor = Color.Green;
+                if (convertedFile.Status == "Error") dataGridView1.Rows[i].Cells[2].Style.ForeColor = Color.Red;
             }
         }
 
