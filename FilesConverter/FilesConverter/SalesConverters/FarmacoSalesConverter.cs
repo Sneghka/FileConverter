@@ -9,18 +9,12 @@ namespace FilesConverter.SalesConverters
     {
         public FarmacoSalesConverter(DateTime data, string customer) : base( data, customer)
         {
-
+            ColumnNames = "Область,Наименование товара,ОКПО покупателя,Покупатель,Адрес доставки,Количество проданных уп#";
         }
 
-      
-
-        public SalesResult ConvertSalesReport(string path, string request)
+        protected override List<SalesResultItem> ConvertRows(DataTable salesReport)
         {
-            DataTable salesReport = new DataTable();
-            SalesResult storedSales = new SalesResult();
-
-            WorkWithExcel.ExcelFileToDataTable(out salesReport, path, request);
-
+            var property = new List<SalesResultItem>();
             foreach (DataRow row in salesReport.Rows)
             {
                 var storedSalesRow = new SalesResultItem
@@ -34,10 +28,10 @@ namespace FilesConverter.SalesConverters
                     DistributorsClientPlusAdress = row["Покупатель"] + " " + row["Адрес доставки"],
                     Upakovki = Convert.ToInt32(row["Количество проданных уп#"])
                 };
-                storedSales.SaleLines.Add(storedSalesRow);
+                property.Add(storedSalesRow);
             }
-            return storedSales;
+            return property;
+
         }
-      
     }
 }

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 using FilesConverter.SalesConverters;
 
 namespace FilesConverter.Sales
@@ -25,11 +26,8 @@ namespace FilesConverter.Sales
             {
                 var salesResult = new SalesResult();
 
-                var dotIndex = file.LastIndexOf('.');
-                var slashIndex = file.LastIndexOf('\\');
-                var name = file.Substring(slashIndex + 1, dotIndex - slashIndex - 1);
+                var name = Path.GetFileNameWithoutExtension(file);
                 var converter = factory.GetConverter(name);
-
                 if (converter == null)
                 {
                     salesResult.FilePath = file;
@@ -55,7 +53,7 @@ namespace FilesConverter.Sales
                 dataGridView1.Rows[i].Cells[1].Value = convertedFile.FilePath;
                 dataGridView1.Rows[i].Cells[2].Value = convertedFile.Status;
                 dataGridView1.Rows[i].Cells[3].Value = convertedFile.GlobalErrorMessage;
-                if (convertedFile.Status == "Ok") dataGridView1.Rows[i].Cells[2].Style.ForeColor = Color.Green;
+                if (convertedFile.Status == "OK") dataGridView1.Rows[i].Cells[2].Style.ForeColor = Color.Green;
                 if (convertedFile.Status == "Error") dataGridView1.Rows[i].Cells[2].Style.ForeColor = Color.Red;
             }
         }

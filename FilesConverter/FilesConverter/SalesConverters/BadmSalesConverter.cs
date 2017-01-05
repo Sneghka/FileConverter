@@ -16,28 +16,8 @@ namespace FilesConverter.SalesConverters
             ColumnNames = "Область,Город,Товар,Код товара,ОКПО клиента,Клиент,Факт#адрес доставки,Количество";
         }
 
-
-        public SalesResult ConvertSalesReport(string path, string request)
+        protected override  List<SalesResultItem> ConvertRows(DataTable salesReport)
         {
-            DataTable salesReport = new DataTable();
-
-            SalesResult storedSales = new SalesResult();
-
-            WorkWithExcel.ExcelFileToDataTable(out salesReport, path, request);
-
-            string[] columnNames = salesReport.Columns.Cast<DataColumn>()
-                                 .Select(x => x.ColumnName)
-                                 .ToArray();
-
-            
-            storedSales.GlobalErrorMessage = CheckColumnNames(columnNames);
-            if (storedSales.GlobalErrorMessage != null)
-            {
-                storedSales.FilePath = path;
-                storedSales.Status = "Error";
-                return storedSales;
-            }
-
             var property = new List<SalesResultItem>();
             foreach (DataRow row in salesReport.Rows)
             {
@@ -56,11 +36,7 @@ namespace FilesConverter.SalesConverters
                 };
                 property.Add(storedSalesRow);
             }
-            storedSales.SaleLines = property;
-            storedSales.FilePath = path;
-            storedSales.Status = "OK";
-            return storedSales;
+            return property;
         }
-
     }
 }

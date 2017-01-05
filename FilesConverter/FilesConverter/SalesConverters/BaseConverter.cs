@@ -2,15 +2,17 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FilesConverter.Sales;
+using System.Data;
 
 namespace FilesConverter.SalesConverters
 {
-    public class BaseConverter
+    public abstract class BaseConverter
     {
         public string _customer;
         public DateTime _date;
         public string ColumnNames { get; set; }
-      
+
 
         public BaseConverter(DateTime data, string customer)
         {
@@ -25,7 +27,7 @@ namespace FilesConverter.SalesConverters
             string[] colListOfClass = ColumnNames.Split(',');
 
             foreach (var col in colListOfClass)
-            
+
             {
                 if (!dtColumnNames.Contains(col))
                 {
@@ -44,5 +46,30 @@ namespace FilesConverter.SalesConverters
             }
             return message;
         }
+
+        protected abstract List<SalesResultItem> ConvertRows(DataTable salesReport);
+
+        public SalesResult ConvertSalesReport(string path, string request)
+        {
+            DataTable salesReport = new DataTable();
+            SalesResult storedSales = new SalesResult();
+            WorkWithExcel.ExcelFileToDataTable(out salesReport, path, request);
+
+            string[] columnNames = salesReport.Columns.Cast<DataColumn>()
+                                 .Select(x => x.ColumnName)
+                                 .ToArray();
+            storedSales.FilePath = path;
+
+            storedSales.GlobalErrorMessage = CheckColumnNames(columnNames);
+            if (storedSales.GlobalErrorMessage != "")
+            {
+                storedSales.Status = "Error";
+                return storedSales;
+            }
+            storedSales.SaleLines = ConvertRows(salesReport);
+            storedSales.Status = "OK";
+            return storedSales;
+        }
+
     }
 }

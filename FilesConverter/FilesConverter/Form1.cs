@@ -32,7 +32,6 @@ namespace FilesConverter
 
         }
 
-
         private void btnUploadSales_Click(object sender, EventArgs e)
         {
             OpenFileDialog dialog = new OpenFileDialog();
@@ -42,6 +41,7 @@ namespace FilesConverter
             {
                 List<string> pathsList = (from f in dialog.FileNames
                                           select f).ToList();
+                var temp = dialog.FileNames;
 
                 _distributorsSalesList.CheckAndConvertSalesFiles(pathsList, dateTimePicker1, boxCustomer);
                 _distributorsSalesList.AddDataToGridView(dataGridView1);
@@ -87,8 +87,8 @@ namespace FilesConverter
 
             }
 
-            this.Controls.Clear();
-            this.InitializeComponent();
+            Controls.Clear();
+            InitializeComponent();
             _distributorsSalesList.ClearResult();
             _rules.Clear();
             

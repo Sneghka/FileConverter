@@ -9,18 +9,12 @@ namespace FilesConverter.SalesConverters
     {
         public OptimaSalesConverter(DateTime data, string customer) : base( data, customer)
         {
-
+            ColumnNames = "Область,Город,Товар,Код товара,ОКПО,Дебитор доставки,Продажи шт";
         }
 
-     
-
-        public SalesResult ConvertSalesReport(string path, string request)
+        protected override List<SalesResultItem> ConvertRows(DataTable salesReport)
         {
-            DataTable salesReport = new DataTable();
-            SalesResult storedSales = new SalesResult();
-
-            WorkWithExcel.ExcelFileToDataTable(out salesReport, path, request);
-
+            var property = new List<SalesResultItem>();
             foreach (DataRow row in salesReport.Rows)
             {
                 var storedSalesRow = new SalesResultItem
@@ -33,15 +27,12 @@ namespace FilesConverter.SalesConverters
                     ItemName = row["Товар"].ToString(),
                     ItemCode = row["Код товара"].ToString(),
                     OKPO = row["ОКПО"].ToString(),
-                    DistributorsClientPlusAdress = row["Дебитор доставки"].ToString() , // будет исправление после первого отчёта (пока нет колонки Адрес)
+                    DistributorsClientPlusAdress = row["Дебитор доставки"].ToString(), // будет исправление после первого отчёта (пока нет колонки Адрес)
                     Upakovki = Convert.ToInt32(row["Продажи шт"])
                 };
-                storedSales.SaleLines.Add(storedSalesRow);
+                property.Add(storedSalesRow);
             }
-
-            return storedSales;
+            return property;
         }
-        
-
     }
 }
