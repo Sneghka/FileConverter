@@ -9,8 +9,8 @@ namespace FilesConverter.SalesConverters
 {
     public abstract class BaseConverter
     {
-        public string Customer;
-        public DateTime Date;
+        protected string Customer;
+        protected DateTime Date;
         public string ColumnNames { get; set; }
 
 
