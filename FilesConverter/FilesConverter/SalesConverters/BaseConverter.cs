@@ -51,11 +51,10 @@ namespace FilesConverter.SalesConverters
             storedSales.GlobalErrorMessage = CheckColumnNames(columnNames);
             if (!string.IsNullOrEmpty(storedSales.GlobalErrorMessage))
             {
-                storedSales.Status = "Error";
+                
                 return storedSales;
             }
             storedSales.SaleLines = ConvertRows(salesReport);
-            storedSales.Status = "OK";
             storedSales.Name = Path.GetFileNameWithoutExtension(path);
             return storedSales;
         }

@@ -21,6 +21,7 @@ namespace FilesConverter.SalesConverters
             var property = new List<SalesResultItem>();
             foreach (DataRow row in salesReport.Rows)
             {
+                int i;
                 var storedSalesRow = new SalesResultItem
                 {
                     Customer = Customer,
@@ -32,7 +33,9 @@ namespace FilesConverter.SalesConverters
                     ItemCode = row["Код товара"].ToString(),
                     OKPO = row["ОКПО клиента"].ToString(),
                     DistributorsClientPlusAdress = row["Клиент"] + " " + row["Факт#адрес доставки"],
-                    Upakovki = Convert.ToInt32(row["Количество"])
+                    /* Upakovki = Convert.ToInt32(row["Количество"])*/
+                    Upakovki = int.TryParse(row["Количество"].ToString(), out i) ? i: (int?) null
+                    
                 };
                 property.Add(storedSalesRow);
             }

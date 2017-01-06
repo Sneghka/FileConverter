@@ -14,9 +14,19 @@ namespace FilesConverter.Sales
         public string Name { get; set; }
         public string FilePath { get; set; }
         public List<SalesResultItem> SaleLines { get; set; }
-        public string Status { get; set; }
+
+        public string Status
+        {
+            get
+            {
+                if (IsSuccess) return "OK";
+                return "Error";
+            }
+        }
         public string GlobalErrorMessage { get; set; }
         public List<ConvertationError> ErrorMessageList { get; set; }
         public bool IsSuccess => GlobalErrorMessage == "" && (ErrorMessageList?.Count ?? 0) == 0;
+
+        
     }
 }

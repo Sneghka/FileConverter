@@ -22,6 +22,6 @@ namespace FilesConverter.Sales
         public string DistributorsClientPlusAdress { get; set; }
         public DateTime Date { get; set; }
         public string ItemCode { get; set; }
-        public int Upakovki { get; set; }
+        public int? Upakovki { get; set; }
     }
 }

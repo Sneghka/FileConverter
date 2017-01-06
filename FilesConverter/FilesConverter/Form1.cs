@@ -20,12 +20,12 @@ namespace FilesConverter
     {
 
         private List<ExchangeRule> _rules = new List<ExchangeRule>();
-        private SalesResultList _resultList = new SalesResultList();
+        private SalesResultList _salesResultList = new SalesResultList();
 
         public void ClearForm()
         {
-            _resultList.ResultList.Clear();
-            _resultList.PathForSaving = string.Empty;
+            _salesResultList.ResultList.Clear();
+            _salesResultList.PathForSaving = string.Empty;
             Controls.Clear();
             InitializeComponent();
             _rules.Clear();
@@ -52,12 +52,10 @@ namespace FilesConverter
                                           select f).ToList();
                 
                 var convertFiles = new ConvertFiles();
-                _resultList.ResultList = convertFiles.CheckAndConvertSalesFiles(pathsList, dateTimePicker1, boxCustomer);
+                _salesResultList.ResultList = convertFiles.ConvertSalesFiles(pathsList, dateTimePicker1.Value, boxCustomer.Text);
 
                 var gridView = new WorkWithGridView();
-                gridView.AddDataToGridView(dataGridView1, _resultList);
-
-              
+                gridView.AddDataToGridView(dataGridView1, _salesResultList);
              }
         }
 
@@ -71,7 +69,7 @@ namespace FilesConverter
             {
                 var path = fbd.SelectedPath;
                 textBoxFolderForSaving.Text = path;
-                _resultList.PathForSaving = path;
+                _salesResultList.PathForSaving = path;
             }
         }
 
@@ -87,28 +85,29 @@ namespace FilesConverter
                 }
             }
 
-            /*if (textBoxFolderForSaving.Text == "")
+            if (string.IsNullOrEmpty(textBoxFolderForSaving.Text))
             {
                 DialogResult ok = new DialogResult();
                 ok = MessageBox.Show(Constants.FolderForSavingIsnotChoosen, "Внимание!!!", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                if (ok == DialogResult.Cancel)
+                if (ok == DialogResult.OK)
                 {
                     return;
                 }
-            }*/
+              
+            }
 
-            var distributorsFile = _resultList.ResultList;
-            for (int i = 0; i < distributorsFile.Count; i++)
+            var convertedFiles = _salesResultList.ResultList;
+            for (int i = 0; i < convertedFiles.Count; i++)
             {
-
+                
                 if (_rules.Count != 0)
                 {
-                    Helper.ChangeItemName(_rules, distributorsFile[i].SaleLines);
+                    Helper.ChangeItemName(_rules, convertedFiles[i].SaleLines);
                 }
 
-                var temp = textBoxFolderForSaving.Text;
-                var pathForSaving =Path.Combine(temp, distributorsFile[i].Name);
-                WorkWithExcel.WriteDataToExcel(distributorsFile[i].SaleLines, pathForSaving);
+                var chosenFolder = textBoxFolderForSaving.Text;
+                var pathForSaving =Path.Combine(chosenFolder, convertedFiles[i].Name);
+                if(convertedFiles[i].SaleLines != null) WorkWithExcel.WriteDataToExcel(convertedFiles[i].SaleLines, pathForSaving);
 
             }
 
