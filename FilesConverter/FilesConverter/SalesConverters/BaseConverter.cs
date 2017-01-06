@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using FilesConverter.Sales;
 using System.Data;
+using System.IO;
 
 namespace FilesConverter.SalesConverters
 {
@@ -55,6 +56,7 @@ namespace FilesConverter.SalesConverters
             }
             storedSales.SaleLines = ConvertRows(salesReport);
             storedSales.Status = "OK";
+            storedSales.Name = Path.GetFileNameWithoutExtension(path);
             return storedSales;
         }
 

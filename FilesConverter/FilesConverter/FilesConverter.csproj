@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
+    <Compile Include="ConvertFiles.cs" />
     <Compile Include="Errors\ConvertationError.cs" />
     <Compile Include="Errors\ConvertationErrorsList.cs" />
     <Compile Include="SalesConverters\BaseConverter.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="SalesConverters\ISalesConverter.cs" />
     <Compile Include="Sales\SalesResultList.cs" />
     <Compile Include="WorkWithExcel.cs" />
+    <Compile Include="WorkWithGridView.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

@@ -20,7 +20,16 @@ namespace FilesConverter
     {
 
         private List<ExchangeRule> _rules = new List<ExchangeRule>();
-        private SalesResultList _distributorsSalesList = new SalesResultList();
+        private SalesResultList _resultList = new SalesResultList();
+
+        public void ClearForm()
+        {
+            _resultList.ResultList.Clear();
+            _resultList.PathForSaving = string.Empty;
+            Controls.Clear();
+            InitializeComponent();
+            _rules.Clear();
+        }
 
         public Form1()
         {
@@ -42,8 +51,12 @@ namespace FilesConverter
                 List<string> pathsList = (from f in dialog.FileNames
                                           select f).ToList();
                 
-                _distributorsSalesList.CheckAndConvertSalesFiles(pathsList, dateTimePicker1, boxCustomer);
-                _distributorsSalesList.AddDataToGridView(dataGridView1);
+                var convertFiles = new ConvertFiles();
+                _resultList.ResultList = convertFiles.CheckAndConvertSalesFiles(pathsList, dateTimePicker1, boxCustomer);
+
+                var gridView = new WorkWithGridView();
+                gridView.AddDataToGridView(dataGridView1, _resultList);
+
               
              }
         }
@@ -58,7 +71,7 @@ namespace FilesConverter
             {
                 var path = fbd.SelectedPath;
                 textBoxFolderForSaving.Text = path;
-                _distributorsSalesList.PathForSaving = path;
+                _resultList.PathForSaving = path;
             }
         }
 
@@ -84,7 +97,7 @@ namespace FilesConverter
                 }
             }*/
 
-            var distributorsFile = _distributorsSalesList.DistributorsSalesList;
+            var distributorsFile = _resultList.ResultList;
             for (int i = 0; i < distributorsFile.Count; i++)
             {
 
@@ -99,12 +112,7 @@ namespace FilesConverter
 
             }
 
-           
-
-            Controls.Clear();
-            InitializeComponent();
-            _distributorsSalesList.ClearResult();
-            _rules.Clear();
+           ClearForm();
             
         }
 
