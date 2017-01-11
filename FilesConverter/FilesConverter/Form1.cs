@@ -46,7 +46,27 @@ namespace FilesConverter
 
         private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
         {
+            if (dateTimePicker1.Value > DateTime.Today)
+            {
+                dateTimePicker1.Value = DateTime.Today;
+                DialogResult ok = new DialogResult();
+                ok = MessageBox.Show(Constants.IncorrectDate, "Внимание!!!", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                if (ok == DialogResult.OK)
+                {
+                    return;
+                }
+            }
 
+            if (_salesResultList.ResultList != null)
+            {
+                foreach (var salesResult in _salesResultList.ResultList)
+                {
+                    foreach (var lines in salesResult.SaleLines)
+                    {
+                        lines.Date = dateTimePicker1.Value.Date;
+                    }
+                }
+            }
         }
 
         private void btnUploadSales_Click(object sender, EventArgs e)
@@ -108,23 +128,11 @@ namespace FilesConverter
                 {
                     return;
                 }
-
             }
 
             var convertedFiles = _salesResultList.ResultList;
-            for (int i = 0; i < convertedFiles.Count; i++)
-            {
-
-                if (_rules.Count != 0)
-                {
-                    Helper.ChangeItemName(_rules, convertedFiles[i].SaleLines);
-                }
-
-                var chosenFolder = textBoxFolderForSaving.Text;
-                var pathForSaving = Path.Combine(chosenFolder, convertedFiles[i].Name);
-                if (convertedFiles[i].SaleLines != null) WorkWithExcel.WriteDataToExcel(convertedFiles[i].SaleLines, pathForSaving);
-
-            }
+            var convertFiles = new ConvertFiles();
+            convertFiles.SendResultToExcel(convertedFiles, textBoxFolderForSaving.Text, _rules);
 
             ClearForm();
 
@@ -143,14 +151,22 @@ namespace FilesConverter
                 ExchangeRuleList ruleList = new ExchangeRuleList();
                 _rules = ruleList.GetChangingRules(path, "select * from [Sheet1$]");
             }
-
-
         }
+
 
         private void boxCustomer_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (boxCustomer.Text.Length > 0)
-                btnUploadSales.Enabled = true;
+            if (boxCustomer.Text.Length > 0) btnUploadSales.Enabled = true;
+            if (_salesResultList.ResultList != null)
+            {
+                foreach (var salesResult in _salesResultList.ResultList)
+                {
+                    foreach (var lines in salesResult.SaleLines)
+                    {
+                        lines.Customer = boxCustomer.Text;
+                    }
+                }
+            }
         }
 
         private void textBoxFolderForSaving_TextChanged(object sender, EventArgs e)

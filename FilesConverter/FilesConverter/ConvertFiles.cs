@@ -7,6 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using FilesConverter.Errors;
+using FilesConverter.Rules;
 using FilesConverter.Sales;
 using FilesConverter.SalesConverters;
 
@@ -50,8 +51,7 @@ namespace FilesConverter
             }
             return resultList;
         }
-
-
+        
         public List<ConvertationError> CheckSaleLinesErrors(SalesResult salesResult)
         {
             var errorMessageList = new List<ConvertationError>();
@@ -66,7 +66,7 @@ namespace FilesConverter
                 {
                     messageList.Add(Constants.UpakovkiCellIsEmpty);
                 }
-                if ((line?.Region.Length ?? 0) < 2 || !Regex.IsMatch(line.Region, "^[a-zA-Zа-яА-Я-]+$"))
+                if ((line?.Region.Length ?? 0) < 2 || !Regex.IsMatch(line.Region, @"^[a-zA-Zа-яА-Я.()\s-]+$"))
                 {
                     messageList.Add(Constants.IncorrectRegionName);
                 }
@@ -78,9 +78,32 @@ namespace FilesConverter
                 {
                     error.ErrorMessage = string.Join("/", messageList);
                     errorMessageList.Add(error);
+                    salesResult.GlobalErrorMessage = "Click row for details!";
                 }
             }
             return errorMessageList;
+        }
+
+        public void SendResultToExcel(List<SalesResult> salesResultList, string folderForSaving, List<ExchangeRule> rules )
+        {
+            for (int i = 0; i < salesResultList.Count; i++)
+            {
+                if (!salesResultList[i].IsSuccess)
+                {
+                    continue;
+                }
+
+                if (rules.Count != 0)
+                {
+                    Helper.ChangeItemName(rules, salesResultList[i].SaleLines);
+                }
+
+                var chosenFolder = folderForSaving;
+                var name = salesResultList[i].Name;
+                var pathForSaving = Path.Combine(chosenFolder, name);
+                WorkWithExcel.WriteDataToExcel(salesResultList[i].SaleLines, pathForSaving);
+
+            }
         }
 
     }
