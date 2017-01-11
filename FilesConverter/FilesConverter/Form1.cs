@@ -61,9 +61,12 @@ namespace FilesConverter
             {
                 foreach (var salesResult in _salesResultList.ResultList)
                 {
-                    foreach (var lines in salesResult.SaleLines)
+                    if (salesResult.IsSuccess)
                     {
-                        lines.Date = dateTimePicker1.Value.Date;
+                        foreach (var lines in salesResult.SaleLines)
+                        {
+                            lines.Date = dateTimePicker1.Value.Date;
+                        }
                     }
                 }
             }
@@ -83,10 +86,10 @@ namespace FilesConverter
                 _salesResultList.ResultList = convertFiles.ConvertSalesFiles(pathsList, dateTimePicker1.Value, boxCustomer.Text); //convert to view
 
 
-                foreach (var list in _salesResultList.ResultList)
+                foreach (var salesResult in _salesResultList.ResultList)
                 {
-                    if (!string.IsNullOrEmpty(list.GlobalErrorMessage)) continue;
-                    list.ErrorMessageList = convertFiles.CheckSaleLinesErrors(list); // check if neccessary cells are correct
+                    if (!string.IsNullOrEmpty(salesResult.GlobalErrorMessage)) continue;
+                    salesResult.ErrorMessageList = convertFiles.CheckSaleLinesErrors(salesResult); // check if neccessary cells are correct
                 }
                 
                 var gridView = new WorkWithGridView();
@@ -161,9 +164,12 @@ namespace FilesConverter
             {
                 foreach (var salesResult in _salesResultList.ResultList)
                 {
-                    foreach (var lines in salesResult.SaleLines)
+                    if (salesResult.IsSuccess)
                     {
-                        lines.Customer = boxCustomer.Text;
+                        foreach (var lines in salesResult.SaleLines)
+                        {
+                            lines.Customer = boxCustomer.Text;
+                        }
                     }
                 }
             }
@@ -174,7 +180,7 @@ namespace FilesConverter
 
         }
 
-       private void dataGridView1_SelectionChanged(object sender, EventArgs e)
+        private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
             if (dataGridView1.SelectedRows.Count == 0) return;
             _selectedResult = (SalesResult)dataGridView1.SelectedRows[0].DataBoundItem;
@@ -183,7 +189,8 @@ namespace FilesConverter
         private void dataGridView1_DoubleClick(object sender, EventArgs e)
         {
             if (SelectedResult == null) return;
-            if(SelectedResult.IsSuccess) return;
+            if (SelectedResult.IsSuccess) return;
+            if (SelectedResult.ErrorMessageList == null) return;
             ErrorsDescriptionForm.Show(SelectedResult);
         }
     }
