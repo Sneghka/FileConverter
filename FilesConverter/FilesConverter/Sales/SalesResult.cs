@@ -19,8 +19,7 @@ namespace FilesConverter.Sales
         {
             get
             {
-                if (IsSuccess) return "OK";
-                return "Error";
+                return IsSuccess ? "OK" : "Error";
             }
         }
         public string GlobalErrorMessage { get; set; }

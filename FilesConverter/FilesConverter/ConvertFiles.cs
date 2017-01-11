@@ -19,7 +19,7 @@ namespace FilesConverter
         {
             var factory = new ConverterFactory(date.Date, customer);
             var resultList = new List<SalesResult>();
-            
+
             foreach (var file in salesFile)
             {
                 try
@@ -37,8 +37,6 @@ namespace FilesConverter
                     }
 
                     var salesResult = converter.ConvertSalesReport(file, "select * from [Sheet1$]");
-                    var errorList = new ConvertationErrorsList();
-                    //salesResult.ErrorMessageList = errorList.CheckSaleLinesErrors(salesResult);
                     resultList.Add(salesResult);
                 }
                 catch (Exception e)
@@ -54,9 +52,36 @@ namespace FilesConverter
         }
 
 
-      /*  public List<ConvertationError> CheckSaleLinesErrors(SalesResult salesResult)
+        public List<ConvertationError> CheckSaleLinesErrors(SalesResult salesResult)
         {
-            
-        }*/
+            var errorMessageList = new List<ConvertationError>();
+
+            foreach (var line in salesResult.SaleLines)
+            {
+                var error = new ConvertationError();
+                error.RowNumber = salesResult.SaleLines.IndexOf(line) + 2;
+                var messageList = new List<string>();
+
+                if (line?.Upakovki == null)
+                {
+                    messageList.Add(Constants.UpakovkiCellIsEmpty);
+                }
+                if ((line?.Region.Length ?? 0) < 2 || !Regex.IsMatch(line.Region, "^[a-zA-Zа-яА-Я-]+$"))
+                {
+                    messageList.Add(Constants.IncorrectRegionName);
+                }
+                if (Regex.IsMatch(line.DistributorsClientPlusAdress, "^(?!.*[a-zA-Zа-яА-Я]).*$")) // line contains gap after concat. Check if doesn't contain letters
+                {
+                    messageList.Add(Constants.IncorrectNameAndAdress);
+                }
+                if (messageList.Count != 0)
+                {
+                    error.ErrorMessage = string.Join("/", messageList);
+                    errorMessageList.Add(error);
+                }
+            }
+            return errorMessageList;
+        }
+
     }
 }

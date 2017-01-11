@@ -42,7 +42,6 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.SequenceNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.FilePath = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Information = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Others = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -143,7 +142,7 @@
             this.textBoxFolderForSaving.Name = "textBoxFolderForSaving";
             this.textBoxFolderForSaving.Size = new System.Drawing.Size(609, 20);
             this.textBoxFolderForSaving.TabIndex = 17;
-            this.textBoxFolderForSaving.TextChanged += new System.EventHandler(textBoxFolderForSaving_TextChanged);
+            this.textBoxFolderForSaving.TextChanged += new System.EventHandler(this.textBoxFolderForSaving_TextChanged);
             // 
             // btnChooseFolderForSaving
             // 
@@ -190,7 +189,6 @@
             this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.SequenceNumber,
             this.FilePath,
             this.Information,
             this.Others});
@@ -202,21 +200,16 @@
             dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
             this.dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(875, 225);
             this.dataGridView1.TabIndex = 20;
-            this.dataGridView1.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
-            // 
-            // SequenceNumber
-            // 
-            this.SequenceNumber.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.ColumnHeader;
-            this.SequenceNumber.HeaderText = "№";
-            this.SequenceNumber.Name = "SequenceNumber";
-            this.SequenceNumber.ReadOnly = true;
-            this.SequenceNumber.Width = 55;
+            this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
+            this.dataGridView1.DoubleClick += new System.EventHandler(this.dataGridView1_DoubleClick);
             // 
             // FilePath
             // 
             this.FilePath.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.FilePath.DataPropertyName = "FilePath";
             this.FilePath.FillWeight = 189.1304F;
             this.FilePath.HeaderText = "File";
             this.FilePath.Name = "FilePath";
@@ -225,6 +218,7 @@
             // Information
             // 
             this.Information.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Information.DataPropertyName = "Status";
             this.Information.HeaderText = "Status";
             this.Information.Name = "Information";
             this.Information.ReadOnly = true;
@@ -233,6 +227,7 @@
             // Others
             // 
             this.Others.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Others.DataPropertyName = "GlobalErrorMessage";
             this.Others.HeaderText = "Information";
             this.Others.Name = "Others";
             this.Others.ReadOnly = true;
@@ -320,7 +315,6 @@
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.DataGridView dataGridView1;
-        private System.Windows.Forms.DataGridViewTextBoxColumn SequenceNumber;
         private System.Windows.Forms.DataGridViewTextBoxColumn FilePath;
         private System.Windows.Forms.DataGridViewTextBoxColumn Information;
         private System.Windows.Forms.DataGridViewTextBoxColumn Others;

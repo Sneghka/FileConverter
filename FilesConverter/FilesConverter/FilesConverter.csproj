@@ -48,6 +48,12 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="ConvertFiles.cs" />
+    <Compile Include="ErrorsForm\ErrorsDescriptionForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ErrorsForm\ErrorsDescriptionForm.Designer.cs">
+      <DependentUpon>ErrorsDescriptionForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Errors\ConvertationError.cs" />
     <Compile Include="Errors\ConvertationErrorsList.cs" />
     <Compile Include="SalesConverters\BaseConverter.cs" />
@@ -75,6 +81,9 @@
     <Compile Include="Sales\SalesResultList.cs" />
     <Compile Include="WorkWithExcel.cs" />
     <Compile Include="WorkWithGridView.cs" />
+    <EmbeddedResource Include="ErrorsForm\ErrorsDescriptionForm.resx">
+      <DependentUpon>ErrorsDescriptionForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

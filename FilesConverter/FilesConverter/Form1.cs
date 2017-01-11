@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using FilesConverter.ErrorsForm;
 using FilesConverter.Rules;
 using FilesConverter.Sales;
 using FilesConverter.SalesConverters;
@@ -18,7 +19,14 @@ namespace FilesConverter
 {
     public partial class Form1 : Form
     {
-
+        private SalesResult _selectedResult;
+        private SalesResult SelectedResult
+        {
+            get
+            {
+                return _selectedResult;
+            }
+        }
         private List<ExchangeRule> _rules = new List<ExchangeRule>();
         private SalesResultList _salesResultList = new SalesResultList();
 
@@ -50,13 +58,20 @@ namespace FilesConverter
             {
                 List<string> pathsList = (from f in dialog.FileNames
                                           select f).ToList();
-                
-                var convertFiles = new ConvertFiles();
-                _salesResultList.ResultList = convertFiles.ConvertSalesFiles(pathsList, dateTimePicker1.Value, boxCustomer.Text);
 
+                var convertFiles = new ConvertFiles();
+                _salesResultList.ResultList = convertFiles.ConvertSalesFiles(pathsList, dateTimePicker1.Value, boxCustomer.Text); //convert to view
+
+
+                foreach (var list in _salesResultList.ResultList)
+                {
+                    if (!string.IsNullOrEmpty(list.GlobalErrorMessage)) continue;
+                    list.ErrorMessageList = convertFiles.CheckSaleLinesErrors(list); // check if neccessary cells are correct
+                }
+                
                 var gridView = new WorkWithGridView();
                 gridView.AddDataToGridView(dataGridView1, _salesResultList);
-             }
+            }
         }
 
         private void btnChooseFolderForSaving_Click(object sender, EventArgs e)
@@ -93,26 +108,26 @@ namespace FilesConverter
                 {
                     return;
                 }
-              
+
             }
 
             var convertedFiles = _salesResultList.ResultList;
             for (int i = 0; i < convertedFiles.Count; i++)
             {
-                
+
                 if (_rules.Count != 0)
                 {
                     Helper.ChangeItemName(_rules, convertedFiles[i].SaleLines);
                 }
 
                 var chosenFolder = textBoxFolderForSaving.Text;
-                var pathForSaving =Path.Combine(chosenFolder, convertedFiles[i].Name);
-                if(convertedFiles[i].SaleLines != null) WorkWithExcel.WriteDataToExcel(convertedFiles[i].SaleLines, pathForSaving);
+                var pathForSaving = Path.Combine(chosenFolder, convertedFiles[i].Name);
+                if (convertedFiles[i].SaleLines != null) WorkWithExcel.WriteDataToExcel(convertedFiles[i].SaleLines, pathForSaving);
 
             }
 
-           ClearForm();
-            
+            ClearForm();
+
         }
 
 
@@ -138,14 +153,22 @@ namespace FilesConverter
                 btnUploadSales.Enabled = true;
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void textBoxFolderForSaving_TextChanged(object sender, EventArgs e)
         {
 
         }
 
-        private void textBoxFolderForSaving_TextChanged(object sender, EventArgs e)
+       private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
-            
+            if (dataGridView1.SelectedRows.Count == 0) return;
+            _selectedResult = (SalesResult)dataGridView1.SelectedRows[0].DataBoundItem;
+        }
+
+        private void dataGridView1_DoubleClick(object sender, EventArgs e)
+        {
+            if (SelectedResult == null) return;
+            if(SelectedResult.IsSuccess) return;
+            ErrorsDescriptionForm.Show(SelectedResult);
         }
     }
 }
