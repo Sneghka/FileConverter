@@ -61,16 +61,11 @@ namespace FilesConverter
             {
                 foreach (var salesResult in _salesResultList.ResultList)
                 {
-                    if (salesResult.IsSuccess)
-                    {
-                        foreach (var lines in salesResult.SaleLines)
-                        {
-                            lines.Date = dateTimePicker1.Value.Date;
-                        }
-                    }
+                    salesResult.ChangeDate(dateTimePicker1.Value);
                 }
             }
         }
+
 
         private void btnUploadSales_Click(object sender, EventArgs e)
         {
@@ -85,13 +80,6 @@ namespace FilesConverter
                 var convertFiles = new ConvertFiles();
                 _salesResultList.ResultList = convertFiles.ConvertSalesFiles(pathsList, dateTimePicker1.Value, boxCustomer.Text); //convert to view
 
-
-                foreach (var salesResult in _salesResultList.ResultList)
-                {
-                    if (!string.IsNullOrEmpty(salesResult.GlobalErrorMessage)) continue;
-                    salesResult.ErrorMessageList = convertFiles.CheckSaleLinesErrors(salesResult); // check if neccessary cells are correct
-                }
-                
                 var gridView = new WorkWithGridView();
                 gridView.AddDataToGridView(dataGridView1, _salesResultList);
             }
@@ -164,13 +152,7 @@ namespace FilesConverter
             {
                 foreach (var salesResult in _salesResultList.ResultList)
                 {
-                    if (salesResult.IsSuccess)
-                    {
-                        foreach (var lines in salesResult.SaleLines)
-                        {
-                            lines.Customer = boxCustomer.Text;
-                        }
-                    }
+                    salesResult.ChangeCustomer(boxCustomer.Text);
                 }
             }
         }

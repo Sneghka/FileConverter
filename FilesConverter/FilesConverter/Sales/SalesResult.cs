@@ -26,6 +26,31 @@ namespace FilesConverter.Sales
         public List<ConvertationError> ErrorMessageList { get; set; }
         public bool IsSuccess => GlobalErrorMessage == "" && (ErrorMessageList?.Count ?? 0) == 0;
 
-        
+
+        public void ChangeDate(DateTime day)
+        {
+            if (IsSuccess)
+            {
+                foreach (var lines in SaleLines)
+                {
+                    lines.Date = day;
+                }
+            }
+        }
+
+
+        public void ChangeCustomer(string customer)
+        {
+            if (IsSuccess)
+            {
+                foreach (var lines in SaleLines)
+                {
+                    lines.Customer = customer;
+                }
+            }
+        }
+
+
+
     }
 }

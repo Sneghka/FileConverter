@@ -15,8 +15,7 @@ namespace FilesConverter
 {
     public class ConvertFiles
     {
-        public List<SalesResult> ConvertSalesFiles(List<string> salesFile, DateTime date,
-            string customer)
+        public List<SalesResult> ConvertSalesFiles(List<string> salesFile, DateTime date, string customer)
         {
             var factory = new ConverterFactory(date.Date, customer);
             var resultList = new List<SalesResult>();
@@ -38,6 +37,12 @@ namespace FilesConverter
                     }
 
                     var salesResult = converter.ConvertSalesReport(file, "select * from [Sheet1$]");
+
+                    if (string.IsNullOrEmpty(salesResult.GlobalErrorMessage))
+                    {
+                        salesResult.ErrorMessageList = CheckSaleLinesErrors(salesResult);
+                    }
+
                     resultList.Add(salesResult);
                 }
                 catch (Exception e)
@@ -51,8 +56,8 @@ namespace FilesConverter
             }
             return resultList;
         }
-        
-        public List<ConvertationError> CheckSaleLinesErrors(SalesResult salesResult)
+
+        private List<ConvertationError> CheckSaleLinesErrors(SalesResult salesResult)
         {
             var errorMessageList = new List<ConvertationError>();
 
@@ -66,11 +71,11 @@ namespace FilesConverter
                 {
                     messageList.Add(Constants.UpakovkiCellIsEmpty);
                 }
-                if ((line?.Region.Length ?? 0) < 2 || !Regex.IsMatch(line.Region, @"^[a-zA-Zа-яА-Я.()\s-]+$"))
+                if ((line?.Region.Length ?? 0) < 2 || !Regex.IsMatch(line.Region, @"[a-zA-Zа-яА-ЯіІїЇєЄ]{2,}")) // @"^[a-zA-Zа-яА-ЯіІїЇєЄ.()\s.-]+$"
                 {
                     messageList.Add(Constants.IncorrectRegionName);
                 }
-                if (Regex.IsMatch(line.DistributorsClientPlusAdress, "^(?!.*[a-zA-Zа-яА-Я]).*$")) // line contains gap after concat. Check if doesn't contain letters
+                if (Regex.IsMatch(line.DistributorsClientPlusAdress, "^(?!.*[a-zA-Zа-яА-ЯіІїЇєЄ]).*$")) // line contains gap after concat. Check if doesn't contain letters
                 {
                     messageList.Add(Constants.IncorrectNameAndAdress);
                 }
@@ -84,7 +89,7 @@ namespace FilesConverter
             return errorMessageList;
         }
 
-        public void SendResultToExcel(List<SalesResult> salesResultList, string folderForSaving, List<ExchangeRule> rules )
+        public void SendResultToExcel(List<SalesResult> salesResultList, string folderForSaving, List<ExchangeRule> rules)
         {
             for (int i = 0; i < salesResultList.Count; i++)
             {
@@ -98,11 +103,22 @@ namespace FilesConverter
                     Helper.ChangeItemName(rules, salesResultList[i].SaleLines);
                 }
 
-                var chosenFolder = folderForSaving;
-                var name = salesResultList[i].Name;
-                var pathForSaving = Path.Combine(chosenFolder, name);
-                WorkWithExcel.WriteDataToExcel(salesResultList[i].SaleLines, pathForSaving);
-
+                var quantLinesInExcelFile = 60000;
+                var currentIndex = 0;
+                var ostatokRowNumber = salesResultList[i].SaleLines.Count;
+                int j = 1;
+                while (ostatokRowNumber > 0)
+                {
+                    var chosenFolder = folderForSaving;
+                    var name = (j==1) ? salesResultList[i].Name : salesResultList[i].Name + "_" + j;
+                    var pathForSaving = Path.Combine(chosenFolder, name);
+                    var linesForWriting = ostatokRowNumber > 60000 ? quantLinesInExcelFile : ostatokRowNumber;
+                    var subList = salesResultList[i].SaleLines.GetRange(currentIndex, linesForWriting);
+                    currentIndex = currentIndex + linesForWriting;
+                    ostatokRowNumber -= quantLinesInExcelFile;
+                    WorkWithExcel.WriteDataToExcel(subList, pathForSaving);
+                    j++;
+                }
             }
         }
 
