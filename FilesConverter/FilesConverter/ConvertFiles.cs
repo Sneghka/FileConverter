@@ -104,8 +104,6 @@ namespace FilesConverter
                 {
                     Helper.ChangeItemName(rules, salesResult.SaleLines);
                 }
-
-                
                 var currentIndex = 0;
                 var ostatokRowNumber = salesResult.SaleLines.Count;
                 int j = 1;
