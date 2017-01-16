@@ -92,29 +92,29 @@ namespace FilesConverter
 
         public void SendResultToExcel(List<SalesResult> salesResultList, string folderForSaving, List<ExchangeRule> rules)
         {
-            for (int i = 0; i < salesResultList.Count; i++)
+            var quantLinesInExcelFile = 60000;
+
+            foreach (SalesResult salesResult in salesResultList)
             {
-                if (!salesResultList[i].IsSuccess)
+                if (!salesResult.IsSuccess)
                 {
                     continue;
                 }
 
                 if (rules.Count != 0)
                 {
-                    Helper.ChangeItemName(rules, salesResultList[i].SaleLines);
+                    Helper.ChangeItemName(rules, salesResult.SaleLines);
                 }
-
-                var quantLinesInExcelFile = 60000;
                 var currentIndex = 0;
-                var ostatokRowNumber = salesResultList[i].SaleLines.Count;
+                var ostatokRowNumber = salesResult.SaleLines.Count;
                 int j = 1;
                 while (ostatokRowNumber > 0)
                 {
                     var chosenFolder = folderForSaving;
-                    var name = (j==1) ? salesResultList[i].Name : salesResultList[i].Name + "_" + j;
+                    var name = (j==1) ? salesResult.Name : salesResult.Name + "_" + j;
                     var pathForSaving = Path.Combine(chosenFolder, name);
-                    var linesForWriting = ostatokRowNumber > 60000 ? quantLinesInExcelFile : ostatokRowNumber;
-                    var subList = salesResultList[i].SaleLines.GetRange(currentIndex, linesForWriting);
+                    var linesForWriting = ostatokRowNumber > quantLinesInExcelFile ? quantLinesInExcelFile : ostatokRowNumber;
+                    var subList = salesResult.SaleLines.GetRange(currentIndex, linesForWriting);
                     currentIndex = currentIndex + linesForWriting;
                     ostatokRowNumber -= quantLinesInExcelFile;
                     WorkWithExcel.WriteDataToExcel(subList, pathForSaving);
@@ -122,6 +122,5 @@ namespace FilesConverter
                 }
             }
         }
-
     }
 }
