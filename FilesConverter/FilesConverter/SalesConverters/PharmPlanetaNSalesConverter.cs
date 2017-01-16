@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using FilesConverter.Result;
 using FilesConverter.Sales;
 
 namespace FilesConverter.SalesConverters
 {
-    public class PharmPlanetaNSalesConverter : BaseConverter, ISalesConverter
+    public class PharmPlanetaNSalesConverter : BaseConverter, ICommonConverter
     {
         public PharmPlanetaNSalesConverter(DateTime data, string customer) : base( data, customer)
         {
@@ -13,9 +14,9 @@ namespace FilesConverter.SalesConverters
             Request = "select * from [Отчет о продажах поставщика дет$]";
         }
 
-        protected override List<SalesResultItem> ConvertRows(DataTable salesReport)
+        protected override List<IResultItem> ConvertRows(DataTable salesReport)
         {
-            var property = new List<SalesResultItem>();
+            var property = new List<IResultItem>();
             foreach (DataRow row in salesReport.Rows)
             {
                 var storedSalesRow = new SalesResultItem

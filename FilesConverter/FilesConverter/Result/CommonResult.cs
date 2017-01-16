@@ -1,27 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using FilesConverter.Errors;
 
-namespace FilesConverter.Sales
+namespace FilesConverter.Result
 {
-    public class SalesResult
+    public class CommonResult 
     {
-        
-
         public string Name { get; set; }
         public string FilePath { get; set; }
-        public List<SalesResultItem> SaleLines { get; set; }
-
-        public string Status
-        {
-            get
-            {
-                return IsSuccess ? "OK" : "Error";
-            }
-        }
+        public List<IResultItem> Lines { get; set; }
+        public string Status => IsSuccess ? "OK" : "Error";
         public string GlobalErrorMessage { get; set; }
         public List<ConvertationError> ErrorMessageList { get; set; }
         public bool IsSuccess => GlobalErrorMessage == "" && (ErrorMessageList?.Count ?? 0) == 0;
@@ -31,7 +19,7 @@ namespace FilesConverter.Sales
         {
             if (IsSuccess)
             {
-                foreach (var lines in SaleLines)
+                foreach (var lines in Lines)
                 {
                     lines.Date = day;
                 }
@@ -43,14 +31,11 @@ namespace FilesConverter.Sales
         {
             if (IsSuccess)
             {
-                foreach (var lines in SaleLines)
+                foreach (var lines in Lines)
                 {
                     lines.Customer = customer;
                 }
             }
         }
-
-
-
     }
 }

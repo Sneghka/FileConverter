@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using FilesConverter.Errors;
+using FilesConverter.Result;
 using FilesConverter.Sales;
 using Microsoft.Office.Interop.Excel;
 
@@ -19,7 +20,7 @@ namespace FilesConverter.ErrorsForm
         /*private ConvertationError _error;
         private string _globalErrorMessage;*/
 
-        public ErrorsDescriptionForm(SalesResult selectedResult)
+        public ErrorsDescriptionForm(CommonResult selectedResult)
         {
             InitializeComponent();
             dataGridViewErrors.AutoGenerateColumns = false;
@@ -27,18 +28,18 @@ namespace FilesConverter.ErrorsForm
 
         }
 
-        private void Init(SalesResult selectedResult)
+        private void Init(CommonResult selectedResult)
         {
             InitErrors(selectedResult);
         }
 
-        private void InitErrors(SalesResult selectedResult)
+        private void InitErrors(CommonResult selectedResult)
         {
             _errorList = selectedResult.ErrorMessageList;
             dataGridViewErrors.DataSource = _errorList;
         }
 
-        public static void Show(SalesResult selectedResult)
+        public static void Show(CommonResult selectedResult)
         {
             var form = new ErrorsDescriptionForm(selectedResult);
             form.ShowDialog();

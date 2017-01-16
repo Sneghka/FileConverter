@@ -6,6 +6,7 @@ using FilesConverter.Sales;
 using System.Data;
 using System.IO;
 using System.Net.Cache;
+using FilesConverter.Result;
 
 namespace FilesConverter.SalesConverters
 {
@@ -37,13 +38,13 @@ namespace FilesConverter.SalesConverters
             return message;
         }
 
-        protected abstract List<SalesResultItem> ConvertRows(DataTable salesReport);
+        protected abstract List<IResultItem> ConvertRows(DataTable salesReport);
 
 
-        public SalesResult ConvertSalesReport(string path)
+        public CommonResult ConvertSalesReport(string path)
         {
             var salesReport = new DataTable();
-            var storedSales = new SalesResult();
+            var storedSales = new CommonResult();
             WorkWithExcel.ExcelFileToDataTable(out salesReport, path, Request);
 
             var columnNames = salesReport.Columns.Cast<DataColumn>()
@@ -53,10 +54,9 @@ namespace FilesConverter.SalesConverters
             storedSales.GlobalErrorMessage = CheckColumnNames(columnNames);
             if (!string.IsNullOrEmpty(storedSales.GlobalErrorMessage))
             {
-                
                 return storedSales;
             }
-            storedSales.SaleLines = ConvertRows(salesReport);
+            storedSales.Lines = ConvertRows(salesReport);
             storedSales.Name = Path.GetFileNameWithoutExtension(path);
             return storedSales;
         }

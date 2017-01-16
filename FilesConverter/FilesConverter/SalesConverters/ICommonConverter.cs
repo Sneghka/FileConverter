@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
+using FilesConverter.Result;
 using FilesConverter.Sales;
 
 namespace FilesConverter.SalesConverters
 
 {
-    public interface ISalesConverter
+    public interface ICommonConverter
     {
-        SalesResult ConvertSalesReport(string path);
+        CommonResult ConvertSalesReport(string path);
        
     }
 }

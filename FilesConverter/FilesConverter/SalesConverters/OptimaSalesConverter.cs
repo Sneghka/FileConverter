@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using FilesConverter.Result;
 using FilesConverter.Sales;
 
 namespace FilesConverter.SalesConverters
 {
-    public class OptimaSalesConverter : BaseConverter, ISalesConverter
+    public class OptimaSalesConverter : BaseConverter, ICommonConverter
     {
         public OptimaSalesConverter(DateTime data, string customer) : base( data, customer)
         {
@@ -13,7 +14,7 @@ namespace FilesConverter.SalesConverters
             Request = "select * from [Страница 1$]";
         }
 
-        protected override List<SalesResultItem> ConvertRows(DataTable salesReport)
+        protected override List<IResultItem> ConvertRows(DataTable salesReport)
         {
             var property = new List<SalesResultItem>();
             foreach (DataRow row in salesReport.Rows)
@@ -33,7 +34,7 @@ namespace FilesConverter.SalesConverters
                 };
                 property.Add(storedSalesRow);
             }
-            return property;
+            return new List<IResultItem>(property);
         }
     }
 }

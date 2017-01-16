@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using FilesConverter.Result;
 using FilesConverter.Sales;
 
 namespace FilesConverter.SalesConverters
 {
-    public class VentaSalesConverter : BaseConverter, ISalesConverter
+    public class VentaSalesConverter : BaseConverter, ICommonConverter
     {
 
         public VentaSalesConverter(DateTime data, string customer) : base( data, customer)
@@ -14,9 +15,9 @@ namespace FilesConverter.SalesConverters
             Request = "select * from [Sheet1$]";
         }
 
-        protected override List<SalesResultItem> ConvertRows(DataTable salesReport)
+        protected override List<IResultItem> ConvertRows(DataTable salesReport)
         {
-            var property = new List<SalesResultItem>();
+            var property = new List<IResultItem>();
             foreach (DataRow row in salesReport.Rows)
             {
                 var storedSalesRow = new SalesResultItem
@@ -34,7 +35,7 @@ namespace FilesConverter.SalesConverters
                 };
                 property.Add(storedSalesRow);
             }
-            return property;
+            return  property; 
         }
     }
 }

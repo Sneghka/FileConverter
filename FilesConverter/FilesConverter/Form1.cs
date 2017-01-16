@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using FilesConverter.ErrorsForm;
+using FilesConverter.Result;
 using FilesConverter.Rules;
 using FilesConverter.Sales;
 using FilesConverter.SalesConverters;
@@ -19,8 +20,8 @@ namespace FilesConverter
 {
     public partial class Form1 : Form
     {
-        private SalesResult _selectedResult;
-        private SalesResult SelectedResult
+        private CommonResult _selectedResult;
+        private CommonResult SelectedResult
         {
             get
             {
@@ -165,7 +166,7 @@ namespace FilesConverter
         private void dataGridView1_SelectionChanged(object sender, EventArgs e)
         {
             if (dataGridView1.SelectedRows.Count == 0) return;
-            _selectedResult = (SalesResult)dataGridView1.SelectedRows[0].DataBoundItem;
+            _selectedResult = (CommonResult)dataGridView1.SelectedRows[0].DataBoundItem;
         }
 
         private void dataGridView1_DoubleClick(object sender, EventArgs e)

@@ -56,12 +56,13 @@
     </Compile>
     <Compile Include="Errors\ConvertationError.cs" />
     <Compile Include="Errors\ConvertationErrorsList.cs" />
+    <Compile Include="Result\IResultItem.cs" />
     <Compile Include="SalesConverters\BaseConverter.cs" />
     <Compile Include="SalesConverters\ConverterFactory.cs" />
     <Compile Include="SalesConverters\FramkoSalesConverter.cs" />
     <Compile Include="SalesConverters\OptimaSalesConverter.cs" />
     <Compile Include="SalesConverters\PharmPlanetaNSalesConverter.cs" />
-    <Compile Include="Sales\SalesResult.cs" />
+    <Compile Include="Result\CommonResult.cs" />
     <Compile Include="Sales\SalesResultItem.cs" />
     <Compile Include="SalesConverters\BadmSalesConverter.cs" />
     <Compile Include="SalesConverters\FarmacoSalesConverter.cs" />
@@ -77,8 +78,12 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SalesConverters\ISalesConverter.cs" />
+    <Compile Include="SalesConverters\ICommonConverter.cs" />
     <Compile Include="Sales\SalesResultList.cs" />
+    <Compile Include="StocksConverter\BadmStocksConverter.cs" />
+    <Compile Include="StocksConverter\OptimaStocksConverter.cs" />
+    <Compile Include="Stock\StocksResultItem.cs" />
+    <Compile Include="Stock\StocksResultList.cs" />
     <Compile Include="WorkWithExcel.cs" />
     <Compile Include="WorkWithGridView.cs" />
     <EmbeddedResource Include="ErrorsForm\ErrorsDescriptionForm.resx">
@@ -138,9 +143,7 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Stock\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
