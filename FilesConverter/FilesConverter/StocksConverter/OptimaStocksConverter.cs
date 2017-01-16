@@ -21,10 +21,6 @@ namespace FilesConverter.StocksConverter
         protected override List<IResultItem> ConvertRows(DataTable stocksReport)
         {
             var columns = stocksReport.Columns;
-
-
-
-
             var property = new List<IResultItem>();
             foreach (DataRow row in stocksReport.Rows)
             {
@@ -45,6 +41,7 @@ namespace FilesConverter.StocksConverter
                     property.Add(storedSalesRow);
                 }
             }
+            property.Sort();
             return property;
         }
     }
