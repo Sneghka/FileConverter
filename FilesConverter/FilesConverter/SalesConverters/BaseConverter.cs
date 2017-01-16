@@ -5,6 +5,7 @@ using System.Text;
 using FilesConverter.Sales;
 using System.Data;
 using System.IO;
+using System.Net.Cache;
 
 namespace FilesConverter.SalesConverters
 {
@@ -13,7 +14,7 @@ namespace FilesConverter.SalesConverters
         protected string Customer;
         protected DateTime Date;
         public string ColumnNames { get; set; }
-
+        public string Request { get; set; }
 
         protected BaseConverter(DateTime data, string customer)
         {
@@ -38,11 +39,12 @@ namespace FilesConverter.SalesConverters
 
         protected abstract List<SalesResultItem> ConvertRows(DataTable salesReport);
 
-        public SalesResult ConvertSalesReport(string path, string request)
+
+        public SalesResult ConvertSalesReport(string path)
         {
             var salesReport = new DataTable();
             var storedSales = new SalesResult();
-            WorkWithExcel.ExcelFileToDataTable(out salesReport, path, request);
+            WorkWithExcel.ExcelFileToDataTable(out salesReport, path, Request);
 
             var columnNames = salesReport.Columns.Cast<DataColumn>()
                                  .Select(x => x.ColumnName);

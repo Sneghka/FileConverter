@@ -11,6 +11,7 @@ namespace FilesConverter.SalesConverters
         public VentaSalesConverter(DateTime data, string customer) : base( data, customer)
         {
             ColumnNames = "Область,Город,Товар,Код товара,Окпо,Клиент,Адрес дост#,Количество";
+            Request = "select * from [Sheet1$]";
         }
 
         protected override List<SalesResultItem> ConvertRows(DataTable salesReport)

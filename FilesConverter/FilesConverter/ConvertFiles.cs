@@ -36,7 +36,8 @@ namespace FilesConverter
                         continue;
                     }
 
-                    var salesResult = converter.ConvertSalesReport(file, "select * from [Sheet1$]");
+                    var salesResult = converter.ConvertSalesReport(file);
+                    
 
                     if (string.IsNullOrEmpty(salesResult.GlobalErrorMessage))
                     {

@@ -11,6 +11,7 @@ namespace FilesConverter.SalesConverters
         public FramkoSalesConverter(DateTime data, string customer) : base( data, customer)
         {
             ColumnNames = "Область,Город,Товар,КодОКПО,Клиент,Улица,Количество";
+            Request = "select * from [Клиентский отчет$]";
         }
 
         protected override List<SalesResultItem> ConvertRows(DataTable salesReport)

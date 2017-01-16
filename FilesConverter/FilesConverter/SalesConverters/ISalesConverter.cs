@@ -6,7 +6,7 @@ namespace FilesConverter.SalesConverters
 {
     public interface ISalesConverter
     {
-        SalesResult ConvertSalesReport(string path, string request);
+        SalesResult ConvertSalesReport(string path);
        
     }
 }

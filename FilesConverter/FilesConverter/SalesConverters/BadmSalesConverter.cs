@@ -14,6 +14,7 @@ namespace FilesConverter.SalesConverters
         public BadmSalesConverter(DateTime data, string customer) : base(data, customer)
         {
             ColumnNames = "Область,Город,Товар,Код товара,ОКПО клиента,Клиент,Факт#адрес доставки,Количество";
+            Request = "select * from [Badm$]";
         }
 
         protected override  List<SalesResultItem> ConvertRows(DataTable salesReport)

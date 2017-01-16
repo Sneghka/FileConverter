@@ -10,6 +10,7 @@ namespace FilesConverter.SalesConverters
         public OptimaSalesConverter(DateTime data, string customer) : base( data, customer)
         {
             ColumnNames = "Область,Город,Товар,Код товара,ОКПО,Дебитор доставки,Продажи шт";
+            Request = "select * from [Страница 1$]";
         }
 
         protected override List<SalesResultItem> ConvertRows(DataTable salesReport)

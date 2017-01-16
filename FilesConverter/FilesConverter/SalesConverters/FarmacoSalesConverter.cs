@@ -10,6 +10,7 @@ namespace FilesConverter.SalesConverters
         public FarmacoSalesConverter(DateTime data, string customer) : base( data, customer)
         {
             ColumnNames = "Область,Наименование товара,ОКПО покупателя,Покупатель,Адрес доставки,Количество проданных уп#";
+            Request = "select * from [report_202$]";
         }
 
         protected override List<SalesResultItem> ConvertRows(DataTable salesReport)

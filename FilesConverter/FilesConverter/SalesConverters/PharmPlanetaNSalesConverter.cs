@@ -10,6 +10,7 @@ namespace FilesConverter.SalesConverters
         public PharmPlanetaNSalesConverter(DateTime data, string customer) : base( data, customer)
         {
             ColumnNames = "Область1,Город1,Наименование,Артикул МЦ, ОКПО,НаимКлиента_,Адрес1,К-во";
+            Request = "select * from [Отчет о продажах поставщика дет$]";
         }
 
         protected override List<SalesResultItem> ConvertRows(DataTable salesReport)
