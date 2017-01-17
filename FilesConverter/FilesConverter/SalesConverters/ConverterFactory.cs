@@ -1,4 +1,5 @@
 ﻿using System;
+using FilesConverter.Stock;
 using FilesConverter.StocksConverter;
 
 namespace FilesConverter.SalesConverters
@@ -16,17 +17,23 @@ namespace FilesConverter.SalesConverters
             _customer = customer;
         }
         
-        public ICommonConverter GetConverter(string filename)
+        public ICommonConverter GetConverter(string filename, string directoryName)
         {
             var filenameSmall = filename.ToLower();
-            if (filenameSmall.IndexOf("badm") != -1 && filenameSmall.IndexOf("sales") != -1 ) return new BadmSalesConverter(_date, _customer);
-            if (filenameSmall.IndexOf("farmaco") != -1 &&  filenameSmall.IndexOf("sales") != -1) return new FarmacoSalesConverter(_date, _customer);
-            if (filenameSmall.IndexOf("framko") != - 1 && filenameSmall.IndexOf("sales") != -1) return new FramkoSalesConverter(_date, _customer);
-            if (filenameSmall.IndexOf("optima") != -1 && filenameSmall.IndexOf("sales") != -1) return new OptimaSalesConverter(_date, _customer);
-            if (filenameSmall.IndexOf("venta") != -1 && filenameSmall.IndexOf("sales") != -1) return new VentaSalesConverter(_date, _customer);
-            if (filenameSmall.IndexOf("pharmplaneta") != -1 && filenameSmall.IndexOf("sales") != -1) return new PharmPlanetaNSalesConverter(_date, _customer);
-            if (filenameSmall.IndexOf("badm") != -1 && filenameSmall.IndexOf("stocks") != -1) return new BadmStocksConverter(_date, _customer);
-            if (filenameSmall.IndexOf("optima") != -1 && filenameSmall.IndexOf("stocks") != -1) return new OptimaStocksConverter(_date, _customer);
+            var directoryNameSmall = directoryName.ToLower();
+
+            if (filenameSmall.IndexOf("badm") != -1 && directoryNameSmall.IndexOf("sales") != -1 ) return new BadmSalesConverter(_date, _customer);
+            if (filenameSmall.IndexOf("farmaco") != -1 && directoryNameSmall.IndexOf("sales") != -1) return new FarmacoSalesConverter(_date, _customer);
+            if (filenameSmall.IndexOf("framko") != - 1 && directoryNameSmall.IndexOf("sales") != -1) return new FramkoSalesConverter(_date, _customer);
+            if (filenameSmall.IndexOf("optima") != -1 && directoryNameSmall.IndexOf("sales") != -1) return new OptimaSalesConverter(_date, _customer);
+            if (filenameSmall.IndexOf("venta") != -1 && directoryNameSmall.IndexOf("sales") != -1) return new VentaSalesConverter(_date, _customer);
+            if (filenameSmall.IndexOf("pharmplaneta") != -1 && directoryNameSmall.IndexOf("sales") != -1) return new PharmPlanetaNSalesConverter(_date, _customer);
+            if (filenameSmall.IndexOf("badm") != -1 && directoryNameSmall.IndexOf("stock") != -1) return new BadmStocksConverter(_date, _customer);
+            if (filenameSmall.IndexOf("optima") != -1 && directoryNameSmall.IndexOf("stock") != -1) return new OptimaStocksConverter(_date, _customer);
+            if (filenameSmall.IndexOf("framko") != -1 && directoryNameSmall.IndexOf("stock") != -1) return new FramkoStocksConverter(_date, _customer);
+            if (filenameSmall.IndexOf("venta") != -1 && directoryNameSmall.IndexOf("stock") != -1) return new VentaStocksConverter(_date, _customer);
+            if (filenameSmall.IndexOf("pharmplaneta") != -1 && directoryNameSmall.IndexOf("stock") != -1) return new PharmPlanetaNStocksConverter(_date, _customer);
+            if (filenameSmall.IndexOf("farmaco") != -1 && directoryNameSmall.IndexOf("stock") != -1) return new FarmacoStocksConverter(_date, _customer);
 
             return null;
         }

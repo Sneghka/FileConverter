@@ -11,7 +11,7 @@ using FilesConverter.SalesConverters;
 
 namespace FilesConverter.Sales
 {
-    public class SalesResultList 
+    public class CommonResultList 
     {
         public List<CommonResult> ResultList { get; set; }
         public string PathForSaving { get; set; }

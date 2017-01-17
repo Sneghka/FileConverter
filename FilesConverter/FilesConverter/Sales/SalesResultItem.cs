@@ -8,6 +8,7 @@ namespace FilesConverter.Sales
 {
     public class SalesResultItem : IResultItem
     {
+        private const string ExcelColumnsName = "Заказчик,Дистрибьютор,Период,Год,Товар,Область,Город,Код ОКПО,Клиент с адресом,Дата,Код товара,Кол-во упаковок";
 
         public string Customer { get; set; }
         public string Distributor { get; set; }
@@ -27,7 +28,13 @@ namespace FilesConverter.Sales
         public DateTime Date { get; set; }
         public string ItemCode { get; set; }
         public int? Upakovki { get; set; }
+        
 
+
+        public string[] GetColunmsNameForExcel()
+        {
+            return ExcelColumnsName.Split(',');
+        }
 
         public string LineErrorMessage()
         {

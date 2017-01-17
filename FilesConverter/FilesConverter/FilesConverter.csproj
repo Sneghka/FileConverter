@@ -79,11 +79,14 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SalesConverters\ICommonConverter.cs" />
-    <Compile Include="Sales\SalesResultList.cs" />
+    <Compile Include="Sales\CommonResultList.cs" />
     <Compile Include="StocksConverter\BadmStocksConverter.cs" />
+    <Compile Include="StocksConverter\FarmacoStocksConverter.cs" />
+    <Compile Include="StocksConverter\FramkoStocksConverter.cs" />
     <Compile Include="StocksConverter\OptimaStocksConverter.cs" />
+    <Compile Include="StocksConverter\VentaStocksConverter.cs" />
+    <Compile Include="StocksConverter\PharmPlanetaNStocksConverter.cs" />
     <Compile Include="Stock\StocksResultItem.cs" />
-    <Compile Include="Stock\StocksResultList.cs" />
     <Compile Include="WorkWithExcel.cs" />
     <Compile Include="WorkWithGridView.cs" />
     <EmbeddedResource Include="ErrorsForm\ErrorsDescriptionForm.resx">

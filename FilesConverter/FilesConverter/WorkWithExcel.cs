@@ -39,40 +39,14 @@ namespace FilesConverter
             Workbook wb = myApp.Workbooks.Add(XlWBATemplate.xlWBATWorksheet);
             Worksheet ws = (Worksheet)wb.Worksheets[1];
 
-            PropertyInfo[] properties = {} ;
-          
-            if (list[0] is SalesResultItem)
-            {
-                ws.Cells[1, 1] = "Заказчик";
-                ws.Cells[1, 2] = "Дистрибьютор";
-                ws.Cells[1, 3] = "Период";
-                ws.Cells[1, 4] = "Год";
-                ws.Cells[1, 5] = "Товар";
-                ws.Cells[1, 6] = "Область";
-                ws.Cells[1, 7] = "Город";
-                ws.Cells[1, 8] = "Код ОКПО";
-                ws.Cells[1, 9] = "Клиент с адресом";
-                ws.Cells[1, 10] = "Дата";
-                ws.Cells[1, 11] = "Код товара";
-                ws.Cells[1, 12] = "Кол-во упаковок";
+            var columnNames = list[0].GetColunmsNameForExcel();
 
-                properties = typeof(SalesResultItem).GetProperties();
+            for (int i = 0; i < columnNames.Length; i++)
+            {
+                ws.Cells[1, i + 1] = columnNames[i];
             }
 
-            if (list[0] is StocksResultItem)
-            {
-                ws.Cells[1, 1] = "Заказчик";
-                ws.Cells[1, 2] = "Дистрибьютор";
-                ws.Cells[1, 3] = "Период";
-                ws.Cells[1, 4] = "Год";
-                ws.Cells[1, 5] = "Наименование товара";
-                ws.Cells[1, 6] = "Код товара";
-                ws.Cells[1, 7] = "Адрес склада";
-                ws.Cells[1, 8] = "Дата";
-                ws.Cells[1, 9] = "Остаток";
-
-                properties = typeof(StocksResultItem).GetProperties();
-            }
+            PropertyInfo[] properties = list[0].GetType().GetProperties();
 
             var topRow = 2;
             object[,] arr = new object[list.Count, properties.Length];

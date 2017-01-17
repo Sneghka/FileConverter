@@ -21,7 +21,7 @@ namespace FilesConverter.StocksConverter
         protected override List<IResultItem> ConvertRows(DataTable stocksReport)
         {
             var columns = stocksReport.Columns;
-            var property = new List<IResultItem>();
+            var commonResultLines = new List<IResultItem>();
             foreach (DataRow row in stocksReport.Rows)
             {
                 for (int j = 2; j < columns.Count; j++)
@@ -38,11 +38,11 @@ namespace FilesConverter.StocksConverter
                         Upakovki = int.TryParse(row[columns[j].Caption].ToString(), out i) ? i : (int?)null
 
                     };
-                    property.Add(storedSalesRow);
+                    commonResultLines.Add(storedSalesRow);
                 }
             }
-            property.Sort();
-            return property;
+            //commonResultLines.Sort();
+            return commonResultLines;
         }
     }
 }

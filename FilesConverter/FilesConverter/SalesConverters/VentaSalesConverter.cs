@@ -17,7 +17,7 @@ namespace FilesConverter.SalesConverters
 
         protected override List<IResultItem> ConvertRows(DataTable salesReport)
         {
-            var property = new List<IResultItem>();
+            var commonResultLines = new List<IResultItem>();
             foreach (DataRow row in salesReport.Rows)
             {
                 var storedSalesRow = new SalesResultItem
@@ -33,9 +33,9 @@ namespace FilesConverter.SalesConverters
                     DistributorsClientPlusAdress = row["Клиент"] + " " + row["Адрес дост#"],
                     Upakovki = Convert.ToInt32(row["Количество"])
                 };
-                property.Add(storedSalesRow);
+                commonResultLines.Add(storedSalesRow);
             }
-            return  property; 
+            return  commonResultLines; 
         }
     }
 }

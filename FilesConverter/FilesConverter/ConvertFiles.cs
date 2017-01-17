@@ -26,7 +26,10 @@ namespace FilesConverter
                 try
                 {
                     var name = Path.GetFileNameWithoutExtension(file);
-                    var converter = factory.GetConverter(name);
+                   var dirName = new DirectoryInfo(Path.GetDirectoryName(file)).Name;
+
+                 
+                    var converter = factory.GetConverter(name, dirName);
                     if (converter == null)
                     {
                         resultList.Add(new CommonResult

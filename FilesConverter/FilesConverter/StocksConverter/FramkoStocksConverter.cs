@@ -5,18 +5,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using FilesConverter.Result;
-using FilesConverter.Sales;
-using FilesConverter.Stock;
 using FilesConverter.SalesConverters;
+using FilesConverter.Stock;
 
 namespace FilesConverter.StocksConverter
 {
-    public class BadmStocksConverter : BaseConverter, ICommonConverter
+    public class FramkoStocksConverter : BaseConverter, ICommonConverter
     {
-        public BadmStocksConverter(DateTime data, string customer) : base(data, customer)
+        public FramkoStocksConverter(DateTime data, string customer) : base(data, customer)
         {
-            ColumnNames = "Товар,Код товара,Филиал,Количество доступное";
-            Request = "select * from [Badm$]";
+            ColumnNames = "Товар,Склад,Остаток на конец";
+            Request = "select * from [Оборот товаров$]";
         }
 
         protected override List<IResultItem> ConvertRows(DataTable salesReport)
@@ -28,12 +27,11 @@ namespace FilesConverter.StocksConverter
                 var storedSalesRow = new StocksResultItem
                 {
                     Customer = Customer,
-                    Distributor = "Бадм",
-                    AdressSklada = "Бадм" + " " + row["Филиал"],
+                    Distributor = "Фрамко",
+                    AdressSklada = "Фрамко" + " " + row["Склад"],
                     Date = Date.Date,
                     ItemName = row["Товар"].ToString(),
-                    ItemCode = row["Код товара"].ToString(),
-                    Upakovki = int.TryParse(row["Количество доступное"].ToString(), out i) ? i : (int?)null
+                   Upakovki = int.TryParse(row["Остаток на конец"].ToString(), out i) ? i : (int?)null
 
                 };
                 commonResultLines.Add(storedSalesRow);

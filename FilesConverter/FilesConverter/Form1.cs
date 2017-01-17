@@ -13,6 +13,7 @@ using FilesConverter.ErrorsForm;
 using FilesConverter.Result;
 using FilesConverter.Rules;
 using FilesConverter.Sales;
+using System.Reflection;
 using FilesConverter.SalesConverters;
 
 
@@ -29,15 +30,30 @@ namespace FilesConverter
             }
         }
         private List<ExchangeRule> _rules = new List<ExchangeRule>();
-        private SalesResultList _salesResultList = new SalesResultList();
+        private CommonResultList _commonResultList = new CommonResultList();
+        private List<CommonResult> _commonResultResulList = new List<CommonResult>();
 
         public void ClearForm()
         {
-            _salesResultList.ResultList.Clear();
-            _salesResultList.PathForSaving = string.Empty;
+            _commonResultList.ResultList.Clear();
+            _commonResultList.PathForSaving = string.Empty;
             Controls.Clear();
             InitializeComponent();
             _rules.Clear();
+        }
+
+        public void ChangeOrAddCommonResultToCommonResultList(List<string> pathsList )
+        {
+            if (_commonResultList.ResultList != null)
+            {
+                foreach (var path in pathsList)
+                {
+                    for (int i = _commonResultList.ResultList.Count - 1; i >= 0; i--)
+                    {
+                        if (path == _commonResultList.ResultList[i].FilePath) _commonResultList.ResultList.Remove(_commonResultList.ResultList[i]);
+                    }
+                }
+            }
         }
 
         public Form1()
@@ -58,9 +74,9 @@ namespace FilesConverter
                 }
             }
 
-            if (_salesResultList.ResultList != null)
+            if (_commonResultList.ResultList != null)
             {
-                foreach (var salesResult in _salesResultList.ResultList)
+                foreach (var salesResult in _commonResultList.ResultList)
                 {
                     salesResult.ChangeDate(dateTimePicker1.Value);
                 }
@@ -75,14 +91,19 @@ namespace FilesConverter
             dialog.Multiselect = true;
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                List<string> pathsList = (from f in dialog.FileNames
+                List<string> pathsList = (from f in dialog.FileNames 
                                           select f).ToList();
 
+                ChangeOrAddCommonResultToCommonResultList(pathsList);
+               
                 var convertFiles = new ConvertFiles();
-                _salesResultList.ResultList = convertFiles.ConvertSalesFiles(pathsList, dateTimePicker1.Value, boxCustomer.Text); //convert to view
+
+                _commonResultResulList.AddRange(convertFiles.ConvertSalesFiles(pathsList, dateTimePicker1.Value, boxCustomer.Text));
+                _commonResultList.ResultList = _commonResultResulList;
 
                 var gridView = new WorkWithGridView();
-                gridView.AddDataToGridView(dataGridView1, _salesResultList);
+                gridView.AddDataToGridView(dataGridView1, _commonResultList);
+
             }
         }
 
@@ -96,7 +117,7 @@ namespace FilesConverter
             {
                 var path = fbd.SelectedPath;
                 textBoxFolderForSaving.Text = path;
-                _salesResultList.PathForSaving = path;
+                _commonResultList.PathForSaving = path;
             }
         }
 
@@ -122,7 +143,7 @@ namespace FilesConverter
                 }
             }
 
-            var convertedFiles = _salesResultList.ResultList;
+            var convertedFiles = _commonResultList.ResultList;
             var convertFiles = new ConvertFiles();
             convertFiles.SendResultToExcel(convertedFiles, textBoxFolderForSaving.Text, _rules);
 
@@ -149,9 +170,9 @@ namespace FilesConverter
         private void boxCustomer_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (boxCustomer.Text.Length > 0) btnUploadSales.Enabled = true;
-            if (_salesResultList.ResultList != null)
+            if (_commonResultList.ResultList != null)
             {
-                foreach (var salesResult in _salesResultList.ResultList)
+                foreach (var salesResult in _commonResultList.ResultList)
                 {
                     salesResult.ChangeCustomer(boxCustomer.Text);
                 }
