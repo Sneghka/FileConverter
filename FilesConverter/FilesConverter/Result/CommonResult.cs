@@ -41,9 +41,9 @@ namespace FilesConverter.Result
 
         public void GetFolderForSaving()
         {
-            var dirName = new DirectoryInfo(Path.GetDirectoryName(FilePath)).ToString();
-            var folderForConvertedFiles = dirName.ToLower() == "sales" ? "Преобразование Sales" : "Преобразование Stock";
-            FolderForSaving = Path.Combine(dirName, folderForConvertedFiles);
+            var dirName = new DirectoryInfo(Path.GetDirectoryName(FilePath));
+            var folderForConvertedFiles = dirName.Name.ToLower() == "sales" ? "Преобразование Sales" : "Преобразование Stock";
+            FolderForSaving = Path.Combine(dirName.ToString(), folderForConvertedFiles);
         }
     }
 }
