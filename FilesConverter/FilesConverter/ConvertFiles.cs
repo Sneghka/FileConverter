@@ -77,7 +77,7 @@ namespace FilesConverter
 
      
 
-        public void SendResultToExcel(List<CommonResult> commonResultList, string folderForSaving, List<ExchangeRule> rules)
+        public void SendResultToExcel(List<CommonResult> commonResultList, List<ExchangeRule> rules)
         {
             var quantLinesInExcelFile = 60000;
 
@@ -97,9 +97,13 @@ namespace FilesConverter
                 int j = 1;
                 while (ostatokRowNumber > 0)
                 {
-                    var chosenFolder = folderForSaving;
+                    if (string.IsNullOrEmpty(salesResult.FolderForSaving))
+                    {
+                        salesResult.GetFolderForSaving();
+                        Directory.CreateDirectory(salesResult.FolderForSaving);
+                    }
                     var name = (j==1) ? salesResult.Name : salesResult.Name + "_" + j;
-                    var pathForSaving = Path.Combine(chosenFolder, name);
+                    var pathForSaving = Path.Combine(salesResult.FolderForSaving, name);
                     var linesForWriting = ostatokRowNumber > quantLinesInExcelFile ? quantLinesInExcelFile : ostatokRowNumber;
                     var subList = salesResult.Lines.GetRange(currentIndex, linesForWriting);
                     currentIndex = currentIndex + linesForWriting;

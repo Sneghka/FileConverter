@@ -119,6 +119,11 @@ namespace FilesConverter
 
         private void btnChangeNameAndSave_Click(object sender, EventArgs e)
         {
+            foreach (var commonResult in _commonResultList.ResultList)
+            {
+                commonResult.FolderForSaving = _commonResultList.PathForSaving;
+            }
+
             if (_rules.Count == 0)
             {
                 DialogResult cancel = new DialogResult();
@@ -132,16 +137,14 @@ namespace FilesConverter
             if (string.IsNullOrEmpty(textBoxFolderForSaving.Text))
             {
                 DialogResult ok = new DialogResult();
-                ok = MessageBox.Show(Constants.FolderForSavingIsnotChoosen, "Внимание!!!", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                if (ok == DialogResult.OK)
-                {
-                    return;
-                }
+                ok = MessageBox.Show(Constants.FolderForSavingIsnotChoosen, "Внимание!!!", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
+               if(ok == DialogResult.Cancel) return;
             }
 
             var convertedFiles = _commonResultList.ResultList;
             var convertFiles = new ConvertFiles();
-            convertFiles.SendResultToExcel(convertedFiles, textBoxFolderForSaving.Text, _rules);
+
+            convertFiles.SendResultToExcel(convertedFiles, _rules);
 
             ClearForm();
 

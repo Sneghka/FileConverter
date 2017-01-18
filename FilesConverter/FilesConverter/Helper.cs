@@ -9,9 +9,9 @@ using FilesConverter.Sales;
 
 namespace FilesConverter
 {
-   public static class Helper
+    public static class Helper
     {
-        public static void ChangeItemName(List<ExchangeRule> rules, List<IResultItem> convertedFile )
+        public static void ChangeItemName(List<ExchangeRule> rules, List<IResultItem> convertedFile)
         {
             for (int i = 0; i < convertedFile.Count; i++)
             {

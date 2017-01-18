@@ -30,25 +30,25 @@
         {
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
             this.label1 = new System.Windows.Forms.Label();
             this.boxCustomer = new System.Windows.Forms.ComboBox();
             this.label2 = new System.Windows.Forms.Label();
             this.btnConvertAndSave = new System.Windows.Forms.Button();
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.label5 = new System.Windows.Forms.Label();
             this.btnUploadSales = new System.Windows.Forms.Button();
             this.textBoxFolderForSaving = new System.Windows.Forms.TextBox();
             this.btnChooseFolderForSaving = new System.Windows.Forms.Button();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.FilePath = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Information = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Others = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label3 = new System.Windows.Forms.Label();
             this.textBoxRulesPath = new System.Windows.Forms.TextBox();
             this.btnUploadRules = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.FilePath = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Information = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Others = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -61,9 +61,9 @@
             this.label1.Font = new System.Drawing.Font("Calibri", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label1.Location = new System.Drawing.Point(33, 12);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(145, 39);
+            this.label1.Size = new System.Drawing.Size(144, 39);
             this.label1.TabIndex = 0;
-            this.label1.Text = "Customer";
+            this.label1.Text = "Заказчик";
             // 
             // boxCustomer
             // 
@@ -89,18 +89,18 @@
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.25F);
             this.label2.Location = new System.Drawing.Point(478, 16);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(57, 25);
+            this.label2.Size = new System.Drawing.Size(62, 25);
             this.label2.TabIndex = 2;
-            this.label2.Text = "Date";
+            this.label2.Text = "Дата";
             // 
             // btnConvertAndSave
             // 
             this.btnConvertAndSave.Font = new System.Drawing.Font("Calibri", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnConvertAndSave.Location = new System.Drawing.Point(828, 573);
+            this.btnConvertAndSave.Location = new System.Drawing.Point(721, 573);
             this.btnConvertAndSave.Name = "btnConvertAndSave";
-            this.btnConvertAndSave.Size = new System.Drawing.Size(143, 44);
+            this.btnConvertAndSave.Size = new System.Drawing.Size(250, 44);
             this.btnConvertAndSave.TabIndex = 4;
-            this.btnConvertAndSave.Text = "Convert";
+            this.btnConvertAndSave.Text = "Конвертировать";
             this.btnConvertAndSave.UseVisualStyleBackColor = true;
             this.btnConvertAndSave.Click += new System.EventHandler(this.btnChangeNameAndSave_Click);
             // 
@@ -114,25 +114,15 @@
             this.dateTimePicker1.TabIndex = 7;
             this.dateTimePicker1.ValueChanged += new System.EventHandler(this.dateTimePicker1_ValueChanged);
             // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label5.Location = new System.Drawing.Point(21, 35);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(118, 24);
-            this.label5.TabIndex = 13;
-            this.label5.Text = "Upload sales";
-            // 
             // btnUploadSales
             // 
             this.btnUploadSales.Enabled = false;
             this.btnUploadSales.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnUploadSales.Location = new System.Drawing.Point(145, 28);
+            this.btnUploadSales.Location = new System.Drawing.Point(20, 28);
             this.btnUploadSales.Name = "btnUploadSales";
-            this.btnUploadSales.Size = new System.Drawing.Size(148, 31);
+            this.btnUploadSales.Size = new System.Drawing.Size(173, 31);
             this.btnUploadSales.TabIndex = 14;
-            this.btnUploadSales.Text = "Choose file";
+            this.btnUploadSales.Text = "Выбрать файлы";
             this.btnUploadSales.UseVisualStyleBackColor = true;
             this.btnUploadSales.Click += new System.EventHandler(this.btnUploadSales_Click);
             // 
@@ -151,7 +141,7 @@
             this.btnChooseFolderForSaving.Name = "btnChooseFolderForSaving";
             this.btnChooseFolderForSaving.Size = new System.Drawing.Size(198, 35);
             this.btnChooseFolderForSaving.TabIndex = 18;
-            this.btnChooseFolderForSaving.Text = "Choose folder for saving";
+            this.btnChooseFolderForSaving.Text = "Сохранить файлы\r\n";
             this.btnChooseFolderForSaving.UseVisualStyleBackColor = true;
             this.btnChooseFolderForSaving.Click += new System.EventHandler(this.btnChooseFolderForSaving_Click);
             // 
@@ -172,13 +162,12 @@
             this.tabPage1.Controls.Add(this.dataGridView1);
             this.tabPage1.Controls.Add(this.label3);
             this.tabPage1.Controls.Add(this.btnUploadSales);
-            this.tabPage1.Controls.Add(this.label5);
             this.tabPage1.Location = new System.Drawing.Point(4, 33);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
             this.tabPage1.Size = new System.Drawing.Size(921, 329);
             this.tabPage1.TabIndex = 0;
-            this.tabPage1.Text = "Converter";
+            this.tabPage1.Text = "Конвертер";
             // 
             // dataGridView1
             // 
@@ -187,6 +176,14 @@
             this.dataGridView1.AllowUserToOrderColumns = true;
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.dataGridView1.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle2.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle2.SelectionBackColor = System.Drawing.SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.dataGridView1.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.FilePath,
@@ -197,50 +194,24 @@
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.RowHeadersWidth = 25;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            dataGridViewCellStyle2.ForeColor = System.Drawing.Color.Black;
-            this.dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            dataGridViewCellStyle3.ForeColor = System.Drawing.Color.Black;
+            this.dataGridView1.RowsDefaultCellStyle = dataGridViewCellStyle3;
             this.dataGridView1.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.dataGridView1.Size = new System.Drawing.Size(875, 225);
             this.dataGridView1.TabIndex = 20;
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             this.dataGridView1.DoubleClick += new System.EventHandler(this.dataGridView1_DoubleClick);
             // 
-            // FilePath
-            // 
-            this.FilePath.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.FilePath.DataPropertyName = "FilePath";
-            this.FilePath.FillWeight = 189.1304F;
-            this.FilePath.HeaderText = "File";
-            this.FilePath.Name = "FilePath";
-            this.FilePath.ReadOnly = true;
-            // 
-            // Information
-            // 
-            this.Information.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.Information.DataPropertyName = "Status";
-            this.Information.HeaderText = "Status";
-            this.Information.Name = "Information";
-            this.Information.ReadOnly = true;
-            this.Information.Width = 85;
-            // 
-            // Others
-            // 
-            this.Others.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Others.DataPropertyName = "GlobalErrorMessage";
-            this.Others.HeaderText = "Information";
-            this.Others.Name = "Others";
-            this.Others.ReadOnly = true;
-            // 
             // label3
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(299, 38);
+            this.label3.Location = new System.Drawing.Point(198, 38);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(175, 13);
+            this.label3.Size = new System.Drawing.Size(182, 13);
             this.label3.TabIndex = 19;
-            this.label3.Text = "(заполните поля Customer и Date)";
+            this.label3.Text = "(заполните поля Заказчик и Дата)";
             // 
             // textBoxRulesPath
             // 
@@ -256,7 +227,7 @@
             this.btnUploadRules.Name = "btnUploadRules";
             this.btnUploadRules.Size = new System.Drawing.Size(198, 35);
             this.btnUploadRules.TabIndex = 23;
-            this.btnUploadRules.Text = "Upload rules";
+            this.btnUploadRules.Text = "Загрузить правила\r\n";
             this.btnUploadRules.UseVisualStyleBackColor = true;
             this.btnUploadRules.Click += new System.EventHandler(this.btnUploadRules_Click);
             // 
@@ -271,6 +242,32 @@
             this.groupBox1.Size = new System.Drawing.Size(743, 59);
             this.groupBox1.TabIndex = 24;
             this.groupBox1.TabStop = false;
+            // 
+            // FilePath
+            // 
+            this.FilePath.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.FilePath.DataPropertyName = "FilePath";
+            this.FilePath.FillWeight = 189.1304F;
+            this.FilePath.HeaderText = "Файл";
+            this.FilePath.Name = "FilePath";
+            this.FilePath.ReadOnly = true;
+            // 
+            // Information
+            // 
+            this.Information.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Information.DataPropertyName = "Status";
+            this.Information.HeaderText = "Статус";
+            this.Information.Name = "Information";
+            this.Information.ReadOnly = true;
+            this.Information.Width = 97;
+            // 
+            // Others
+            // 
+            this.Others.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Others.DataPropertyName = "GlobalErrorMessage";
+            this.Others.HeaderText = "Информация";
+            this.Others.Name = "Others";
+            this.Others.ReadOnly = true;
             // 
             // Form1
             // 
@@ -304,7 +301,6 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btnConvertAndSave;
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button btnUploadSales;
         private System.Windows.Forms.TextBox textBoxFolderForSaving;
         private System.Windows.Forms.Button btnChooseFolderForSaving;

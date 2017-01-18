@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using FilesConverter.Errors;
 
 namespace FilesConverter.Result
@@ -13,7 +14,7 @@ namespace FilesConverter.Result
         public string GlobalErrorMessage { get; set; }
         public List<ConvertationError> ErrorMessageList { get; set; }
         public bool IsSuccess => GlobalErrorMessage == "" && (ErrorMessageList?.Count ?? 0) == 0;
-
+        public string FolderForSaving { get; set; }
 
         public void ChangeDate(DateTime day)
         {
@@ -36,6 +37,13 @@ namespace FilesConverter.Result
                     lines.Customer = customer;
                 }
             }
+        }
+
+        public void GetFolderForSaving()
+        {
+            var dirName = new DirectoryInfo(Path.GetDirectoryName(FilePath)).ToString();
+            var folderForConvertedFiles = dirName.ToLower() == "sales" ? "Преобразование Sales" : "Преобразование Stock";
+            FolderForSaving = Path.Combine(dirName, folderForConvertedFiles);
         }
     }
 }
