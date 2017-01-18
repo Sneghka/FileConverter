@@ -14,12 +14,8 @@ namespace FilesConverter
         public void AddDataToGridView(DataGridView dataGridView1, CommonResultList resultListList)
         {
             dataGridView1.AutoGenerateColumns = false;
-
             dataGridView1.DataSource = null;
             dataGridView1.DataSource = resultListList.ResultList;
-           
-            
-            
         }
     }
 }

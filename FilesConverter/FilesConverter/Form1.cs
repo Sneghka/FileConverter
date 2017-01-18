@@ -31,7 +31,6 @@ namespace FilesConverter
         }
         private List<ExchangeRule> _rules = new List<ExchangeRule>();
         private CommonResultList _commonResultList = new CommonResultList();
-        private List<CommonResult> _commonResultResulList = new List<CommonResult>();
 
         public void ClearForm()
         {
@@ -42,16 +41,15 @@ namespace FilesConverter
             _rules.Clear();
         }
 
-        public void ChangeOrAddCommonResultToCommonResultList(List<string> pathsList )
+        public void RemoveDuplicateCommonResul(List<string> pathsList)
         {
-            if (_commonResultList.ResultList != null)
+            if (_commonResultList.ResultList == null) return;
+
+            foreach (var path in pathsList)
             {
-                foreach (var path in pathsList)
+                for (int i = _commonResultList.ResultList.Count - 1; i >= 0; i--)
                 {
-                    for (int i = _commonResultList.ResultList.Count - 1; i >= 0; i--)
-                    {
-                        if (path == _commonResultList.ResultList[i].FilePath) _commonResultList.ResultList.Remove(_commonResultList.ResultList[i]);
-                    }
+                    if (path == _commonResultList.ResultList[i].FilePath) _commonResultList.ResultList.Remove(_commonResultList.ResultList[i]);
                 }
             }
         }
@@ -91,19 +89,17 @@ namespace FilesConverter
             dialog.Multiselect = true;
             if (dialog.ShowDialog() == DialogResult.OK)
             {
-                List<string> pathsList = (from f in dialog.FileNames 
+                List<string> pathsList = (from f in dialog.FileNames
                                           select f).ToList();
 
-                ChangeOrAddCommonResultToCommonResultList(pathsList);
-               
+                RemoveDuplicateCommonResul(pathsList);
+
                 var convertFiles = new ConvertFiles();
 
-                _commonResultResulList.AddRange(convertFiles.ConvertSalesFiles(pathsList, dateTimePicker1.Value, boxCustomer.Text));
-                _commonResultList.ResultList = _commonResultResulList;
+                _commonResultList.ResultList.AddRange(convertFiles.ConvertSalesFiles(pathsList, dateTimePicker1.Value, boxCustomer.Text));
 
                 var gridView = new WorkWithGridView();
                 gridView.AddDataToGridView(dataGridView1, _commonResultList);
-
             }
         }
 

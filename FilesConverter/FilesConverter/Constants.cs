@@ -14,5 +14,7 @@ namespace FilesConverter
         public const string IncorrectRegionName = "Некорректное название области.";
         public const string IncorrectNameAndAdress = "Ячейка клиент с адресом пустая.";
         public const string IncorrectDate = "Выбранная дата больше сегодня";
+        public const string IncorrectItemName = "Не указано название препарата";
+        public const string IncorrectAdressSklada = "Адрес склада содержит только название дистрибьютора";
     }
 }

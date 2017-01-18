@@ -4,7 +4,7 @@ using FilesConverter.Errors;
 
 namespace FilesConverter.Result
 {
-    public class CommonResult 
+    public class CommonResult
     {
         public string Name { get; set; }
         public string FilePath { get; set; }

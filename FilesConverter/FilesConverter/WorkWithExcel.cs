@@ -39,14 +39,14 @@ namespace FilesConverter
             Workbook wb = myApp.Workbooks.Add(XlWBATemplate.xlWBATWorksheet);
             Worksheet ws = (Worksheet)wb.Worksheets[1];
 
-            var columnNames = list[0].GetColunmsNameForExcel();
-
-            for (int i = 0; i < columnNames.Length; i++)
-            {
-                ws.Cells[1, i + 1] = columnNames[i];
-            }
-
             PropertyInfo[] properties = list[0].GetType().GetProperties();
+
+            for (int i = 0; i < properties.Length; i++)
+            {
+                var attrs = properties[i].GetCustomAttributes(true);
+                ExcelColumnAttribute colName = attrs[0] as ExcelColumnAttribute;
+                ws.Cells[1, i + 1] = colName.Name;
+            }
 
             var topRow = 2;
             object[,] arr = new object[list.Count, properties.Length];

@@ -40,7 +40,7 @@ namespace FilesConverter.StocksConverter
                     commonResultLines.Add(storedSalesRow);
                 }
             }
-            commonResultLines.Sort();
+           /* commonResultLines.Sort();*/
             return commonResultLines;
         }
     }

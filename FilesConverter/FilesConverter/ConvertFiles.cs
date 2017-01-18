@@ -48,7 +48,7 @@ namespace FilesConverter
                         var errorMessageList = new List<ConvertationError>();
                         foreach (var line in commonResult.Lines)
                         {
-                            var errorMessage = line.LineErrorMessage();
+                            var errorMessage = line.GetLineErrorMessage();
                             if (!string.IsNullOrEmpty(errorMessage))
                             {
                                 var error = new ConvertationError();

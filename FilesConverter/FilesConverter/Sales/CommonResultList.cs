@@ -13,7 +13,7 @@ namespace FilesConverter.Sales
 {
     public class CommonResultList 
     {
-        public List<CommonResult> ResultList { get; set; }
+        public List<CommonResult> ResultList { get;} = new List<CommonResult>();
         public string PathForSaving { get; set; }
         
         

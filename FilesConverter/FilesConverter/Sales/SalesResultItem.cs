@@ -8,45 +8,55 @@ namespace FilesConverter.Sales
 {
     public class SalesResultItem : IResultItem
     {
-        private const string ExcelColumnsName = "Заказчик,Дистрибьютор,Период,Год,Товар,Область,Город,Код ОКПО,Клиент с адресом,Дата,Код товара,Кол-во упаковок";
-
+        
+        [ExcelColumn(Name = "Заказчик")]
         public string Customer { get; set; }
+        [ExcelColumn(Name = "Дистрибьютор")]
         public string Distributor { get; set; }
+        [ExcelColumn(Name = "Период")]
         public string Month
         {
-            get { return Date.ToString("MMMM"); }   // в таблице идёт в колонке под названием Период
+            get { return Date.ToString("MMMM"); }  
         }
+        [ExcelColumn(Name = "Год")]
         public int Year
         {
             get { return Date.Year; }
         }
+        [ExcelColumn(Name = "Товар")]
         public string ItemName { get; set; }
+        [ExcelColumn(Name = "Область")]
         public string Region { get; set; }
+        [ExcelColumn(Name = "Город")]
         public string City { get; set; }
+        [ExcelColumn(Name = "Код ОКПО")]
         public string OKPO { get; set; }
+        [ExcelColumn(Name = "Клиент с адресом")]
         public string DistributorsClientPlusAdress { get; set; }
+        [ExcelColumn(Name = "Дата")]
         public DateTime Date { get; set; }
+        [ExcelColumn(Name = "Код товара")]
         public string ItemCode { get; set; }
+        [ExcelColumn(Name = "Кол-во упаковок")]
         public int? Upakovki { get; set; }
-        
 
 
-        public string[] GetColunmsNameForExcel()
+
+
+        public string GetLineErrorMessage()
         {
-            return ExcelColumnsName.Split(',');
-        }
-
-        public string LineErrorMessage()
-        {
-           var messageList = new List<string>();
+            var messageList = new List<string>();
             var errorMessage = string.Empty;
 
             if (Upakovki == null)
             {
                 messageList.Add(Constants.UpakovkiCellIsEmpty);
             }
+            if (string.IsNullOrEmpty(ItemName))
+            {
+                messageList.Add(Constants.IncorrectItemName);
+            }
             if ((Region?.Length ?? 0) < 2 || !Regex.IsMatch(Region, @"[a-zA-Zа-яА-ЯіІїЇєЄ]{2,}"))
-            // @"^[a-zA-Zа-яА-ЯіІїЇєЄ.()\s.-]+$"
             {
                 messageList.Add(Constants.IncorrectRegionName);
             }
@@ -57,7 +67,7 @@ namespace FilesConverter.Sales
             }
             if (messageList.Count != 0)
             {
-                 errorMessage = string.Join("/", messageList);
+                errorMessage = string.Join("/", messageList);
             }
             return errorMessage;
         }
