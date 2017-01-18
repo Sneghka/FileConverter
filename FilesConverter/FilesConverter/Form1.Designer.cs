@@ -42,17 +42,21 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.FilePath = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Information = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Others = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.label3 = new System.Windows.Forms.Label();
             this.textBoxRulesPath = new System.Windows.Forms.TextBox();
             this.btnUploadRules = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.FilePath = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Information = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Others = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.statusBar1 = new System.Windows.Forms.StatusBar();
+            this.statusBarPanel1 = new System.Windows.Forms.StatusBarPanel();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.statusBarPanel1)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -95,8 +99,8 @@
             // 
             // btnConvertAndSave
             // 
-            this.btnConvertAndSave.Font = new System.Drawing.Font("Calibri", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.btnConvertAndSave.Location = new System.Drawing.Point(721, 573);
+            this.btnConvertAndSave.Font = new System.Drawing.Font("Calibri", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.btnConvertAndSave.Location = new System.Drawing.Point(717, 557);
             this.btnConvertAndSave.Name = "btnConvertAndSave";
             this.btnConvertAndSave.Size = new System.Drawing.Size(250, 44);
             this.btnConvertAndSave.TabIndex = 4;
@@ -203,6 +207,32 @@
             this.dataGridView1.SelectionChanged += new System.EventHandler(this.dataGridView1_SelectionChanged);
             this.dataGridView1.DoubleClick += new System.EventHandler(this.dataGridView1_DoubleClick);
             // 
+            // FilePath
+            // 
+            this.FilePath.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.FilePath.DataPropertyName = "FilePath";
+            this.FilePath.FillWeight = 189.1304F;
+            this.FilePath.HeaderText = "Файл";
+            this.FilePath.Name = "FilePath";
+            this.FilePath.ReadOnly = true;
+            // 
+            // Information
+            // 
+            this.Information.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
+            this.Information.DataPropertyName = "Status";
+            this.Information.HeaderText = "Статус";
+            this.Information.Name = "Information";
+            this.Information.ReadOnly = true;
+            this.Information.Width = 97;
+            // 
+            // Others
+            // 
+            this.Others.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this.Others.DataPropertyName = "GlobalErrorMessage";
+            this.Others.HeaderText = "Информация";
+            this.Others.Name = "Others";
+            this.Others.ReadOnly = true;
+            // 
             // label3
             // 
             this.label3.AutoSize = true;
@@ -243,37 +273,35 @@
             this.groupBox1.TabIndex = 24;
             this.groupBox1.TabStop = false;
             // 
-            // FilePath
+            // statusBar1
             // 
-            this.FilePath.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.FilePath.DataPropertyName = "FilePath";
-            this.FilePath.FillWeight = 189.1304F;
-            this.FilePath.HeaderText = "Файл";
-            this.FilePath.Name = "FilePath";
-            this.FilePath.ReadOnly = true;
+            this.statusBar1.Location = new System.Drawing.Point(0, 640);
+            this.statusBar1.Name = "statusBar1";
+            this.statusBar1.Panels.AddRange(new System.Windows.Forms.StatusBarPanel[] {
+            this.statusBarPanel1});
+            this.statusBar1.ShowPanels = true;
+            this.statusBar1.Size = new System.Drawing.Size(1011, 19);
+            this.statusBar1.TabIndex = 25;
             // 
-            // Information
+            // statusBarPanel1
             // 
-            this.Information.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.DisplayedCells;
-            this.Information.DataPropertyName = "Status";
-            this.Information.HeaderText = "Статус";
-            this.Information.Name = "Information";
-            this.Information.ReadOnly = true;
-            this.Information.Width = 97;
+            this.statusBarPanel1.Name = "statusBarPanel1";
+            this.statusBarPanel1.Width = 500;
             // 
-            // Others
+            // progressBar1
             // 
-            this.Others.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
-            this.Others.DataPropertyName = "GlobalErrorMessage";
-            this.Others.HeaderText = "Информация";
-            this.Others.Name = "Others";
-            this.Others.ReadOnly = true;
+            this.progressBar1.Location = new System.Drawing.Point(495, 640);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(516, 23);
+            this.progressBar1.TabIndex = 26;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1011, 629);
+            this.ClientSize = new System.Drawing.Size(1011, 659);
+            this.Controls.Add(this.progressBar1);
+            this.Controls.Add(this.statusBar1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.btnUploadRules);
             this.Controls.Add(this.textBoxRulesPath);
@@ -289,6 +317,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.statusBarPanel1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -314,6 +343,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn FilePath;
         private System.Windows.Forms.DataGridViewTextBoxColumn Information;
         private System.Windows.Forms.DataGridViewTextBoxColumn Others;
+        private System.Windows.Forms.StatusBar statusBar1;
+        private System.Windows.Forms.StatusBarPanel statusBarPanel1;
+        private System.Windows.Forms.ProgressBar progressBar1;
     }
 }
 

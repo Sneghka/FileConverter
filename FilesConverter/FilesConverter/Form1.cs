@@ -96,7 +96,7 @@ namespace FilesConverter
 
                 var convertFiles = new ConvertFiles();
 
-                _commonResultList.ResultList.AddRange(convertFiles.ConvertSalesFiles(pathsList, dateTimePicker1.Value, boxCustomer.Text));
+                _commonResultList.ResultList.AddRange(convertFiles.ConvertSalesFiles(pathsList, dateTimePicker1.Value, boxCustomer.Text, progressBar1, statusBar1));
 
                 var gridView = new WorkWithGridView();
                 gridView.AddDataToGridView(dataGridView1, _commonResultList);
@@ -138,13 +138,13 @@ namespace FilesConverter
             {
                 DialogResult ok = new DialogResult();
                 ok = MessageBox.Show(Constants.FolderForSavingIsnotChoosen, "Внимание!!!", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
-               if(ok == DialogResult.Cancel) return;
+                if (ok == DialogResult.Cancel) return;
             }
 
             var convertedFiles = _commonResultList.ResultList;
             var convertFiles = new ConvertFiles();
 
-            convertFiles.SendResultToExcel(convertedFiles, _rules);
+            convertFiles.SendResultToExcel(convertedFiles, _rules, progressBar1, statusBar1);
 
             ClearForm();
 

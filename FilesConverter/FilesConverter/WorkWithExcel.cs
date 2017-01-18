@@ -41,11 +41,20 @@ namespace FilesConverter
 
             PropertyInfo[] properties = list[0].GetType().GetProperties();
 
-            for (int i = 0; i < properties.Length; i++)
+            int i = 1;
+            foreach (var property in properties)
             {
-                var attrs = properties[i].GetCustomAttributes(true);
-                ExcelColumnAttribute colName = attrs[0] as ExcelColumnAttribute;
-                ws.Cells[1, i + 1] = colName.Name;
+                if (!Attribute.IsDefined(property, typeof(ExcelColumnAttribute))) continue;
+                var attrs = property.GetCustomAttributes(true);
+                foreach (var attr in attrs) 
+                {
+                    ExcelColumnAttribute attrColName1 = attr as ExcelColumnAttribute;
+                    if (attrColName1 != null)
+                    {
+                        ws.Cells[1, i] = attrColName1.Name;
+                    }
+                }
+                i++;
             }
 
             var topRow = 2;
