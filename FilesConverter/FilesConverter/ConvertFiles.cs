@@ -58,7 +58,7 @@ namespace FilesConverter
                                 error.RowNumber = commonResult.Lines.IndexOf(line) + 2;
                                 error.ErrorMessage = errorMessage;
                                 errorMessageList.Add(error);
-                                commonResult.GlobalErrorMessage = "Click row for details!";
+                                commonResult.GlobalErrorMessage = Constants.ShowErrorDetails;
                             }
                         }
                         commonResult.ErrorMessageList = errorMessageList;

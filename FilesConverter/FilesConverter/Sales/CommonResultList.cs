@@ -15,7 +15,32 @@ namespace FilesConverter.Sales
     {
         public List<CommonResult> ResultList { get;} = new List<CommonResult>();
         public string PathForSaving { get; set; }
-        
-        
+
+        public List<string> GetInformationForLogging()
+        {
+            var logStringList = new List<string>();
+
+            foreach (var commonResult in ResultList)
+            {
+                logStringList.Add(commonResult.FilePath + " - convertation " + commonResult.Status);
+                if (commonResult.IsSuccess) continue;
+                if (commonResult.GlobalErrorMessage != Constants.ShowErrorDetails)
+                {
+                    logStringList.Add("       " + commonResult.GlobalErrorMessage);
+                    continue;
+                }
+                foreach (var error in commonResult.ErrorMessageList)
+                {
+                    logStringList.Add("       " + error.RowNumber + " " + error.ErrorMessage);
+                }
+            }
+
+
+
+
+
+            return logStringList;
+        }
+
     }
 }

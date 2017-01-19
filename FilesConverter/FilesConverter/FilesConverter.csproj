@@ -57,6 +57,7 @@
     <Compile Include="Errors\ConvertationError.cs" />
     <Compile Include="Errors\ConvertationErrorsList.cs" />
     <Compile Include="ExcelColumnAttribute.cs" />
+    <Compile Include="LogWriter.cs" />
     <Compile Include="Result\IResultItem.cs" />
     <Compile Include="SalesConverters\BaseConverter.cs" />
     <Compile Include="SalesConverters\ConverterFactory.cs" />

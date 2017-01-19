@@ -146,6 +146,8 @@ namespace FilesConverter
 
             convertFiles.SendResultToExcel(convertedFiles, _rules, progressBar1, statusBar1);
 
+            new LogWriter(_commonResultList);
+
             ClearForm();
 
         }

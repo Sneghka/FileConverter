@@ -41,7 +41,6 @@ namespace FilesConverter.StocksConverter
                     commonResultLines.Add(storedSalesRow);
                 }
             }
-            //commonResultLines.Sort();
             return commonResultLines;
         }
     }

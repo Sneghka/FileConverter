@@ -10,7 +10,7 @@ using FilesConverter.Stock;
 
 namespace FilesConverter.StocksConverter
 {
-   public class VentaStocksConverter : BaseConverter, ICommonConverter
+    public class VentaStocksConverter : BaseConverter, ICommonConverter
     {
         public VentaStocksConverter(DateTime data, string customer) : base(data, customer)
         {
@@ -34,13 +34,12 @@ namespace FilesConverter.StocksConverter
                         AdressSklada = "Вента" + " " + columns[j].Caption,
                         Date = Date.Date,
                         ItemName = row["Наименование Препарата"].ToString(),
-                       Upakovki = int.TryParse(row[columns[j].Caption].ToString(), out i) ? i : (int?)null
+                        Upakovki = int.TryParse(row[columns[j].Caption].ToString(), out i) ? i : (int?)null
 
                     };
                     commonResultLines.Add(storedSalesRow);
                 }
             }
-           /* commonResultLines.Sort();*/
             return commonResultLines;
         }
     }
