@@ -43,7 +43,7 @@ namespace FilesConverter
                 var logMessageList = commonResultList.GetInformationForLogging();
                 foreach (var logMessage in logMessageList)
                 {
-                    txtWriter.WriteLine("  :{0}", logMessage);
+                    txtWriter.WriteLine("  {0}", logMessage);
                 }
                 txtWriter.WriteLine("-------------------------------");
             }

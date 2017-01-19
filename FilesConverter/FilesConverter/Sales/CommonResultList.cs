@@ -22,7 +22,7 @@ namespace FilesConverter.Sales
 
             foreach (var commonResult in ResultList)
             {
-                logStringList.Add(commonResult.FilePath + " - convertation " + commonResult.Status);
+                logStringList.Add(commonResult.FilePath + " - " + commonResult.Status);
                 if (commonResult.IsSuccess) continue;
                 if (commonResult.GlobalErrorMessage != Constants.ShowErrorDetails)
                 {
