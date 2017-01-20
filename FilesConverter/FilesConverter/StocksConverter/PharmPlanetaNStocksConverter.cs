@@ -15,7 +15,7 @@ namespace FilesConverter.StocksConverter
         public PharmPlanetaNStocksConverter(DateTime data, string customer) : base(data, customer)
         {
             ColumnNames = "Название товара,Склад,Количество";
-            Request = "select * from [остатки товара по поставщику$]";
+            Request = "select * from [остатки товара по поставщику (с$]";
         }
 
         protected override List<IResultItem> ConvertRows(DataTable salesReport)
@@ -23,8 +23,8 @@ namespace FilesConverter.StocksConverter
             var commonResultLines = new List<IResultItem>();
             foreach (DataRow row in salesReport.Rows)
             {
+               if(Helper.IsRowEmpty(row)) continue;
                 var skladStringArray = row["Склад"].ToString().Split(' ');
-                //var newArray1 = skladStringArray.Select(r => r!= "Винники" && r!= "Фармпланета" && r != "ФП" && r != "Осн").ToArray();
                 var newArray = from w in skladStringArray
                     where w != "Винники" && w != "Фармпланета" && w != "ФП" && w != "Осн"
                     select w;

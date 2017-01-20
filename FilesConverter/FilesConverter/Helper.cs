@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using FilesConverter.Result;
 using FilesConverter.Rules;
-using FilesConverter.Sales;
+
+
+
 
 namespace FilesConverter
 {
@@ -25,5 +29,11 @@ namespace FilesConverter
                 }
             }
         }
+
+        public static bool IsRowEmpty(DataRow row)
+        {
+            return row.ItemArray.All(item => item == DBNull.Value);
+        }
+        
     }
 }

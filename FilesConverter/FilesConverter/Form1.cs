@@ -94,7 +94,7 @@ namespace FilesConverter
 
                 RemoveDuplicateCommonResul(pathsList);
 
-                var convertFiles = new ConvertFiles();
+                var convertFiles = new FileConverter();
 
                 _commonResultList.ResultList.AddRange(convertFiles.ConvertSalesFiles(pathsList, dateTimePicker1.Value, boxCustomer.Text, progressBar1, statusBar1));
 
@@ -142,7 +142,7 @@ namespace FilesConverter
             }
 
             var convertedFiles = _commonResultList.ResultList;
-            var convertFiles = new ConvertFiles();
+            var convertFiles = new FileConverter();
 
             convertFiles.SendResultToExcel(convertedFiles, _rules, progressBar1, statusBar1);
 

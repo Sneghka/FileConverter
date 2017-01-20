@@ -24,6 +24,7 @@ namespace FilesConverter.StocksConverter
             var commonResultLines = new List<IResultItem>();
             foreach (DataRow row in stocksReport.Rows)
             {
+                if (Helper.IsRowEmpty(row)) continue;
                 for (int j = 2; j < columns.Count; j++)
                 {
                     int i;

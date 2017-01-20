@@ -23,6 +23,7 @@ namespace FilesConverter.StocksConverter
             var commonResultLines = new List<IResultItem>();
             foreach (DataRow row in salesReport.Rows)
             {
+                if (Helper.IsRowEmpty(row)) continue;
                 int i;
                 var storedSalesRow = new StocksResultItem
                 {

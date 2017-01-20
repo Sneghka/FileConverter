@@ -14,7 +14,7 @@ using FilesConverter.SalesConverters;
 
 namespace FilesConverter
 {
-    public class ConvertFiles
+    public class FileConverter
     {
         public List<CommonResult> ConvertSalesFiles(List<string> filesList, DateTime date, string customer, ProgressBar progressBar, StatusBar statusBar)
         {
@@ -51,7 +51,7 @@ namespace FilesConverter
                         var errorMessageList = new List<ConvertationError>();
                         foreach (var line in commonResult.Lines)
                         {
-                            var errorMessage = line.GetLineErrorMessage();
+                           var errorMessage = line.GetLineErrorMessage();
                             if (!string.IsNullOrEmpty(errorMessage))
                             {
                                 var error = new ConvertationError();

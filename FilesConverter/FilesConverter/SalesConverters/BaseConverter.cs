@@ -49,6 +49,7 @@ namespace FilesConverter.SalesConverters
 
             var columnNames = salesReport.Columns.Cast<DataColumn>()
                                  .Select(x => x.ColumnName);
+        
             storedSales.FilePath = path;
 
             storedSales.GlobalErrorMessage = CheckColumnNames(columnNames);

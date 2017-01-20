@@ -19,6 +19,7 @@ namespace FilesConverter.SalesConverters
             var commonResultLines = new List<IResultItem>();
             foreach (DataRow row in salesReport.Rows)
             {
+                if (Helper.IsRowEmpty(row)) continue;
                 var storedSalesRow = new SalesResultItem
                 {
                     Customer = Customer,
