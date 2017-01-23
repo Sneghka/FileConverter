@@ -38,7 +38,7 @@ namespace FilesConverter.Sales
         [ExcelColumn(Name = "Код товара")]
         public string ItemCode { get; set; }
         [ExcelColumn(Name = "Кол-во упаковок")]
-        public int? Upakovki { get; set; }
+        public decimal? Upakovki { get; set; }
 
 
 

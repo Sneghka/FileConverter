@@ -6,11 +6,11 @@ using FilesConverter.Sales;
 
 namespace FilesConverter.SalesConverters
 {
-    public class FarmacoSalesConverter :  BaseConverter, ICommonConverter
+    public class FarmacoSalesConverter : BaseConverter, ICommonConverter
     {
-        public FarmacoSalesConverter(DateTime data, string customer) : base( data, customer)
+        public FarmacoSalesConverter(DateTime data, string customer) : base(data, customer)
         {
-            ColumnNames = "Область,Наименование товара,ОКПО покупателя,Покупатель,Адрес доставки,Количество проданных уп#";
+            ColumnNames = "Область,Наименование товара,ОКПО покупателя,Покупатель,Адрес доставки,Количество проданных уп.";
             Request = "select * from [report_202$]";
         }
 
@@ -20,6 +20,7 @@ namespace FilesConverter.SalesConverters
             foreach (DataRow row in salesReport.Rows)
             {
                 if (Helper.IsRowEmpty(row)) continue;
+                decimal i;
                 var storedSalesRow = new SalesResultItem
                 {
                     Customer = Customer,
@@ -29,7 +30,8 @@ namespace FilesConverter.SalesConverters
                     ItemName = row["Наименование товара"].ToString(),
                     OKPO = row["ОКПО покупателя"].ToString(),
                     DistributorsClientPlusAdress = row["Покупатель"] + " " + row["Адрес доставки"],
-                    Upakovki = Convert.ToInt32(row["Количество проданных уп#"])
+                    Upakovki = decimal.TryParse(row["Количество проданных уп."].ToString(), out i) ? i : (decimal?)null
+
                 };
                 commonResultLines.Add(storedSalesRow);
             }

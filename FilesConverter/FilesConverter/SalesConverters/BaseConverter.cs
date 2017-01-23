@@ -44,14 +44,16 @@ namespace FilesConverter.SalesConverters
         public CommonResult ConvertSalesReport(string path)
         {
             var salesReport = new DataTable();
+           
             var storedSales = new CommonResult();
             WorkWithExcel.ExcelFileToDataTable(out salesReport, path, Request);
+            Helper.SetColumnsInDataTable(salesReport);
 
             var columnNames = salesReport.Columns.Cast<DataColumn>()
                                  .Select(x => x.ColumnName);
         
             storedSales.FilePath = path;
-
+           /* var z = salesReport.Rows;*/
             storedSales.GlobalErrorMessage = CheckColumnNames(columnNames);
             if (!string.IsNullOrEmpty(storedSales.GlobalErrorMessage))
             {

@@ -163,7 +163,18 @@ namespace FilesConverter
                 string path = dialog.FileName;
                 textBoxRulesPath.Text = path;
                 ExchangeRuleList ruleList = new ExchangeRuleList();
-                _rules = ruleList.GetChangingRules(path, "select * from [Sheet1$]");
+
+                try
+                {
+                    _rules = ruleList.GetChangingRules(path, "select * from [Лист1$]");
+                }
+                catch (Exception ex)
+                {
+                    DialogResult ok = new DialogResult();
+                    ok = MessageBox.Show(Constants.IncorrectChangeRuleFile + ex.Message, "Внимание!!!", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    textBoxRulesPath.Text = string.Empty;
+                    if (ok == DialogResult.OK) return;
+                }
             }
         }
 

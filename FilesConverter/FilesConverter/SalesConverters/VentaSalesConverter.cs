@@ -11,7 +11,7 @@ namespace FilesConverter.SalesConverters
 
         public VentaSalesConverter(DateTime data, string customer) : base( data, customer)
         {
-            ColumnNames = "Область,Город,Товар,Код товара,Окпо,Клиент,Адрес дост#,Количество";
+            ColumnNames = "Область,Город,Товар,Код товара,Окпо,Клиент,Адрес дост.,Количество";
             Request = "select * from [Sheet1$]";
         }
 
@@ -21,6 +21,7 @@ namespace FilesConverter.SalesConverters
             foreach (DataRow row in salesReport.Rows)
             {
                 if (Helper.IsRowEmpty(row)) continue;
+                decimal i;
                 var storedSalesRow = new SalesResultItem
                 {
                     Customer = Customer,
@@ -31,8 +32,8 @@ namespace FilesConverter.SalesConverters
                     ItemName = row["Товар"].ToString(),
                     ItemCode = row["Код товара"].ToString(),
                     OKPO = row["Окпо"].ToString(),
-                    DistributorsClientPlusAdress = row["Клиент"] + " " + row["Адрес дост#"],
-                    Upakovki = Convert.ToInt32(row["Количество"])
+                    DistributorsClientPlusAdress = row["Клиент"] + " " + row["Адрес дост."],
+                    Upakovki = decimal.TryParse(row["Количество"].ToString(), out i) ? i : (decimal?)null
                 };
                 commonResultLines.Add(storedSalesRow);
             }

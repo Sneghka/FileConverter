@@ -27,7 +27,7 @@ namespace FilesConverter.StocksConverter
                 if (Helper.IsRowEmpty(row)) continue;
                 for (int j = 2; j < columns.Count; j++)
                 {
-                    int i;
+                    decimal i;
                     var storedSalesRow = new StocksResultItem
                     {
                         Customer = Customer,
@@ -36,7 +36,7 @@ namespace FilesConverter.StocksConverter
                         Date = Date.Date,
                         ItemName = row["Товар"].ToString(),
                         ItemCode = row["Код товара"].ToString(),
-                        Upakovki = int.TryParse(row[columns[j].Caption].ToString(), out i) ? i : (int?)null
+                        Upakovki = decimal.TryParse(row[columns[j].Caption].ToString(), out i) ? i : (decimal?)null
 
                     };
                     commonResultLines.Add(storedSalesRow);

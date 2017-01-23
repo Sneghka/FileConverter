@@ -17,7 +17,7 @@ namespace FilesConverter
         {
             DataSet dsData = new DataSet();
 
-            string sConnStr = String.Format("Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties=\"{1};HDR=Yes\";", path, path.EndsWith(".xlsx") ? "Excel 12.0 Xml" : "Excel 8.0");
+            string sConnStr = String.Format("Provider=Microsoft.ACE.OLEDB.12.0;Data Source={0};Extended Properties=\"{1};HDR=No;IMEX=1;\";", path, path.EndsWith(".xlsx") ? "Excel 12.0 Xml" : "Excel 8.0");
             using (OleDbConnection connection = new OleDbConnection(sConnStr))
             {
                 connection.Open();
@@ -28,6 +28,7 @@ namespace FilesConverter
                 }
                 connection.Close();
             }
+
             dtData = dsData.Tables[0];
         }
 

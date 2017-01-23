@@ -18,9 +18,11 @@ namespace FilesConverter.SalesConverters
         protected override List<IResultItem> ConvertRows(DataTable salesReport)
         {
             var commonResultLines = new List<IResultItem>();
+
             foreach (DataRow row in salesReport.Rows)
             {
                 if (Helper.IsRowEmpty(row)) continue;
+                decimal i;
                 var storedSalesRow = new SalesResultItem
                 {
                     Customer = Customer,
@@ -31,7 +33,7 @@ namespace FilesConverter.SalesConverters
                     ItemName = row["Товар"].ToString(),
                     OKPO = row["КодОКПО"].ToString(),
                     DistributorsClientPlusAdress = row["Клиент"] + " " + row["Улица"],
-                    Upakovki = Convert.ToInt32(row["Количество"])
+                    Upakovki = decimal.TryParse(row["Количество"].ToString(), out i) ? i : (decimal?)null
                 };
                 commonResultLines.Add(storedSalesRow);
             }

@@ -30,7 +30,7 @@ namespace FilesConverter.StocksConverter
                     select w;
                 var sklad = string.Join(" ", newArray);
 
-                int i;
+                decimal i;
                 var storedSalesRow = new StocksResultItem
                 {
                     Customer = Customer,
@@ -38,7 +38,7 @@ namespace FilesConverter.StocksConverter
                     AdressSklada = "Фармпланета" + " " + sklad,
                     Date = Date.Date,
                     ItemName = row["Название товара"].ToString(),
-                    Upakovki = int.TryParse(row["Количество"].ToString(), out i) ? i : (int?)null
+                    Upakovki = decimal.TryParse(row["Количество"].ToString(), out i) ? i : (decimal?)null
 
                 };
                 commonResultLines.Add(storedSalesRow);

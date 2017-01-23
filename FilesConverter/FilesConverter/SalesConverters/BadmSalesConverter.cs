@@ -15,17 +15,17 @@ namespace FilesConverter.SalesConverters
 
         public BadmSalesConverter(DateTime data, string customer) : base(data, customer)
         {
-            ColumnNames = "Область,Город,Товар,Код товара,ОКПО клиента,Клиент,Факт#адрес доставки,Количество";
+            ColumnNames = "Область,Город,Товар,Код товара,ОКПО клиента,Клиент,Факт.адрес доставки,Количество,Производитель";
             Request = "select * from [Badm$]";
         }
 
-        protected override  List<IResultItem> ConvertRows(DataTable salesReport)
+        protected override List<IResultItem> ConvertRows(DataTable salesReport)
         {
             var commonResultLines = new List<IResultItem>();
             foreach (DataRow row in salesReport.Rows)
             {
                 if (Helper.IsRowEmpty(row)) continue;
-                int i;
+                decimal i;
                 var storedSalesRow = new SalesResultItem
                 {
                     Customer = Customer,
@@ -33,12 +33,12 @@ namespace FilesConverter.SalesConverters
                     Region = row["Область"].ToString(),
                     City = row["Город"].ToString(),
                     Date = Date.Date,
-                    ItemName = row["Товар"].ToString(),
+                    ItemName = row["Товар"] + " " + row["Производитель"],
                     ItemCode = row["Код товара"].ToString(),
                     OKPO = row["ОКПО клиента"].ToString(),
-                    DistributorsClientPlusAdress = row["Клиент"] + " " + row["Факт#адрес доставки"],
-                    Upakovki = int.TryParse(row["Количество"].ToString(), out i) ? i: (int?) null
-                    
+                    DistributorsClientPlusAdress = row["Клиент"] + " " + row["Факт.адрес доставки"],
+                    Upakovki = decimal.TryParse(row["Количество"].ToString(), out i) ? i : (decimal?)null
+
                 };
                 commonResultLines.Add(storedSalesRow);
             }

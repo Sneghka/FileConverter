@@ -20,6 +20,7 @@ namespace FilesConverter.SalesConverters
             foreach (DataRow row in salesReport.Rows)
             {
                 if (Helper.IsRowEmpty(row)) continue;
+                decimal i;
                 var storedSalesRow = new SalesResultItem
                 {
                     Customer = Customer,
@@ -31,7 +32,7 @@ namespace FilesConverter.SalesConverters
                     ItemCode = row["Код товара"].ToString(),
                     OKPO = row["ОКПО"].ToString(),
                     DistributorsClientPlusAdress = row["Дебитор доставки"].ToString(), // будет исправление после первого отчёта (пока нет колонки Адрес)
-                    Upakovki = Convert.ToInt32(row["Продажи шт"])
+                    Upakovki = decimal.TryParse(row["Продажи шт"].ToString(), out i) ? i : (decimal?)null
                 };
                 commonResultLines.Add(storedSalesRow);
             }

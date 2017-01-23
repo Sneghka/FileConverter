@@ -21,9 +21,10 @@ namespace FilesConverter
             {
                 foreach (var rule in rules)
                 {
-                    if (convertedFile[i].ItemName == rule.OldName)
+                    var currentName = convertedFile[i].ItemName;
+                    if (currentName.Contains(rule.OldName))
                     {
-                        convertedFile[i].ItemName = rule.NewName;
+                        convertedFile[i].ItemName = string.IsNullOrEmpty(currentName.Substring(rule.OldName.Length)) ? rule.NewName : rule.NewName + currentName.Substring(rule.OldName.Length);
                         break;
                     }
                 }
@@ -34,6 +35,17 @@ namespace FilesConverter
         {
             return row.ItemArray.All(item => item == DBNull.Value);
         }
-        
+
+        public static void SetColumnsInDataTable(DataTable dtTable)
+        {
+
+            for (int i = 0; i < dtTable.Rows[0].ItemArray.Length; i++)
+            {
+                dtTable.Columns[i].ColumnName = dtTable.Columns.Contains(dtTable.Rows[0].ItemArray[i].ToString()) ? dtTable.Rows[0].ItemArray[i].ToString()+1 : dtTable.Rows[0].ItemArray[i].ToString();
+            }
+            DataRow rowDel = dtTable.Rows[0];
+            dtTable.Rows.Remove(rowDel);
+        }
+
     }
 }

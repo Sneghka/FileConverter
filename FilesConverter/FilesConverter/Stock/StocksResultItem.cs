@@ -35,7 +35,7 @@ namespace FilesConverter.Stock
         public DateTime Date { get; set; }
 
         [ExcelColumn(Name = "Остаток")]
-        public int? Upakovki { get; set; }
+        public decimal? Upakovki { get; set; }
 
 
 

@@ -24,7 +24,7 @@ namespace FilesConverter.StocksConverter
             foreach (DataRow row in salesReport.Rows)
             {
                 if (Helper.IsRowEmpty(row)) continue;
-                int i;
+                decimal i;
                 var storedSalesRow = new StocksResultItem
                 {
                     Customer = Customer,
@@ -32,7 +32,7 @@ namespace FilesConverter.StocksConverter
                     AdressSklada = "Фрамко" + " " + row["Склад"],
                     Date = Date.Date,
                     ItemName = row["Товар"].ToString(),
-                   Upakovki = int.TryParse(row["Остаток на конец"].ToString(), out i) ? i : (int?)null
+                   Upakovki = decimal.TryParse(row["Остаток на конец"].ToString(), out i) ? i : (decimal?)null
 
                 };
                 commonResultLines.Add(storedSalesRow);
