@@ -29,7 +29,7 @@ namespace FilesConverter.SalesConverters
                     City = row["Город1"].ToString(), // из столбца "G"
                     Date = Date.Date,
                     ItemName = row["Наименование"] + " " + row["Производитель"],
-                    ItemCode = row["Артикул МЦ"].ToString(),
+                    /*ItemCode = row["Артикул МЦ"].ToString(),*/
                     OKPO = row[" ОКПО"].ToString(),
                     DistributorsClientPlusAdress = row["НаимКлиента\n"] + " " + row["Адрес1"], //"Адрес" (из столбца "Н")
                     Upakovki = decimal.TryParse(row["К-во"].ToString(), out i) ? i : (decimal?)null

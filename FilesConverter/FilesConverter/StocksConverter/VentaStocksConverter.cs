@@ -25,7 +25,7 @@ namespace FilesConverter.StocksConverter
             foreach (DataRow row in stocksReport.Rows)
             {
                 if (Helper.IsRowEmpty(row)) continue;
-                for (int j = 2; j < columns.Count; j++)
+                for (int j = 1; j < columns.Count; j++)
                 {
                     decimal i;
                     var storedSalesRow = new StocksResultItem

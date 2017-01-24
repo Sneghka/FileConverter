@@ -28,11 +28,12 @@ namespace FilesConverter.StocksConverter
                 for (int j = 2; j < columns.Count; j++)
                 {
                     decimal i;
+                    var filial = columns[j].Caption;
                     var storedSalesRow = new StocksResultItem
                     {
                         Customer = Customer,
                         Distributor = "Оптима",
-                        AdressSklada = "Оптима" + " " + columns[j].Caption,
+                        AdressSklada = filial == "Центральный офис" ? "Оптима Киевский офис" : "Оптима" + " " + columns[j].Caption,
                         Date = Date.Date,
                         ItemName = row["Товар"].ToString(),
                         ItemCode = row["Код товара"].ToString(),

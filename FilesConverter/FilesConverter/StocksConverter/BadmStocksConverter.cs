@@ -26,11 +26,12 @@ namespace FilesConverter.StocksConverter
             {
                 if (Helper.IsRowEmpty(row)) continue;
                 decimal i;
+                var filial = row["Филиал"].ToString();
                 var storedSalesRow = new StocksResultItem
                 {
                     Customer = Customer,
                     Distributor = "Бадм",
-                    AdressSklada = "Бадм" + " " + row["Филиал"],
+                    AdressSklada = filial == "РЦ" ? "Бадм РЦ Днепр" : "Бадм" + " " + filial,
                     Date = Date.Date,
                     ItemName = row["Товар"].ToString(),
                     ItemCode = row["Код товара"].ToString(),
