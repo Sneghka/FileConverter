@@ -137,7 +137,7 @@ namespace FilesConverter
             if (string.IsNullOrEmpty(textBoxFolderForSaving.Text))
             {
                 DialogResult ok = new DialogResult();
-                ok = MessageBox.Show(Constants.FolderForSavingIsnotChoosen, "Внимание!!!", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
+                ok = MessageBox.Show(Constants.FolderForSavingIsNotChoosen, "Внимание!!!", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
                 if (ok == DialogResult.Cancel) return;
             }
 
@@ -147,6 +147,8 @@ namespace FilesConverter
             convertFiles.SendResultToExcel(convertedFiles, _rules, progressBar1, statusBar1);
 
             new LogWriter(_commonResultList);
+
+            Helper.email_send("Converted files logger");
 
             ClearForm();
 

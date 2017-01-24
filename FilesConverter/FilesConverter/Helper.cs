@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Net.Mail;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using FilesConverter.Result;
@@ -41,10 +43,27 @@ namespace FilesConverter
 
             for (int i = 0; i < dtTable.Rows[0].ItemArray.Length; i++)
             {
-                dtTable.Columns[i].ColumnName = dtTable.Columns.Contains(dtTable.Rows[0].ItemArray[i].ToString()) ? dtTable.Rows[0].ItemArray[i].ToString()+1 : dtTable.Rows[0].ItemArray[i].ToString();
+                dtTable.Columns[i].ColumnName = dtTable.Columns.Contains(dtTable.Rows[0].ItemArray[i].ToString()) ? dtTable.Rows[0].ItemArray[i].ToString() + 1 : dtTable.Rows[0].ItemArray[i].ToString();
             }
             DataRow rowDel = dtTable.Rows[0];
             dtTable.Rows.Remove(rowDel);
+        }
+
+        public static void email_send(string subject)
+        {
+            var mail = new MailMessage();
+            mail.IsBodyHtml = true;
+            var smtpServer = new SmtpClient("post.morion.ua");
+            mail.From = new MailAddress("snizhana.nomirovska@proximaresearch.com");
+            mail.To.Add("snizhana.nomirovska@proximaresearch.com");
+            mail.To.Add("sneghkan@i.ua");
+            mail.Subject = subject;
+            var logFilePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var fullLogFilePath = logFilePath + @"\" + "log.txt";
+            Attachment attachment = new Attachment(fullLogFilePath);
+            mail.Attachments.Add(attachment);
+            mail.Body = "";
+            smtpServer.Send(mail);
         }
 
     }
