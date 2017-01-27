@@ -49,7 +49,7 @@ namespace FilesConverter
             dtTable.Rows.Remove(rowDel);
         }
 
-        public static void email_send(string subject)
+        public static void email_send(string subject, string filePath)
         {
             var mail = new MailMessage();
             mail.IsBodyHtml = true;
@@ -58,9 +58,7 @@ namespace FilesConverter
             mail.To.Add("snizhana.nomirovska@proximaresearch.com");
             mail.To.Add("sneghkan@i.ua");
             mail.Subject = subject;
-            var logFilePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            var fullLogFilePath = logFilePath + @"\" + "log.txt";
-            Attachment attachment = new Attachment(fullLogFilePath);
+            Attachment attachment = new Attachment(filePath);
             mail.Attachments.Add(attachment);
             mail.Body = "";
             smtpServer.Send(mail);

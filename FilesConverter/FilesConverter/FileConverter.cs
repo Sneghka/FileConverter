@@ -85,11 +85,6 @@ namespace FilesConverter
 
         public void SendResultToExcel(List<CommonResult> commonResultList, List<ExchangeRule> rules, OneFileProcessed oneFileProcessed, FileNameChange fileNameChange)
         {
-            /*progressBar.Minimum = 1;
-            progressBar.Maximum = commonResultList.Count;
-            progressBar.Value = 1;
-            progressBar.Step = 1;*/
-
             var quantLinesInExcelFile = 60000;
             int counter = 1;
 
@@ -109,14 +104,14 @@ namespace FilesConverter
                 int j = 1;
                 while (ostatokRowNumber > 0)
                 {
+                    var dirName = new DirectoryInfo(Path.GetDirectoryName(commonResult.FilePath));
                     if (string.IsNullOrEmpty(commonResult.FolderForSaving))
                     {
-                        commonResult.GetFolderForSavingIfUserNotChoosePathForSaving();
+                        commonResult.GetFolderForSaving(dirName.ToString());
                     }
-
                     if (!string.IsNullOrEmpty(commonResult.FolderForSaving))
                     {
-                        commonResult.GetFolderForSavingIfUserChoosePathForSaving();
+                        commonResult.GetFolderForSaving(commonResult.FolderForSaving);
                     }
                     Directory.CreateDirectory(commonResult.FolderForSaving);
 
@@ -132,8 +127,6 @@ namespace FilesConverter
                 oneFileProcessed(commonResultList.Count, counter);
                 counter++;
                 fileNameChange(commonResult.FilePath);
-                /* progressBar.PerformStep();
-                 statusBar.Panels[0].Text = commonResult.FilePath;*/
             }
         }
     }

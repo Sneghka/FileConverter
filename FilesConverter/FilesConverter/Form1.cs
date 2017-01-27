@@ -14,6 +14,7 @@ using FilesConverter.Result;
 using FilesConverter.Rules;
 using FilesConverter.Sales;
 using System.Reflection;
+using System.Threading;
 using FilesConverter.SalesConverters;
 
 
@@ -166,7 +167,21 @@ namespace FilesConverter
 
             new LogWriter(_commonResultList);
 
-            Helper.email_send("Converted files logger");
+            var logFilePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var fullLogFilePath = logFilePath + @"\" + "log.txt";
+            var subject = Environment.MachineName + " / Converted files Jonson"; 
+
+            try
+            {
+                (new Thread(() => Helper.email_send(subject, fullLogFilePath))).Start();
+                
+            }
+            catch (Exception)
+            {
+                
+               
+            }
+           
 
             ClearForm();
 

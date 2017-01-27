@@ -39,19 +39,12 @@ namespace FilesConverter.Result
             }
         }
 
-        public void GetFolderForSavingIfUserNotChoosePathForSaving()
+        public void GetFolderForSaving(string pathPartOne)
         {
             var dirName = new DirectoryInfo(Path.GetDirectoryName(FilePath));
             var folderForConvertedFiles = dirName.Name.ToLower() == "sales" ? "Преобразование Sales" : "Преобразование Stock";
-            FolderForSaving = Path.Combine(dirName.ToString(), folderForConvertedFiles);
-        }
 
-        public void GetFolderForSavingIfUserChoosePathForSaving()
-        {
-            var dirName = new DirectoryInfo(Path.GetDirectoryName(FilePath)); // получаем путь откуда взяли файл
-            var folderForConvertedFiles = dirName.Name.ToLower() == "sales" ? "Преобразование Sales" : "Преобразование Stock"; // создаём правильную папку для сохранения
-            FolderForSaving = Path.Combine(FolderForSaving, folderForConvertedFiles);
-
+            FolderForSaving = Path.Combine(pathPartOne, folderForConvertedFiles);
         }
     }
 }
