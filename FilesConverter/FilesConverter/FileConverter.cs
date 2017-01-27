@@ -51,7 +51,7 @@ namespace FilesConverter
                         var errorMessageList = new List<ConvertationError>();
                         foreach (var line in commonResult.Lines)
                         {
-                           var errorMessage = line.GetLineErrorMessage();
+                            var errorMessage = line.GetLineErrorMessage();
                             if (!string.IsNullOrEmpty(errorMessage))
                             {
                                 var error = new ConvertationError();
@@ -109,9 +109,15 @@ namespace FilesConverter
                 {
                     if (string.IsNullOrEmpty(commonResult.FolderForSaving))
                     {
-                        commonResult.GetFolderForSaving();
-                        Directory.CreateDirectory(commonResult.FolderForSaving);
+                        commonResult.GetFolderForSavingIfUserNotChoosePathForSaving();
                     }
+
+                    if (!string.IsNullOrEmpty(commonResult.FolderForSaving))
+                    {
+                        commonResult.GetFolderForSavingIfUserChoosePathForSaving();
+                    }
+                    Directory.CreateDirectory(commonResult.FolderForSaving);
+
                     var name = (j == 1) ? commonResult.Name : commonResult.Name + "_" + j;
                     var pathForSaving = Path.Combine(commonResult.FolderForSaving, name);
                     var linesForWriting = ostatokRowNumber > quantLinesInExcelFile ? quantLinesInExcelFile : ostatokRowNumber;
