@@ -16,16 +16,16 @@ namespace FilesConverter
 {
     public class FileConverter
     {
-        public List<CommonResult> ConvertSalesFiles(List<string> filesList, DateTime date, string customer, ProgressBar progressBar, StatusBar statusBar)
+        public delegate void OneFileProcessed(int filesQuantity, int counter);
+
+        public delegate void FileNameChange(string fileName);
+
+        public List<CommonResult> ConvertSalesFiles(List<string> filesList, DateTime date, string customer, OneFileProcessed oneFileProcessed, FileNameChange fileNameChange)
         {
             var factory = new ConverterFactory(date.Date, customer);
             var resultList = new List<CommonResult>();
 
-            progressBar.Minimum = 1;
-            progressBar.Maximum = filesList.Count;
-            progressBar.Value = 1;
-            progressBar.Step = 1;
-
+            int counter = 1;
             foreach (var file in filesList)
             {
                 try
@@ -64,9 +64,10 @@ namespace FilesConverter
                         commonResult.ErrorMessageList = errorMessageList;
                     }
                     resultList.Add(commonResult);
-                    progressBar.PerformStep();
-                    statusBar.Panels[0].Text = file;
 
+                    oneFileProcessed(filesList.Count, counter);
+                    counter++;
+                    fileNameChange(file);
                 }
                 catch (Exception e)
                 {
@@ -82,14 +83,15 @@ namespace FilesConverter
 
 
 
-        public void SendResultToExcel(List<CommonResult> commonResultList, List<ExchangeRule> rules, ProgressBar progressBar, StatusBar statusBar)
+        public void SendResultToExcel(List<CommonResult> commonResultList, List<ExchangeRule> rules, OneFileProcessed oneFileProcessed, FileNameChange fileNameChange)
         {
-            progressBar.Minimum = 1;
+            /*progressBar.Minimum = 1;
             progressBar.Maximum = commonResultList.Count;
             progressBar.Value = 1;
-            progressBar.Step = 1;
+            progressBar.Step = 1;*/
 
             var quantLinesInExcelFile = 60000;
+            int counter = 1;
 
             foreach (var commonResult in commonResultList)
             {
@@ -127,8 +129,11 @@ namespace FilesConverter
                     WorkWithExcel.WriteDataToExcel(subList, pathForSaving);
                     j++;
                 }
-                progressBar.PerformStep();
-                statusBar.Panels[0].Text = commonResult.FilePath;
+                oneFileProcessed(commonResultList.Count, counter);
+                counter++;
+                fileNameChange(commonResult.FilePath);
+                /* progressBar.PerformStep();
+                 statusBar.Panels[0].Text = commonResult.FilePath;*/
             }
         }
     }

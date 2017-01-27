@@ -54,6 +54,20 @@ namespace FilesConverter
             }
         }
 
+        void InvokeProgressBar(int filesQuantity, int counter)
+        {
+            progressBar1.Minimum = 1;
+            progressBar1.Maximum = filesQuantity;
+            progressBar1.Value = counter;
+            progressBar1.Step = 1;
+            progressBar1.PerformStep();
+        }
+        void InvokeStatusBar(string fileName)
+        {
+           statusBar1.Panels[0].Text = fileName;
+        }
+
+
         public Form1()
         {
             InitializeComponent();
@@ -95,8 +109,10 @@ namespace FilesConverter
                 RemoveDuplicateCommonResul(pathsList);
 
                 var convertFiles = new FileConverter();
+                var oneProcessedFile = new FileConverter.OneFileProcessed(InvokeProgressBar);
+                var fileNameChange = new FileConverter.FileNameChange(InvokeStatusBar);
 
-                _commonResultList.ResultList.AddRange(convertFiles.ConvertSalesFiles(pathsList, dateTimePicker1.Value, boxCustomer.Text, progressBar1, statusBar1));
+               _commonResultList.ResultList.AddRange(convertFiles.ConvertSalesFiles(pathsList, dateTimePicker1.Value, boxCustomer.Text, oneProcessedFile, fileNameChange));
 
                 var gridView = new WorkWithGridView();
                 gridView.AddDataToGridView(dataGridView1, _commonResultList);
@@ -144,7 +160,9 @@ namespace FilesConverter
             var convertedFiles = _commonResultList.ResultList;
             var convertFiles = new FileConverter();
 
-            convertFiles.SendResultToExcel(convertedFiles, _rules, progressBar1, statusBar1);
+            var oneProcessedFile = new FileConverter.OneFileProcessed(InvokeProgressBar);
+            var fileNameChange = new FileConverter.FileNameChange(InvokeStatusBar);
+            convertFiles.SendResultToExcel(convertedFiles, _rules, oneProcessedFile, fileNameChange);
 
             new LogWriter(_commonResultList);
 
