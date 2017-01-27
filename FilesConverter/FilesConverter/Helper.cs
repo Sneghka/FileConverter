@@ -51,17 +51,26 @@ namespace FilesConverter
 
         public static void email_send(string subject, string filePath)
         {
-            var mail = new MailMessage();
-            mail.IsBodyHtml = true;
-            var smtpServer = new SmtpClient("post.morion.ua");
-            mail.From = new MailAddress("snizhana.nomirovska@proximaresearch.com");
-            mail.To.Add("snizhana.nomirovska@proximaresearch.com");
-            mail.To.Add("sneghkan@i.ua");
-            mail.Subject = subject;
-            Attachment attachment = new Attachment(filePath);
-            mail.Attachments.Add(attachment);
-            mail.Body = "";
-            smtpServer.Send(mail);
+            try
+            {
+                var mail = new MailMessage();
+                mail.IsBodyHtml = true;
+                var smtpServer = new SmtpClient("post.morion.ua");
+                mail.From = new MailAddress("snizhana.nomirovska@proximaresearch.com");
+                mail.To.Add("snizhana.nomirovska@proximaresearch.com");
+                mail.To.Add("sneghkan@i.ua");
+                mail.Subject = subject;
+                Attachment attachment = new Attachment(filePath);
+                mail.Attachments.Add(attachment);
+                mail.Body = "";
+                smtpServer.Send(mail);
+            }
+            catch (Exception)
+            {
+                
+               
+            }
+            
         }
 
     }

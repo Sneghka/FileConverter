@@ -17,10 +17,11 @@ namespace FilesConverter
     public class FileConverter
     {
         public delegate void OneFileProcessed(int filesQuantity, int counter);
-
+        public event OneFileProcessed OnOneFileProcessed;
         public delegate void FileNameChange(string fileName);
+        public event FileNameChange OnFileNameChange;
 
-        public List<CommonResult> ConvertSalesFiles(List<string> filesList, DateTime date, string customer, OneFileProcessed oneFileProcessed, FileNameChange fileNameChange)
+        public List<CommonResult> ConvertSalesFiles(List<string> filesList, DateTime date, string customer)
         {
             var factory = new ConverterFactory(date.Date, customer);
             var resultList = new List<CommonResult>();
@@ -65,9 +66,9 @@ namespace FilesConverter
                     }
                     resultList.Add(commonResult);
 
-                    oneFileProcessed(filesList.Count, counter);
+                    OnOneFileProcessed(filesList.Count, counter);
                     counter++;
-                    fileNameChange(file);
+                    OnFileNameChange(file);
                 }
                 catch (Exception e)
                 {
@@ -83,7 +84,7 @@ namespace FilesConverter
 
 
 
-        public void SendResultToExcel(List<CommonResult> commonResultList, List<ExchangeRule> rules, OneFileProcessed oneFileProcessed, FileNameChange fileNameChange)
+        public void SendResultToExcel(List<CommonResult> commonResultList, List<ExchangeRule> rules)
         {
             var quantLinesInExcelFile = 60000;
             int counter = 1;
@@ -109,7 +110,7 @@ namespace FilesConverter
                     {
                         commonResult.GetFolderForSaving(dirName.ToString());
                     }
-                    if (!string.IsNullOrEmpty(commonResult.FolderForSaving))
+                    else
                     {
                         commonResult.GetFolderForSaving(commonResult.FolderForSaving);
                     }
@@ -124,9 +125,9 @@ namespace FilesConverter
                     WorkWithExcel.WriteDataToExcel(subList, pathForSaving);
                     j++;
                 }
-                oneFileProcessed(commonResultList.Count, counter);
+                OnOneFileProcessed(commonResultList.Count, counter);
                 counter++;
-                fileNameChange(commonResult.FilePath);
+                OnFileNameChange(commonResult.FilePath);
             }
         }
     }

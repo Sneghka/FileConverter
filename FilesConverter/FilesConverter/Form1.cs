@@ -65,7 +65,7 @@ namespace FilesConverter
         }
         void InvokeStatusBar(string fileName)
         {
-           statusBar1.Panels[0].Text = fileName;
+            statusBar1.Panels[0].Text = fileName;
         }
 
 
@@ -109,11 +109,13 @@ namespace FilesConverter
 
                 RemoveDuplicateCommonResul(pathsList);
 
-                var convertFiles = new FileConverter();
+                var fileConverter = new FileConverter();
                 var oneProcessedFile = new FileConverter.OneFileProcessed(InvokeProgressBar);
+                fileConverter.OnOneFileProcessed += oneProcessedFile;
                 var fileNameChange = new FileConverter.FileNameChange(InvokeStatusBar);
+                fileConverter.OnFileNameChange += fileNameChange;
 
-               _commonResultList.ResultList.AddRange(convertFiles.ConvertSalesFiles(pathsList, dateTimePicker1.Value, boxCustomer.Text, oneProcessedFile, fileNameChange));
+                _commonResultList.ResultList.AddRange(fileConverter.ConvertSalesFiles(pathsList, dateTimePicker1.Value, boxCustomer.Text));
 
                 var gridView = new WorkWithGridView();
                 gridView.AddDataToGridView(dataGridView1, _commonResultList);
@@ -159,32 +161,24 @@ namespace FilesConverter
             }
 
             var convertedFiles = _commonResultList.ResultList;
-            var convertFiles = new FileConverter();
 
+            var fileConverter = new FileConverter();
             var oneProcessedFile = new FileConverter.OneFileProcessed(InvokeProgressBar);
+            fileConverter.OnOneFileProcessed += oneProcessedFile;
             var fileNameChange = new FileConverter.FileNameChange(InvokeStatusBar);
-            convertFiles.SendResultToExcel(convertedFiles, _rules, oneProcessedFile, fileNameChange);
+            fileConverter.OnFileNameChange += fileNameChange;
+            
+            fileConverter.SendResultToExcel(convertedFiles, _rules);
 
             new LogWriter(_commonResultList);
 
             var logFilePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
             var fullLogFilePath = logFilePath + @"\" + "log.txt";
-            var subject = Environment.MachineName + " / Converted files Jonson"; 
+            var subject = Environment.MachineName + " / Converted files Jonson";
 
-            try
-            {
-                (new Thread(() => Helper.email_send(subject, fullLogFilePath))).Start();
-                
-            }
-            catch (Exception)
-            {
-                
-               
-            }
-           
+            new Thread(() => Helper.email_send(subject, fullLogFilePath)).Start();
 
             ClearForm();
-
         }
 
 
