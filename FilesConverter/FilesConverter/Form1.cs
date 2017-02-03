@@ -138,47 +138,59 @@ namespace FilesConverter
 
         private void btnChangeNameAndSave_Click(object sender, EventArgs e)
         {
-            foreach (var commonResult in _commonResultList.ResultList)
+            try
             {
-                commonResult.FolderForSaving = _commonResultList.PathForSaving;
-            }
-
-            if (_rules.Count == 0)
-            {
-                DialogResult cancel = new DialogResult();
-                cancel = MessageBox.Show(Constants.RulesNotUpload, "Внимание!!!", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
-                if (cancel == DialogResult.Cancel)
+                foreach (var commonResult in _commonResultList.ResultList)
                 {
-                    return;
+                    commonResult.FolderForSaving = _commonResultList.PathForSaving;
                 }
-            }
 
-            if (string.IsNullOrEmpty(textBoxFolderForSaving.Text))
+                if (_rules.Count == 0)
+                {
+                    DialogResult cancel = new DialogResult();
+                    cancel = MessageBox.Show(Constants.RulesNotUpload, "Внимание!!!", MessageBoxButtons.OKCancel,
+                        MessageBoxIcon.Asterisk);
+                    if (cancel == DialogResult.Cancel)
+                    {
+                        return;
+                    }
+                }
+
+                if (string.IsNullOrEmpty(textBoxFolderForSaving.Text))
+                {
+                    DialogResult ok = new DialogResult();
+                    ok = MessageBox.Show(Constants.FolderForSavingIsNotChoosen, "Внимание!!!",
+                        MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
+                    if (ok == DialogResult.Cancel) return;
+                }
+
+                var convertedFiles = _commonResultList.ResultList;
+
+                var fileConverter = new FileConverter();
+                var oneProcessedFile = new FileConverter.OneFileProcessed(InvokeProgressBar);
+                fileConverter.OnOneFileProcessed += oneProcessedFile;
+                var fileNameChange = new FileConverter.FileNameChange(InvokeStatusBar);
+                fileConverter.OnFileNameChange += fileNameChange;
+
+                fileConverter.SendResultToExcel(convertedFiles, _rules);
+
+                /*new LogWriter(_commonResultList);*/
+                var logWriter = new LogWriter();
+                logWriter.LogWrite(_commonResultList);
+
+                var logFilePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                var fullLogFilePath = logFilePath + @"\" + "log.txt";
+                var subject = Environment.MachineName + " / Converted files Jonson";
+
+                new Thread(() => Helper.email_send(subject, fullLogFilePath)).Start();
+
+                ClearForm();
+            }
+            catch (Exception exception)
             {
-                DialogResult ok = new DialogResult();
-                ok = MessageBox.Show(Constants.FolderForSavingIsNotChoosen, "Внимание!!!", MessageBoxButtons.OKCancel, MessageBoxIcon.Asterisk);
-                if (ok == DialogResult.Cancel) return;
+                var logWriter = new LogWriter();
+                logWriter.LogException(exception);
             }
-
-            var convertedFiles = _commonResultList.ResultList;
-
-            var fileConverter = new FileConverter();
-            var oneProcessedFile = new FileConverter.OneFileProcessed(InvokeProgressBar);
-            fileConverter.OnOneFileProcessed += oneProcessedFile;
-            var fileNameChange = new FileConverter.FileNameChange(InvokeStatusBar);
-            fileConverter.OnFileNameChange += fileNameChange;
-            
-            fileConverter.SendResultToExcel(convertedFiles, _rules);
-
-            new LogWriter(_commonResultList);
-
-            var logFilePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            var fullLogFilePath = logFilePath + @"\" + "log.txt";
-            var subject = Environment.MachineName + " / Converted files Jonson";
-
-            new Thread(() => Helper.email_send(subject, fullLogFilePath)).Start();
-
-            ClearForm();
         }
 
 
@@ -211,6 +223,7 @@ namespace FilesConverter
         private void boxCustomer_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (boxCustomer.Text.Length > 0) btnUploadSales.Enabled = true;
+            if (boxCustomer.Text == "Джонсон и Джонсон") textBoxRulesPath.Text = @"Y:\Джонсон и Джонсон\Джонсон обр\Converter\Акции декабрь 2016.xls";
             if (_commonResultList.ResultList != null)
             {
                 foreach (var salesResult in _commonResultList.ResultList)

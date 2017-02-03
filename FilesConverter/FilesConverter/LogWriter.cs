@@ -13,9 +13,9 @@ namespace FilesConverter
     public class LogWriter
     {
         private string _logFilePath = string.Empty;
-        public LogWriter(CommonResultList commonResultList)
+        public LogWriter(/*CommonResultList commonResultList*/)
         {
-            LogWrite(commonResultList);
+           // LogWrite(commonResultList);
         }
 
         public void LogWrite(CommonResultList commonResultList)
@@ -46,6 +46,28 @@ namespace FilesConverter
                     txtWriter.WriteLine("  {0}", logMessage);
                 }
                 txtWriter.WriteLine("-------------------------------");
+            }
+            catch (Exception ex)
+            {
+            }
+        }
+
+        public void LogException(Exception e)
+        {
+            
+            _logFilePath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            try
+            {
+                using (StreamWriter w = File.AppendText(_logFilePath + @"\" + "log.txt"))
+                {
+                    w.Write("\r\nLog Entry : ");
+                    w.WriteLine("{0} {1}", DateTime.Now.ToLongTimeString(),DateTime.Now.ToLongDateString());
+                    w.WriteLine("  {0}", e.Message);
+                    if(e.InnerException != null) w.WriteLine("  {0}", e.InnerException.Message);
+
+
+                    /*   Log(commonResultList, w);*/
+                }
             }
             catch (Exception ex)
             {

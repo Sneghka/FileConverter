@@ -16,7 +16,7 @@ namespace FilesConverter.Rules
         {
             List<ExchangeRule> rules = new List<ExchangeRule>();
             var changes = new DataTable();
-            WorkWithExcel.ExcelFileToDataTable(out changes, path, request);
+            WorkWithExcel.ExcelFileToDataTable(out changes, path/*, request*/);
             Helper.SetColumnsInDataTable(changes);
 
             foreach (DataRow row in changes.Rows)

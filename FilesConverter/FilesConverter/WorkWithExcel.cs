@@ -13,7 +13,7 @@ namespace FilesConverter
 {
     public static class WorkWithExcel
     {
-        public static void ExcelFileToDataTable(out DataTable dtData, string path, string sRequest)
+        public static void ExcelFileToDataTable(out DataTable dtData, string path/*, string sRequest*/)
         {
             DataSet dsData = new DataSet();
 
@@ -21,7 +21,13 @@ namespace FilesConverter
             using (OleDbConnection connection = new OleDbConnection(sConnStr))
             {
                 connection.Open();
-                OleDbCommand command = new OleDbCommand(sRequest, connection);
+
+                var dtSchema = connection.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, new object[] { null, null, null, "TABLE" });
+                var sheet1 = dtSchema.Rows[0].Field<string>("TABLE_NAME");
+
+                OleDbCommand command = new OleDbCommand($"Select * from [{sheet1}]", connection);
+                
+                //OleDbCommand command = new OleDbCommand(sRequest, connection);
                 using (OleDbDataAdapter oddaAdapter = new OleDbDataAdapter(command))
                 {
                     oddaAdapter.Fill(dsData);

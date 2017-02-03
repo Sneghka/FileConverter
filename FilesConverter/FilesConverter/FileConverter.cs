@@ -103,9 +103,10 @@ namespace FilesConverter
                 var currentIndex = 0;
                 var ostatokRowNumber = commonResult.Lines.Count;
                 int j = 1;
+                var dirName = new DirectoryInfo(Path.GetDirectoryName(commonResult.FilePath));
                 while (ostatokRowNumber > 0)
                 {
-                    var dirName = new DirectoryInfo(Path.GetDirectoryName(commonResult.FilePath));
+                   
                     if (string.IsNullOrEmpty(commonResult.FolderForSaving))
                     {
                         commonResult.GetFolderForSaving(dirName.ToString());
