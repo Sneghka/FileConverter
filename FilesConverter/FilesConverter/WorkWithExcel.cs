@@ -37,7 +37,7 @@ namespace FilesConverter
 
             dtData = dsData.Tables[0];
         }
-
+       
         public static void WriteDataToExcel(List<IResultItem> list, string path)
         {
             Application myApp = new Application();

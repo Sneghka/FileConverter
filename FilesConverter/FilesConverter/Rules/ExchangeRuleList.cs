@@ -9,7 +9,7 @@ using FilesConverter.Sales;
 
 namespace FilesConverter.Rules
 {
-    public class ExchangeRuleList : List<ExchangeRule>
+    public class ExchangeRuleList
     {
 
         public List<ExchangeRule> GetChangingRules(string path, string request)
@@ -17,6 +17,14 @@ namespace FilesConverter.Rules
             List<ExchangeRule> rules = new List<ExchangeRule>();
             var changes = new DataTable();
             WorkWithExcel.ExcelFileToDataTable(out changes, path/*, request*/);
+
+            var colQuant = changes.Columns.Count;
+
+            for (int i = colQuant - 1; i > 1; i--)
+            {
+                changes.Columns.RemoveAt(i);
+            }
+
             Helper.SetColumnsInDataTable(changes);
 
             foreach (DataRow row in changes.Rows)
