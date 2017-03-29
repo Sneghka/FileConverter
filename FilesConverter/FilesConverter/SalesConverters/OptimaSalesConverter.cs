@@ -10,7 +10,7 @@ namespace FilesConverter.SalesConverters
     {
         public OptimaSalesConverter(DateTime data, string customer) : base( data, customer)
         {
-            ColumnNames = "Область,Город,Товар,Код товара,ОКПО,Дебитор доставки,Продажи шт";
+            ColumnNames = "Область,Город,Товар,Код товара,ОКПО,Дебитор доставки,Продажи шт,Фактический адрес";
             Request = "select * from [Страница 1$]";
         }
 
@@ -33,7 +33,7 @@ namespace FilesConverter.SalesConverters
                     ItemName = row["Товар"].ToString(),
                     /*ItemCode = row["Код товара"].ToString(),*/
                     OKPO = row["ОКПО"].ToString(),
-                    DistributorsClientPlusAdress = row["Дебитор доставки"].ToString(), // будет исправление после первого отчёта (пока нет колонки Адрес)
+                    DistributorsClientPlusAdress = row["Дебитор доставки"] + " " + row["Фактический адрес"], // будет исправление после первого отчёта (пока нет колонки Адрес)
                     Upakovki = decimal.TryParse(row["Продажи шт"].ToString(), out i) ? i : (decimal?)null
                 };
                 commonResultLines.Add(storedSalesRow);
